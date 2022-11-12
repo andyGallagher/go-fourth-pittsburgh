@@ -74,3 +74,34 @@ h6 {
 #__next {
     isolation: isolate;
 }
+
+/* Audio player things */
+.rhap_container {
+    box-shadow: none !important;
+    padding: 0rem !important;
+}
+
+.rhap_additional-controls {
+    display: none !important;
+}
+
+.rhap_volume-controls {
+    display: none !important;
+}
+
+.rhap_total-time {
+    display: none !important;
+}
+
+.rhap_main {
+    flex-direction: row-reverse !important;
+}
+
+.rhap_controls-section {
+    margin-top: 0 !important;
+    flex: 0 !important;
+}
+
+.rhap_progress-section {
+    flex-direction: row-reverse;
+}

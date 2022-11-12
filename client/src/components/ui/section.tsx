@@ -12,7 +12,7 @@ export const Section = React.forwardRef<
         <section
             ref={ref}
             className={clsx(
-                "flex h-screen w-screen bg-slate-200 pb-16 text-white",
+                "flex w-screen bg-slate-200 text-white h-[100%]",
                 className
             )}
         >
