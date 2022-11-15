@@ -11,10 +11,7 @@ export const Section = React.forwardRef<
     return (
         <section
             ref={ref}
-            className={clsx(
-                "flex w-screen bg-slate-200 text-white h-[100%]",
-                className
-            )}
+            className={clsx("flex w-screen text-white h-[100%]", className)}
         >
             {children}
         </section>
