@@ -14,6 +14,11 @@ export default {
             type: "string",
         },
         {
+            name: "audioFileName",
+            title: "Audio File Name",
+            type: "string",
+        },
+        {
             name: "audio",
             title: "Audio",
             type: "file",

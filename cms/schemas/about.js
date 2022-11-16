@@ -19,6 +19,27 @@ export default {
             type: "blockContent",
         },
         {
+            name: "audioFileName",
+            title: "Audio File Name",
+            type: "string",
+        },
+        {
+            name: "audio",
+            title: "Audio",
+            type: "file",
+        },
+        {
+            name: "audioContributor",
+            title: "Audio Contributor",
+            type: "array",
+            of: [
+                {
+                    type: "reference",
+                    to: { type: "contributor" },
+                },
+            ],
+        },
+        {
             name: "contributors",
             title: "Project Contributors",
             type: "array",
@@ -42,6 +63,12 @@ export default {
         {
             name: "body",
             title: "Credits",
+            type: "blockContent",
+        },
+
+        {
+            name: "ads",
+            title: "Ads",
             type: "blockContent",
         },
     ],
