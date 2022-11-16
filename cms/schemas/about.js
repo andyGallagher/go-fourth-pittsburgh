@@ -1,0 +1,61 @@
+export default {
+    name: "about",
+    title: "About Page",
+    type: "document",
+    fields: [
+        {
+            name: "title",
+            title: "Title",
+            type: "string",
+        },
+        {
+            name: "subtitle",
+            title: "Subtitle",
+            type: "string",
+        },
+        {
+            name: "description",
+            title: "Description",
+            type: "blockContent",
+        },
+        {
+            name: "contributors",
+            title: "Project Contributors",
+            type: "array",
+            of: [
+                {
+                    type: "reference",
+                    to: { type: "contributor" },
+                },
+            ],
+        },
+
+        {
+            name: "mainImage",
+            title: "Main image",
+            type: "image",
+            options: {
+                hotspot: true,
+            },
+        },
+
+        {
+            name: "body",
+            title: "Credits",
+            type: "blockContent",
+        },
+    ],
+
+    preview: {
+        select: {
+            title: "title",
+            media: "mainImage",
+        },
+        prepare(selection) {
+            const { contributor } = selection;
+            return Object.assign({}, selection, {
+                subtitle: contributor && `by ${contributor}`,
+            });
+        },
+    },
+};

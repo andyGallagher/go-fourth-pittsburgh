@@ -13,9 +13,9 @@ export const Explore = React.forwardRef<
     return (
         <>
             <Section className={clsx("text-slate-700")} ref={ref}>
-                <div className='relative flex justify-center'>
-                    <div className='absolute w-screen bg-gradient-to-t from-slate-300 h32'></div>
-                    <div className='z-2 absolute flex flex-col z-10 justify-center align-center px-16'>
+                <div className='relative flex justify-center flex-1'>
+                    <div className='z-10 absolute w-screen bg-gradient-to-b from-white h-48 md:hidden'></div>
+                    <div className='z-100 absolute flex flex-col z-10 justify-center align-center px-16'>
                         <h2 className='text-xl font-bold pt-8 pb-2 text-center'>
                             Explore
                         </h2>
@@ -29,7 +29,7 @@ export const Explore = React.forwardRef<
                 </div>
             </Section>
             {isExplore && (
-                <div className='relative w-screen overflow-hidden flex flex-col'>
+                <div className='relative flex-1 overflow-hidden flex flex-col'>
                     <Marquee />
                 </div>
             )}

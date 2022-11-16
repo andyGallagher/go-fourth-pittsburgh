@@ -1,6 +1,7 @@
 import { SanityImageAssetDocument } from "@sanity/client";
 
 export interface BasePage {
+    audioFileName?: string;
     audioContributor: {
         _ref: string;
     }[];
@@ -15,7 +16,7 @@ export interface BasePage {
     mainImage: SanityImageAssetDocument;
     subtitle: string;
     title: string;
-    type: "LandingPage" | "BuildingPage";
+    type: "LandingPage" | "BuildingPage" | "AboutPage";
     nextBuildingSlug?: { current: string };
 }
 
@@ -32,8 +33,22 @@ export interface BuildingPage extends BasePage {
     }[];
     map: SanityImageAssetDocument;
     slug: string;
-    title: "Benedum-Trees Building";
+    title: string;
     zoomInAnimate: SanityImageAssetDocument;
     zoomOutAnimate: SanityImageAssetDocument;
     zoomedIn: SanityImageAssetDocument;
+}
+
+// This one is different enough to not extend
+export interface AboutPage extends BasePage {
+    type: "AboutPage";
+    contributors: {
+        _id: string;
+        name: string;
+        byline: string;
+        image: SanityImageAssetDocument;
+        bio: any; // PortableText
+    }[];
+    description: any; // PortableText
+    ads: any; // PortableText
 }

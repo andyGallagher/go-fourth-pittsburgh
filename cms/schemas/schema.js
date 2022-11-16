@@ -5,6 +5,7 @@ import createSchema from "part:@sanity/base/schema-creator";
 import schemaTypes from "all:part:@sanity/base/schema-type";
 
 // We import object and document schemas
+import about from "./about";
 import blockContent from "./blockContent";
 import building from "./building";
 import contributor from "./contributor";
@@ -27,5 +28,6 @@ export default createSchema({
         blockContent,
         landing,
         lookInside,
+        about,
     ]),
 });

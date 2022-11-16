@@ -11,7 +11,7 @@ import { imageUrlFor } from "helpers/urlFor";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import { use100vh } from "react-div-100vh";
-import { BasePage, BuildingPage, LandingPage } from "types";
+import { BuildingPage, LandingPage } from "types";
 
 const useHundo = () => {
     const [hundo, setHundo] = useState<number | null>(null);
@@ -48,7 +48,8 @@ export const Building = ({
     const onAnimationComplete = useCallback(() => setIsAnimating(false), []);
 
     useEffect(() => {
-        setIsZoomed(false);
+        setIsZoomed(undefined);
+        setIsAnimating(false);
     }, [router.asPath]);
 
     return (
@@ -77,7 +78,7 @@ export const Building = ({
                     <img alt={page.title} src={imageUrlFor(page.mainImage)} />
                 )}
 
-                <div className='absolute top-0 left-0 w-screen flex flex-col items-center justify-center pt-16 '>
+                <div className='text-white absolute top-0 left-0 flex flex-col items-center justify-center pt-16 w-[100%]'>
                     <h1
                         className={clsx(
                             "text-3xl pb-1 border-b-[1px]",
@@ -99,7 +100,6 @@ export const Building = ({
                                 </Button>
                                 <Button
                                     onClick={() => {
-                                        window.scrollTo(0, 0);
                                         router.push(
                                             `/explore/${page.nextBuildingSlug?.current}`
                                         );
@@ -149,7 +149,7 @@ export const Building = ({
                     </div>
                 </div>
 
-                <div className='absolute bottom-0 left-0 w-screen flex flex-col items-center justify-center py-16 bg-gradient-to-t from-slate-300'>
+                <div className='absolute bottom-0 left-0 flex flex-1 flex-col items-center justify-center py-16 bg-gradient-to-t from-slate-300 w-[100%]'>
                     <div
                         tabIndex={0}
                         role='button'

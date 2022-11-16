@@ -1,10 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import clsx from "clsx";
-import { useRouter } from "next/router";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const imageClassName =
-    "absolute top-0 left-0 flex-1 w-screen h-screen flex items-center justify-center overflow-hidden opacity-0 z-2";
+    "absolute top-0 left-0 flex-1 w-screen h-screen flex items-center justify-center overflow-hidden opacity-0 z-2 md:w-[100%]";
 
 export const ZoomIn = ({
     animationIn,
@@ -24,13 +23,8 @@ export const ZoomIn = ({
     const [shownImage, setShownImage] = useState<
         "animation-in" | "animation-out" | "base" | "zoomed"
     >("base");
-    const [zoomOutRando, setZoomOutRando] = useState(0);
-    const [zoomInRando, setZoomInRando] = useState(0);
-    const router = useRouter();
-
-    useEffect(() => {
-        setShownImage("base");
-    }, [router.asPath]);
+    const [zoomOutRando, setZoomOutRando] = useState(animationOut);
+    const [zoomInRando, setZoomInRando] = useState(animationIn);
 
     useEffect(() => {
         let sto: ReturnType<typeof setTimeout>;
@@ -41,16 +35,26 @@ export const ZoomIn = ({
             setTimeout(() => {
                 setShownImage("zoomed");
                 onAnimationComplete();
-                setZoomInRando((i) => i + 1);
-            }, 2000);
+                setZoomOutRando((rando) => {
+                    setTimeout(() => {
+                        setZoomOutRando(rando);
+                    }, 0);
+                    return "";
+                });
+            }, 4000);
         } else if (isZoomed === false) {
             setShownImage("animation-out");
 
             setTimeout(() => {
                 setShownImage("base");
                 onAnimationComplete();
-                setZoomOutRando((i) => i + 1);
-            }, 2000);
+                setZoomInRando((rando) => {
+                    setTimeout(() => {
+                        setZoomInRando(rando);
+                    }, 0);
+                    return "";
+                });
+            }, 4000);
         }
 
         return () => {
@@ -59,7 +63,7 @@ export const ZoomIn = ({
     }, [isZoomed, onAnimationComplete]);
 
     return (
-        <div className='relative w-screen h-screen overflow-hidden'>
+        <div className='relative flex-1 h-screen overflow-hidden'>
             <div className={clsx(imageClassName, "opacity-100 z-1")}>
                 <img
                     alt=''
@@ -95,7 +99,7 @@ export const ZoomIn = ({
             >
                 <img
                     alt=''
-                    src={`${animationIn}?i=${zoomInRando}`}
+                    src={`${zoomInRando}`}
                     style={{
                         height: "100%",
                         maxWidth: "initial",
@@ -111,7 +115,7 @@ export const ZoomIn = ({
             >
                 <img
                     alt=''
-                    src={`${animationOut}?i=${zoomOutRando}`}
+                    src={`${zoomOutRando}`}
                     style={{
                         height: "100%",
                         maxWidth: "initial",

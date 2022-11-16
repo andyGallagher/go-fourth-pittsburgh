@@ -1,11 +1,12 @@
+import { MobileWarning } from "../mobile-warning";
 import clsx from "clsx";
+import { useWindowListener } from "common/useDocumentListener";
 import { Audio } from "components/audio";
 import { LookInside } from "components/look-inside";
+import { Metadata } from "components/metadata";
 import { Sections } from "components/sections";
 import { Button } from "components/ui/button";
 import { Footer } from "components/ui/footer";
-import { imageUrlFor } from "helpers/urlFor";
-import Head from "next/head";
 import { useRouter } from "next/router";
 import { useRef, useState } from "react";
 import { BuildingPage, LandingPage } from "types";
@@ -36,20 +37,22 @@ export const Base = ({ page }: { page: LandingPage | BuildingPage }) => {
 
     const isExplorerPage = page.type !== "LandingPage";
 
+    useWindowListener(
+        "scroll",
+        () => {
+            if (drawer === "look-inside") {
+                setDrawer(undefined);
+            }
+        },
+        [drawer]
+    );
+
     return (
-        <div>
-            <Head>
-                <title>Go Fourth | GoFourthPittsburgh.org</title>
-                <meta name='description' content='GoFourthPittsburgh.org' />
-                <link rel='icon' href='/favicon.ico' />
-            </Head>
+        <MobileWarning>
+            <Metadata />
 
             <main className={clsx(drawer === "audio" && "pb-[90px]")}>
                 <div
-                    className={clsx(
-                        "transition-all duration-500",
-                        drawer === "look-inside" && "blur"
-                    )}
                     onClick={() => {
                         if (drawer === "look-inside") {
                             setDrawer(undefined);
@@ -57,10 +60,15 @@ export const Base = ({ page }: { page: LandingPage | BuildingPage }) => {
                     }}
                 >
                     {isExplorerPage && (
-                        <Sections.Explore isExplore page={page} />
+                        <Sections.Explore
+                            key={`${page.title}--explore`}
+                            isExplore
+                            page={page}
+                        />
                     )}
 
                     <Sections.Building
+                        key={`${page.title}--building`}
                         page={page}
                         openAudioPanel={() =>
                             setDrawer((drawer) => {
@@ -76,13 +84,16 @@ export const Base = ({ page }: { page: LandingPage | BuildingPage }) => {
                         }
                         scrollToDetail={scrollToDetail}
                     />
-                    <Sections.Detail ref={detailRef} page={page} />
+                    <Sections.Detail
+                        key={`${page.title}--detail`}
+                        ref={detailRef}
+                        page={page}
+                    />
 
                     <div className='mt-4 pb-8 flex justify-center'>
                         <Button
                             isInverted
                             onClick={() => {
-                                window.scrollTo(0, 0);
                                 router.push(
                                     `/explore/${page.nextBuildingSlug?.current}`
                                 );
@@ -101,10 +112,15 @@ export const Base = ({ page }: { page: LandingPage | BuildingPage }) => {
                     </div>
                 </div>
 
-                <Audio page={page} isShowing={drawer === "audio"} />
+                <Audio
+                    key={`${page.title}--audio`}
+                    page={page}
+                    isShowing={drawer === "audio"}
+                />
 
                 {page.type === "BuildingPage" && (
                     <LookInside
+                        key={`${page.title}--lookInside`}
                         isShowing={drawer === "look-inside"}
                         close={() => setDrawer(undefined)}
                         lookInside={page.lookInside}
@@ -113,6 +129,6 @@ export const Base = ({ page }: { page: LandingPage | BuildingPage }) => {
 
                 <Footer />
             </main>
-        </div>
+        </MobileWarning>
     );
 };

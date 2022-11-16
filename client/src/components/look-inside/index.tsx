@@ -5,7 +5,7 @@ import { ReactComponent as CloseIcon } from "../../assets/icons/close.svg";
 import { imageUrlFor } from "../../helpers/urlFor";
 import clsx from "clsx";
 import { Button } from "components/ui/button";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { BuildingPage } from "types";
 
 export const LookInside = ({
@@ -20,20 +20,22 @@ export const LookInside = ({
     const [index, setIndex] = useState(0);
     const { image, title, description } = lookInside[index];
 
-    useEffect(() => {
-        setIndex(0);
-    }, [isShowing]);
-
     return (
         <div
             className={clsx(
-                "fixed bottom-0 left-0 w-[100%] bg-white py-2 px-4 flex flex-col rounded-lg transition-transform duration-300 shadow-xl z-50 h-[75vh]",
-                isShowing ? "translate-y-0" : "translate-y-full"
+                "fixed bottom-0 left-0 w-[100%] bg-white py-2 flex flex-col rounded-t-lg transition-transform duration-300 shadow-xl z-50 h-[82vh]",
+                isShowing
+                    ? "translate-y-0 md:sticky"
+                    : "translate-y-full md:hidden"
             )}
+            style={{
+                boxShadow:
+                    "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 -8px 18px -6px rgb(0 0 0 / 0.1)",
+            }}
         >
-            <div className='relative flex-1 flex flex-col px-2 pt-6 pb-2'>
+            <div className='relative flex-1 pt-2 pb-2 h-[82vh] min-h-[82vh]'>
                 <button
-                    className='absolute top-0 right-0 [&_polygon]:fill-slate-600 flex'
+                    className='ml-auto px-4 [&_polygon]:fill-slate-600 flex'
                     onClick={close}
                 >
                     <CloseIcon
@@ -43,17 +45,19 @@ export const LookInside = ({
                         }}
                     />
                 </button>
-                <div className='flex items-center justify-center p-4'>
+                <div className='flex items-center justify-center py-4 max-h-[50%] my-4 overflow-hidden'>
                     <img
-                        className='max-h-[30vh]'
+                        className='w-[100%]'
                         alt={title}
                         src={imageUrlFor(image)}
                     />
                 </div>
-                <h4 className='font-bold text-l'>{title}</h4>
-                <div>{description}</div>
+                <div className='flex flex-col'>
+                    <h4 className='font-bold text-l px-8'>{title}</h4>
+                    <div className='px-8'>{description}</div>
+                </div>
 
-                <div className='mt-auto flex'>
+                <div className='absolute bottom-4 left-0 flex px-8 w-[100%]'>
                     {lookInside[index - 1] && (
                         <Button
                             isInverted

@@ -6,12 +6,17 @@ export const Section = React.forwardRef<
     {
         children: React.ReactNode;
         className?: string;
+        isHundo?: boolean;
     }
->(({ children, className }, ref) => {
+>(({ children, className, isHundo = true }, ref) => {
     return (
         <section
             ref={ref}
-            className={clsx("flex w-screen text-white h-[100%]", className)}
+            className={clsx(
+                "flex text-slate-600",
+                isHundo && "h-[100%]",
+                className
+            )}
         >
             {children}
         </section>

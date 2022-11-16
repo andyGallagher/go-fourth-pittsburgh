@@ -11,26 +11,26 @@ export type MapKeys =
 const COORDINATES: Record<MapKeys, { style: React.CSSProperties }> = {
     ["bank-of-pittsburgh"]: {
         style: {
-            top: "50%",
+            top: "51%",
             left: "0%",
-            width: "45%",
-            height: "15%",
+            width: "53%",
+            height: "17%",
         },
     },
     ["benedum-trees-building"]: {
         style: {
-            top: "42.5%",
-            left: "55%",
-            width: "33%",
-            height: "10%",
+            top: "36.5%",
+            left: "68%",
+            width: "28%",
+            height: "16%",
         },
     },
     ["pittsburgh-stock-exchange"]: {
         style: {
-            top: "52.5%",
-            left: "55%",
-            width: "25%",
-            height: "12%",
+            top: "53%",
+            left: "68%",
+            width: "30%",
+            height: "15%",
         },
     },
 };
@@ -39,9 +39,9 @@ export const Map = ({ src }: { src: string }) => {
     const mapRef = useRef<HTMLDivElement>(null);
 
     return (
-        <div className='w-screen h-[60vh] overflow-hidden flex'>
+        <div className='flex-1 h-[60vh] overflow-hidden flex'>
             <div
-                className='w-screen h-[60vh] relative flex items-center justify-center'
+                className='flex-1 h-[60vh] relative flex items-center justify-center'
                 ref={mapRef}
             >
                 <img

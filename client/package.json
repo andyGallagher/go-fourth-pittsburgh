@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "dev": "next dev",
-        "build": "next build && rm -rf dist && npm run gulp",
+        "build": "rm -rf .next && next build && rm -rf dist && npm run gulp",
         "gulp": "gulp",
         "start": "next start",
         "lint": "next lint"

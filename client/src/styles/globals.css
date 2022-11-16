@@ -7,6 +7,12 @@
     src: url("../assets/fonts/proxima-nova-regular.woff2");
 }
 
+@font-face {
+    font-family: "garamond";
+    src: url("../assets/fonts/EBGaramond-VariableFont_wght.ttf");
+    /* src: url("../assets/fonts/EBGaramond-Italic-VariableFont_wght.ttf"); */
+}
+
 /* 
   @see https://www.joshwcomeau.com/css/custom-css-reset/
 */
@@ -119,6 +125,11 @@ h6 {
 
 .portable-text p {
     margin-top: 1rem;
+    font-family: "garamond", serif;
+}
+
+.portable-text a {
+    text-decoration: underline;
 }
 
 .portable-text p:first-of-type {
@@ -127,4 +138,22 @@ h6 {
 
 .portable-text *:last-child {
     margin-bottom: 0rem;
+}
+
+.credits p {
+    font-family: "proxima-nova-regular", sans-serif;
+    margin-top: 0.25rem;
+}
+
+.credits p:first-of-type {
+    margin-top: 0rem;
+}
+
+.credits *:last-child {
+    margin-bottom: 0rem;
+}
+
+.detail p {
+    padding-left: 2rem;
+    padding-right: 2rem;
 }

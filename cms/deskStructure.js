@@ -7,6 +7,6 @@ export default () =>
         .title("Content")
         .items([
             ...S.documentTypeListItems().filter((docType) => {
-                return docType.getTitle() !== "__hidden Look Inside";
+                return docType.getTitle() !== "Look Inside";
             }),
         ]);

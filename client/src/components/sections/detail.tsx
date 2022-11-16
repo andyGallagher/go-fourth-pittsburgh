@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { PortableText, PortableTextReactComponents } from "@portabletext/react";
 import { Section } from "components/ui/section";
-import { imageUrlFor } from "helpers/urlFor";
+import { imageUrlFor, isImageWider } from "helpers/urlFor";
 import React from "react";
 import { BasePage } from "types";
 
@@ -11,12 +11,24 @@ const components: Partial<PortableTextReactComponents> = {
             if (!value?.asset?._ref) {
                 return null;
             }
+
+            if (isImageWider(value)) {
+                return (
+                    <img
+                        alt={value.alt || " "}
+                        loading='lazy'
+                        src={imageUrlFor(value)}
+                        className='mt-8 mb-4'
+                    />
+                );
+            }
+
             return (
                 <img
                     alt={value.alt || " "}
                     loading='lazy'
                     src={imageUrlFor(value)}
-                    className='rounded-xl mt-4 mb-4 max-w-[50%]'
+                    className='rounded-md mt-8 max-w-[50%]'
                 />
             );
         },
@@ -27,7 +39,7 @@ export const Detail = React.forwardRef<HTMLDivElement, { page: BasePage }>(
     ({ page }, ref) => {
         return (
             <Section className='text-slate-600 pt-12 pb-4' ref={ref}>
-                <div className='portable-text flex px-8 flex-col flex-1 justify-center items-center text-center'>
+                <div className='detail portable-text flex flex-col flex-1 justify-center items-center '>
                     <PortableText value={page.body} components={components} />
                 </div>
             </Section>
