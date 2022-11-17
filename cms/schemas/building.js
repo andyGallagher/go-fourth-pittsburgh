@@ -107,9 +107,22 @@ export default {
         },
 
         {
-            name: "Metadata",
-            title: "Metadata",
-            type: "pageMetadata",
+            name: "metaTitle",
+            title: "Meta Title",
+            type: "string",
+        },
+        {
+            name: "metaDescription",
+            title: "Meta Description",
+            type: "string",
+        },
+        {
+            name: "metaThumbnail",
+            title: "Meta Thumbnail",
+            type: "image",
+            options: {
+                hotspot: true,
+            },
         },
     ],
 

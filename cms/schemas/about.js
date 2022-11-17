@@ -71,6 +71,25 @@ export default {
             title: "Ads",
             type: "blockContent",
         },
+
+        {
+            name: "metaTitle",
+            title: "Meta Title",
+            type: "string",
+        },
+        {
+            name: "metaDescription",
+            title: "Meta Description",
+            type: "string",
+        },
+        {
+            name: "metaThumbnail",
+            title: "Meta Thumbnail",
+            type: "image",
+            options: {
+                hotspot: true,
+            },
+        },
     ],
 
     preview: {
