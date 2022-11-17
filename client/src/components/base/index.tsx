@@ -49,7 +49,7 @@ export const Base = ({ page }: { page: LandingPage | BuildingPage }) => {
 
     return (
         <MobileWarning>
-            <Metadata />
+            <Metadata page={page} />
 
             <main className={clsx(drawer === "audio" && "pb-[90px]")}>
                 <div
@@ -116,6 +116,7 @@ export const Base = ({ page }: { page: LandingPage | BuildingPage }) => {
                     key={`${page.title}--audio`}
                     page={page}
                     isShowing={drawer === "audio"}
+                    close={() => setDrawer(undefined)}
                 />
 
                 {page.type === "BuildingPage" && (

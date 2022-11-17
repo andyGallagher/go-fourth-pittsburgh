@@ -105,6 +105,12 @@ export default {
                 hotspot: true,
             },
         },
+
+        {
+            name: "Metadata",
+            title: "Metadata",
+            type: "pageMetadata",
+        },
     ],
 
     preview: {

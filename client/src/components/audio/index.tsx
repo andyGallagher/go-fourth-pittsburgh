@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
-import { audioUrlFor, imageUrlFor } from "../../helpers/urlFor";
+import { ReactComponent as CloseIcon } from "../../assets/icons/close.svg";
 import clsx from "clsx";
+import { audioUrlFor, imageUrlFor } from "helpers/urlFor";
 import { useEffect, useMemo, useRef, useState } from "react";
 import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
@@ -9,9 +10,11 @@ import { BasePage } from "types";
 export const Audio = ({
     page,
     isShowing,
+    close,
 }: {
     page: BasePage;
     isShowing: boolean;
+    close: () => void;
 }) => {
     const hasShownRef = useRef(false);
     const audioRef = useRef<AudioPlayer>(null);
@@ -34,6 +37,12 @@ export const Audio = ({
 
         if (!isShowing && hasShownRef.current) {
             audioRef.current?.audio.current?.pause();
+        }
+    }, [isShowing]);
+
+    useEffect(() => {
+        if (isShowing) {
+            audioRef.current?.audio.current?.play();
         }
     }, [isShowing]);
 
@@ -68,38 +77,49 @@ export const Audio = ({
                     </div>
                 </div>
 
-                {contributors.length ? (
-                    <div className='ml-auto relative w-[64px] height-[55px]'>
-                        {contributors.map((contributor, index) => (
-                            <div
-                                key={contributor.name}
-                                className={clsx(
-                                    "absolute mt-2 mr-1 w-10 h-10 overflow-hidden flex align-center justify-center rounded-[50%]",
-                                    !index
-                                        ? `z-${10} top-[8px] left-[27px]`
-                                        : "top-[-8px]"
-                                )}
-                            >
-                                <img
-                                    className='absolute top-0 bottom-0 m-auto h-[100%]'
-                                    alt='thumbnail'
-                                    src={imageUrlFor(contributor.image)}
-                                />
-                            </div>
-                        ))}
-                    </div>
-                ) : (
-                    <div
-                        key={contributors[0].name}
-                        className='ml-auto relative mt-2 mr-1 w-10 overflow-hidden flex align-center justify-center rounded-[50%]'
+                <div>
+                    <button
+                        className='ml-auto [&_polygon]:fill-slate-600 flex mt-[-2px] mr-[-6px]'
+                        onClick={close}
                     >
-                        <img
-                            className='absolute top-0 bottom-0 m-auto h-[100%]'
-                            alt='thumbnail'
-                            src={imageUrlFor(contributors[0].image)}
+                        <CloseIcon
+                            style={{
+                                width: "32px",
+                                height: "32px",
+                            }}
                         />
-                    </div>
-                )}
+                    </button>
+                    {contributors.length ? (
+                        <div className='ml-auto relative w-[64px] height-[55px]'>
+                            {contributors.map((contributor, index) => (
+                                <div
+                                    key={contributor.name}
+                                    className={clsx(
+                                        "absolute mt-2 mr-1 w-10 h-10 overflow-hidden flex align-center justify-center rounded-[50%] top-[-4px]",
+                                        !index ? `z-${10} left-[32px]` : ""
+                                    )}
+                                >
+                                    <img
+                                        className='absolute top-0 bottom-0 m-auto h-[100%]'
+                                        alt='thumbnail'
+                                        src={imageUrlFor(contributor.image)}
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <div
+                            key={contributors[0].name}
+                            className='ml-auto relative mt-2 mr-1 w-10 overflow-hidden flex align-center justify-center rounded-[50%]'
+                        >
+                            <img
+                                className='absolute top-0 bottom-0 m-auto h-[100%]'
+                                alt='thumbnail'
+                                src={imageUrlFor(contributors[0].image)}
+                            />
+                        </div>
+                    )}
+                </div>
             </div>
 
             <AudioPlayer

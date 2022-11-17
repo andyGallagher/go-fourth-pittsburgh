@@ -48,7 +48,7 @@ const adComponents: Partial<PortableTextReactComponents> = {
                             alt={res.value.alt || " "}
                             loading='lazy'
                             src={imageUrlFor(res.value)}
-                            className='rounded-xl max-w-[50%] mx-auto'
+                            className='rounded-xl w-[100%]'
                         />
                     </a>
                 );
@@ -64,7 +64,7 @@ const adComponents: Partial<PortableTextReactComponents> = {
                             alt={res.value.alt || " "}
                             loading='lazy'
                             src={imageUrlFor(res.value)}
-                            className='rounded-xl max-w-[50%] mx-auto'
+                            className='rounded-xl w-[100%]'
                         />
                     </a>
                 );
@@ -88,7 +88,7 @@ export default function About({ page }: { page: AboutPage }) {
     return (
         <MobileWarning>
             <main className={clsx(drawer === "audio" && "pb-[90px]")}>
-                <Metadata />
+                <Metadata page={page} />
                 <Section className='text-slate-600 pt-12' isHundo={false}>
                     <div className='flex flex-col items-center'>
                         <h1
@@ -183,7 +183,11 @@ export default function About({ page }: { page: AboutPage }) {
 
                 <Footer />
 
-                <Audio page={page} isShowing={drawer === "audio"} />
+                <Audio
+                    page={page}
+                    isShowing={drawer === "audio"}
+                    close={() => setDrawer(undefined)}
+                />
             </main>
         </MobileWarning>
     );

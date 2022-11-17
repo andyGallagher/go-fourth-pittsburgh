@@ -23,7 +23,10 @@ export const Footer = () => {
                     </Link>
                 </div>
 
-                <div className='mt-4 text-center underline flex items-center'>
+                <a
+                    className='mt-4 text-center underline flex items-center'
+                    href='mailto:info@gofourthpittsburgh.org'
+                >
                     <MailIcon
                         style={{
                             width: "16px",
@@ -32,7 +35,7 @@ export const Footer = () => {
                         }}
                     />
                     info@gofourthpittsburgh.org
-                </div>
+                </a>
             </footer>
         </div>
     );

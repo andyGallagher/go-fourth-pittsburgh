@@ -18,6 +18,9 @@ export interface BasePage {
     title: string;
     type: "LandingPage" | "BuildingPage" | "AboutPage";
     nextBuildingSlug?: { current: string };
+    metaTitle: string;
+    metaDescription: string;
+    metaThumbnail: SanityImageAssetDocument;
 }
 
 export interface LandingPage extends BasePage {

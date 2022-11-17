@@ -45,9 +45,9 @@ export const LookInside = ({
                         }}
                     />
                 </button>
-                <div className='flex items-center justify-center py-4 max-h-[50%] my-4 overflow-hidden'>
+                <div className='relative flex items-center justify-center py-4 max-h-[60%] min-h-[60%] my-4 overflow-hidden'>
                     <img
-                        className='w-[100%]'
+                        className='w-[100%] '
                         alt={title}
                         src={imageUrlFor(image)}
                     />
