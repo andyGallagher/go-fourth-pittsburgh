@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { PortableText, PortableTextReactComponents } from "@portabletext/react";
 import client from "client";
 import clsx from "clsx";
@@ -8,8 +7,9 @@ import { MobileWarning } from "components/mobile-warning";
 import { Button } from "components/ui/button";
 import { Footer } from "components/ui/footer";
 import { Section } from "components/ui/section";
-import { imageUrlFor } from "helpers/urlFor";
+import { getImageProps } from "helpers/urlFor";
 import { GetStaticProps } from "next";
+import Image from "next/image";
 import React, { useState } from "react";
 import { AboutPage } from "types";
 
@@ -20,10 +20,10 @@ const baseComponents: Partial<PortableTextReactComponents> = {
                 return null;
             }
             return (
-                <img
+                <Image
                     alt={value.alt || " "}
                     loading='lazy'
-                    src={imageUrlFor(value)}
+                    {...getImageProps(value)}
                     className='rounded-xl mt-4 mb-4 max-w-[50%] mx-auto'
                 />
             );
@@ -44,10 +44,10 @@ const adComponents: Partial<PortableTextReactComponents> = {
                         className='block mt-4 mb-4 '
                         href='http://www.HighrisesCollection.com'
                     >
-                        <img
+                        <Image
                             alt={res.value.alt || " "}
                             loading='lazy'
-                            src={imageUrlFor(res.value)}
+                            {...getImageProps(res.value)}
                             className='rounded-xl max-w-[50%] mx-auto'
                         />
                     </a>
@@ -60,10 +60,10 @@ const adComponents: Partial<PortableTextReactComponents> = {
                         className='block mt-4 mb-4 '
                         href='http://www.amazon.com/MultiStories-Antique-Skyscrapers-Business-Tycoons/dp/057880736X'
                     >
-                        <img
+                        <Image
                             alt={res.value.alt || " "}
                             loading='lazy'
-                            src={imageUrlFor(res.value)}
+                            {...getImageProps(res.value)}
                             className='rounded-xl max-w-[50%] mx-auto'
                         />
                     </a>
@@ -71,10 +71,10 @@ const adComponents: Partial<PortableTextReactComponents> = {
             }
 
             return (
-                <img
+                <Image
                     alt={res.value.alt || " "}
                     loading='lazy'
-                    src={imageUrlFor(res.value)}
+                    {...getImageProps(res.value)}
                     className='rounded-xl mt-4 mb-4 max-w-[50%] mx-auto'
                 />
             );
@@ -124,9 +124,9 @@ export default function About({ page }: { page: AboutPage }) {
                                 <React.Fragment key={contributor._id}>
                                     <div className='flex flex-col mb-8 last:mb-0 portable-text'>
                                         {contributor.image && (
-                                            <img
+                                            <Image
                                                 alt={`picture of ${contributor.name}`}
-                                                src={imageUrlFor(
+                                                {...getImageProps(
                                                     contributor.image
                                                 )}
                                                 className='max-w-[30%] rounded-md'
@@ -189,7 +189,7 @@ export default function About({ page }: { page: AboutPage }) {
     );
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getServerSideProps: GetStaticProps = async (context) => {
     const [page, contributors]: [any, any[]] = await Promise.all([
         client.fetch(
             `

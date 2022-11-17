@@ -14,12 +14,25 @@ export const imageUrlFor = (source: any, isGif = false): string => {
     return url;
 };
 
-export const isImageWider = (source: any) => {
+export const getRawDimensions = (source: any) => {
     const ref = source.asset._ref;
     const [_a, _b, dimensionsRaw] = ref.split("-");
     const [width, height] = dimensionsRaw
         .split("x")
         .map((dim: string) => parseInt(dim));
+
+    return { width, height };
+};
+
+export const getImageProps = (source: any) => {
+    return {
+        ...getRawDimensions(source),
+        src: imageUrlFor(source),
+    };
+};
+
+export const isImageWider = (source: any) => {
+    const { width, height } = getRawDimensions(source);
 
     return width > height;
 };

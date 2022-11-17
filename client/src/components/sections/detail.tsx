@@ -1,7 +1,7 @@
-/* eslint-disable @next/next/no-img-element */
 import { PortableText, PortableTextReactComponents } from "@portabletext/react";
 import { Section } from "components/ui/section";
-import { imageUrlFor, isImageWider } from "helpers/urlFor";
+import { getImageProps, isImageWider } from "helpers/urlFor";
+import Image from "next/image";
 import React from "react";
 import { BasePage } from "types";
 
@@ -14,20 +14,20 @@ const components: Partial<PortableTextReactComponents> = {
 
             if (isImageWider(value)) {
                 return (
-                    <img
+                    <Image
                         alt={value.alt || " "}
                         loading='lazy'
-                        src={imageUrlFor(value)}
+                        {...getImageProps(value)}
                         className='mt-8 mb-4'
                     />
                 );
             }
 
             return (
-                <img
+                <Image
                     alt={value.alt || " "}
                     loading='lazy'
-                    src={imageUrlFor(value)}
+                    {...getImageProps(value)}
                     className='rounded-md mt-8 max-w-[50%]'
                 />
             );

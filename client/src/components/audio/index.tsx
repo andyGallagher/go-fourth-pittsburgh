@@ -1,7 +1,7 @@
-/* eslint-disable @next/next/no-img-element */
-import { audioUrlFor, imageUrlFor } from "../../helpers/urlFor";
+import { audioUrlFor, getImageProps } from "../../helpers/urlFor";
 import clsx from "clsx";
-import { useEffect, useMemo, useRef, useState } from "react";
+import Image from "next/image";
+import { useEffect, useMemo, useRef } from "react";
 import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 import { BasePage } from "types";
@@ -52,10 +52,10 @@ export const Audio = ({
         >
             <div className='flex flex-row px-2 py-2'>
                 <div className='relative w-12 h-12 overflow-hidden flex align-center justify-center rounded-sm'>
-                    <img
+                    <Image
                         className='absolute top-0 bottom-0 m-auto w-[48px]'
                         alt='thumbnail'
-                        src={imageUrlFor(page.mainImage)}
+                        {...getImageProps(page.mainImage)}
                     />
                 </div>
 
@@ -80,10 +80,10 @@ export const Audio = ({
                                         : "top-[-8px]"
                                 )}
                             >
-                                <img
+                                <Image
                                     className='absolute top-0 bottom-0 m-auto h-[100%]'
                                     alt='thumbnail'
-                                    src={imageUrlFor(contributor.image)}
+                                    {...getImageProps(contributor.image)}
                                 />
                             </div>
                         ))}
@@ -93,10 +93,10 @@ export const Audio = ({
                         key={contributors[0].name}
                         className='ml-auto relative mt-2 mr-1 w-10 overflow-hidden flex align-center justify-center rounded-[50%]'
                     >
-                        <img
+                        <Image
                             className='absolute top-0 bottom-0 m-auto h-[100%]'
                             alt='thumbnail'
-                            src={imageUrlFor(contributors[0].image)}
+                            {...getImageProps(contributors[0].image)}
                         />
                     </div>
                 )}
