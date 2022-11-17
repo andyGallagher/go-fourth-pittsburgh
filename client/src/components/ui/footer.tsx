@@ -28,6 +28,7 @@ export const Footer = () => {
                     href='mailto:info@gofourthpittsburgh.org'
                 >
                     <MailIcon
+                        className='mail'
                         style={{
                             width: "16px",
                             height: "16px",

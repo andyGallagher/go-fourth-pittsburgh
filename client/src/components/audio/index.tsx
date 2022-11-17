@@ -108,10 +108,7 @@ export const Audio = ({
                             ))}
                         </div>
                     ) : (
-                        <div
-                            key={contributors[0].name}
-                            className='ml-auto relative mt-2 mr-1 w-10 overflow-hidden flex align-center justify-center rounded-[50%]'
-                        >
+                        <div className='ml-auto relative mt-2 mr-1 w-10 overflow-hidden flex align-center justify-center rounded-[50%]'>
                             <img
                                 className='absolute top-0 bottom-0 m-auto h-[100%]'
                                 alt='thumbnail'

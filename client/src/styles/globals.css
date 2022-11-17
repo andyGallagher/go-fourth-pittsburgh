@@ -157,3 +157,7 @@ h6 {
     padding-left: 2rem;
     padding-right: 2rem;
 }
+
+.mail rect {
+    fill: none !important;
+}

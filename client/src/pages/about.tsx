@@ -121,7 +121,7 @@ export default function About({ page }: { page: AboutPage }) {
 
                         <div className='flex flex-col pt-8 px-12 mt-4'>
                             {page.contributors.map((contributor) => (
-                                <React.Fragment key={contributor._id}>
+                                <React.Fragment key={contributor.name}>
                                     <div className='flex flex-col mb-8 last:mb-0 portable-text'>
                                         {contributor.image && (
                                             <img
