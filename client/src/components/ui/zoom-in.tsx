@@ -64,7 +64,9 @@ export const ZoomIn = ({
 
     return (
         <div className='relative flex-1 h-screen overflow-hidden'>
-            <div className={clsx(imageClassName, "opacity-100 z-1")}>
+            <div
+                className={clsx(imageClassName, "opacity-100 z-1 md:relative")}
+            >
                 <img
                     alt=''
                     src={base}

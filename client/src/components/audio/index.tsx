@@ -49,7 +49,7 @@ export const Audio = ({
     return (
         <div
             className={clsx(
-                "fixed bottom-0 left-0 w-[100%] bg-white py-2 px-4 flex flex-col rounded-t-lg transition-transform z-50",
+                "fixed bottom-0 left-0 w-[100%] bg-white py-2 px-4 flex flex-col rounded-t-lg transition-transform z-50 md:bottom-[2rem] md:max-w-[400px] md:mx-auto",
                 isShowing
                     ? "translate-y-0 md:sticky"
                     : "translate-y-full md:hidden"
@@ -60,7 +60,7 @@ export const Audio = ({
             }}
         >
             <div className='flex flex-row px-2 py-2'>
-                <div className='relative w-12 h-12 overflow-hidden flex align-center justify-center rounded-sm'>
+                <div className='relative w-12 h-12 overflow-hidden flex align-center justify-center rounded-sm m-auto'>
                     <img
                         className='absolute top-0 bottom-0 m-auto w-[48px]'
                         alt='thumbnail'
@@ -68,7 +68,7 @@ export const Audio = ({
                     />
                 </div>
 
-                <div className='ml-4 flex flex-col'>
+                <div className='ml-4 flex flex-col flex-1 min-h-[68px]'>
                     <div className='font-bold text-base'>
                         {page.audioFileName ?? page.title}
                     </div>

@@ -23,7 +23,7 @@ export const LookInside = ({
     return (
         <div
             className={clsx(
-                "fixed bottom-0 left-0 w-[100%] bg-white py-2 flex flex-col rounded-t-lg transition-transform duration-300 shadow-xl z-50 h-[82vh]",
+                "fixed bottom-0 left-0 w-[100%] bg-white py-2 flex flex-col rounded-t-lg transition-transform duration-300 shadow-xl z-50 h-[82vh] md:h-auto md:w-[400px] md:bottom-16 md:mx-auto",
                 isShowing
                     ? "translate-y-0 md:sticky"
                     : "translate-y-full md:hidden"

@@ -1,4 +1,4 @@
-import { MobileWarning } from "../mobile-warning";
+import { Viewports } from "../viewports";
 import clsx from "clsx";
 import { useWindowListener } from "common/useDocumentListener";
 import { Audio } from "components/audio";
@@ -48,11 +48,12 @@ export const Base = ({ page }: { page: LandingPage | BuildingPage }) => {
     );
 
     return (
-        <MobileWarning>
-            <Metadata page={page} />
+        <Viewports>
+            <Metadata key={`${page.title}--metadata`} page={page} />
 
             <main className={clsx(drawer === "audio" && "pb-[90px]")}>
                 <div
+                    className=' md:flex md:flex-row md:mx-auto'
                     onClick={() => {
                         if (drawer === "look-inside") {
                             setDrawer(undefined);
@@ -61,6 +62,7 @@ export const Base = ({ page }: { page: LandingPage | BuildingPage }) => {
                 >
                     {isExplorerPage && (
                         <Sections.Explore
+                            className='md:hidden'
                             key={`${page.title}--explore`}
                             isExplore
                             page={page}
@@ -84,32 +86,46 @@ export const Base = ({ page }: { page: LandingPage | BuildingPage }) => {
                         }
                         scrollToDetail={scrollToDetail}
                     />
-                    <Sections.Detail
-                        key={`${page.title}--detail`}
-                        ref={detailRef}
-                        page={page}
-                    />
+                    <div className='md:w-[480px] md:overflow-scroll md:max-h-screen md:pb-8 md:mx-8'>
+                        <Sections.Detail
+                            key={`${page.title}--detail`}
+                            ref={detailRef}
+                            page={page}
+                        />
 
-                    <div className='mt-4 pb-8 flex justify-center'>
-                        <Button
-                            isInverted
-                            onClick={() => {
-                                router.push(
-                                    `/explore/${page.nextBuildingSlug?.current}`
-                                );
-                            }}
-                        >
-                            {(() => {
-                                if (isExplorerPage && page.nextBuildingSlug) {
-                                    return "Next building";
-                                } else if (isExplorerPage) {
-                                    return "Home";
-                                }
+                        <div className='mt-4 pb-8 flex justify-center'>
+                            <Button
+                                isInverted
+                                onClick={() => {
+                                    router.push(
+                                        `/explore/${page.nextBuildingSlug?.current}`
+                                    );
+                                }}
+                            >
+                                {(() => {
+                                    if (
+                                        isExplorerPage &&
+                                        page.nextBuildingSlug
+                                    ) {
+                                        return "Next building";
+                                    } else if (isExplorerPage) {
+                                        return "Home";
+                                    }
 
-                                return "Explore";
-                            })()}
-                        </Button>
+                                    return "Explore";
+                                })()}
+                            </Button>
+                        </div>
                     </div>
+
+                    {isExplorerPage && (
+                        <Sections.Explore
+                            className='-md:hidden'
+                            key={`${page.title}--explore`}
+                            isExplore
+                            page={page}
+                        />
+                    )}
                 </div>
 
                 <Audio
@@ -130,6 +146,6 @@ export const Base = ({ page }: { page: LandingPage | BuildingPage }) => {
 
                 <Footer />
             </main>
-        </MobileWarning>
+        </Viewports>
     );
 };

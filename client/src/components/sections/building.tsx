@@ -149,7 +149,7 @@ export const Building = ({
                     </div>
                 </div>
 
-                <div className='absolute bottom-0 left-0 flex flex-1 flex-col items-center justify-center py-16 bg-gradient-to-t from-slate-300 w-[100%]'>
+                <div className='absolute bottom-0 left-0 flex flex-1 flex-col items-center justify-center py-16 bg-gradient-to-t from-slate-300 w-[100%] md:hidden'>
                     <div
                         tabIndex={0}
                         role='button'
@@ -163,7 +163,7 @@ export const Building = ({
                     </div>
                 </div>
             </Section>
-            <Marquee className='absolute bottom-0' />
+            <Marquee className='absolute bottom-0 md:hidden' />
         </div>
     );
 };

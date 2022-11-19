@@ -4,10 +4,10 @@ import client from "client";
 import clsx from "clsx";
 import { Audio } from "components/audio";
 import { Metadata } from "components/metadata";
-import { MobileWarning } from "components/mobile-warning";
 import { Button } from "components/ui/button";
 import { Footer } from "components/ui/footer";
 import { Section } from "components/ui/section";
+import { Viewports } from "components/viewports";
 import { imageUrlFor } from "helpers/urlFor";
 import { GetStaticProps } from "next";
 import React, { useState } from "react";
@@ -41,7 +41,8 @@ const adComponents: Partial<PortableTextReactComponents> = {
             if (res.index === 2) {
                 return (
                     <a
-                        className='block mt-4 mb-4 '
+                        key='chris'
+                        className='block mt-4 mb-4'
                         href='http://www.HighrisesCollection.com'
                     >
                         <img
@@ -57,7 +58,8 @@ const adComponents: Partial<PortableTextReactComponents> = {
             if (res.index === 4) {
                 return (
                     <a
-                        className='block mt-4 mb-4 '
+                        key='mark'
+                        className='block mt-4 mb-4'
                         href='http://www.amazon.com/MultiStories-Antique-Skyscrapers-Business-Tycoons/dp/057880736X'
                     >
                         <img
@@ -86,11 +88,13 @@ export default function About({ page }: { page: AboutPage }) {
     const [drawer, setDrawer] = useState<"audio" | undefined>(undefined);
 
     return (
-        <MobileWarning>
-            <main className={clsx(drawer === "audio" && "pb-[90px]")}>
+        <Viewports>
+            <main
+                className={clsx(drawer === "audio" && "pb-[90px] md:pb-[0px]")}
+            >
                 <Metadata page={page} />
                 <Section className='text-slate-600 pt-12' isHundo={false}>
-                    <div className='flex flex-col items-center'>
+                    <div className='flex flex-col items-center md:max-w-[600px] md:mx-auto'>
                         <h1
                             className={
                                 "text-3xl pb-1 border-b-[1px] uppercase tracking-wider"
@@ -122,7 +126,7 @@ export default function About({ page }: { page: AboutPage }) {
                         <div className='flex flex-col pt-8 px-12 mt-4'>
                             {page.contributors.map((contributor) => (
                                 <React.Fragment key={contributor.name}>
-                                    <div className='flex flex-col mb-8 last:mb-0 portable-text'>
+                                    <div className='flex flex-col mb-8 last:mb-0 portable-text items-center'>
                                         {contributor.image && (
                                             <img
                                                 alt={`picture of ${contributor.name}`}
@@ -154,7 +158,7 @@ export default function About({ page }: { page: AboutPage }) {
                     isHundo={false}
                 >
                     <div className='flex flex-col items-center'>
-                        <div className='credits bg-slate-200 text-slate-500 tracking-wider portable-text uppercase flex px-8 flex-col justify-center items-center text-center p-16 border-t-2 border-b-2 border-slate-300'>
+                        <div className='credits bg-slate-200 text-slate-500 tracking-wider portable-text uppercase flex px-8 flex-col justify-center items-center text-center p-16 border-t-2 border-b-2 border-slate-300 md:border-2 md:shadow-md'>
                             <div className='text-sm'>
                                 <PortableText
                                     value={page.body}
@@ -166,7 +170,7 @@ export default function About({ page }: { page: AboutPage }) {
                 </Section>
 
                 <Section
-                    className='text-slate-600 flex flex-col'
+                    className='text-slate-600 flex flex-col md:w-[50%] md:mx-auto'
                     isHundo={false}
                 >
                     <div className='flex flex-col items-center'>
@@ -189,7 +193,7 @@ export default function About({ page }: { page: AboutPage }) {
                     close={() => setDrawer(undefined)}
                 />
             </main>
-        </MobileWarning>
+        </Viewports>
     );
 }
 

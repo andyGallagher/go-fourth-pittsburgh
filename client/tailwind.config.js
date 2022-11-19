@@ -12,8 +12,13 @@ module.exports = {
                 marquee2: "marquee2 7s linear infinite",
             },
 
+            screens: {
+                "-md": { max: "768px" },
+            },
+
             fontFamily: {
                 proximaNova: ["proxima-nova-regular", "sans-serif"],
+                garamond: ["garamond", "serif"],
             },
 
             keyframes: {

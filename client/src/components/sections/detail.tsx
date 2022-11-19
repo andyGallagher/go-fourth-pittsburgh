@@ -1,11 +1,81 @@
 /* eslint-disable @next/next/no-img-element */
-import { PortableText, PortableTextReactComponents } from "@portabletext/react";
+import {
+    PortableText,
+    PortableTextReactComponents,
+    defaultComponents,
+} from "@portabletext/react";
 import { Section } from "components/ui/section";
 import { imageUrlFor, isImageWider } from "helpers/urlFor";
 import React from "react";
 import { BasePage } from "types";
 
 const components: Partial<PortableTextReactComponents> = {
+    block: {
+        normal: ({ children, index }) => {
+            if (index === 0) {
+                return (
+                    <p>
+                        {React.Children.map(children, (child, index) => {
+                            if (index === 0 && typeof child === "string") {
+                                const firstLetter = child.slice(0, 1);
+                                const rest = child.slice(1);
+                                return (
+                                    <>
+                                        <span
+                                            style={{
+                                                fontSize: "3rem",
+                                                float: "left",
+                                                marginRight: "8px",
+                                                lineHeight: "53px",
+                                                marginBottom: "1px",
+                                                border: "1px solid",
+                                                padding: "4px 8px 8px",
+                                                marginTop: "7px",
+                                                height: "64px",
+                                                width: "64px",
+                                                textAlign: "center",
+                                            }}
+                                        >
+                                            {firstLetter}
+                                        </span>
+                                        <span>{rest}</span>
+                                    </>
+                                );
+                            }
+
+                            return child;
+                        })}
+                    </p>
+                );
+            }
+
+            return <p>{children}</p>;
+        },
+        blockquote: ({ children, ...rest }) => {
+            const childCount = React.Children.count(children);
+            return (
+                <blockquote className='mx-8 mt-8 p-4 font-garamond text-slate-200 bg-slate-700 rounded-sm'>
+                    {React.Children.map(children, (child, index) => {
+                        if (index === childCount - 1) {
+                            return (
+                                <span className='float-right mr-2'>
+                                    {child}
+                                </span>
+                            );
+                        }
+
+                        return child;
+                    })}
+                </blockquote>
+            );
+        },
+        h1: ({ children }) => <h1>{children}</h1>,
+        h2: ({ children }) => <h2>{children}</h2>,
+        h3: ({ children }) => <h3>{children}</h3>,
+        h4: ({ children }) => <h4>{children}</h4>,
+        h5: ({ children }) => <h5>{children}</h5>,
+        h6: ({ children }) => <h6>{children}</h6>,
+    },
     types: {
         image: ({ value }) => {
             if (!value?.asset?._ref) {
@@ -18,7 +88,7 @@ const components: Partial<PortableTextReactComponents> = {
                         alt={value.alt || " "}
                         loading='lazy'
                         src={imageUrlFor(value)}
-                        className='mt-8 mb-4'
+                        className='mt-8 mb-4 md:px-8'
                     />
                 );
             }
@@ -35,11 +105,17 @@ const components: Partial<PortableTextReactComponents> = {
     },
 };
 
+/**
+
+ */
 export const Detail = React.forwardRef<HTMLDivElement, { page: BasePage }>(
     ({ page }, ref) => {
         return (
-            <Section className='text-slate-600 pt-12 pb-4' ref={ref}>
-                <div className='detail portable-text flex flex-col flex-1 justify-center items-center '>
+            <Section
+                className='text-slate-600 pt-12 pb-4 md:pt-0  md:h-auto'
+                ref={ref}
+            >
+                <div className='detail portable-text flex flex-col flex-1 justify-center items-center md:justify-start'>
                     <PortableText value={page.body} components={components} />
                 </div>
             </Section>

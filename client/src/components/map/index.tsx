@@ -39,13 +39,19 @@ export const Map = ({ src }: { src: string }) => {
     const mapRef = useRef<HTMLDivElement>(null);
 
     return (
-        <div className='flex-1 h-[60vh] overflow-hidden flex'>
+        <div className='flex-1 h-[60vh] overflow-hidden flex md:h-[100vh] md:items-center md:justify-center'>
             <div
                 className='flex-1 h-[60vh] relative flex items-center justify-center'
                 ref={mapRef}
             >
                 <img
-                    className='absolute top-0 bottom-0 m-auto h-[60vh] w-[auto] max-w-[initial]'
+                    className='-md:hidden w-[347px] md:rounded-xl md:overflow-hidden'
+                    alt='map'
+                    src={src}
+                />
+
+                <img
+                    className='absolute top-0 bottom-0 m-auto h-[60vh] w-[auto] max-w-[initial] md:rounded-xl md:overflow-hidden'
                     alt='map'
                     src={src}
                     style={{
