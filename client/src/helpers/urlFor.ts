@@ -11,10 +11,10 @@ export const imageUrlFor = (
     }
 
     if (source.asset._ref.includes("gif")) {
-        return `/assets/images/${source.asset._ref}.gif`;
+        return `https://cdn.gofourthpittsburgh.org/dist/${source.asset._ref}.gif`;
     }
 
-    return `/assets/images/${source.asset._ref}.webp`;
+    return `https://cdn.gofourthpittsburgh.org/dist/${source.asset._ref}.webp`;
 };
 
 export const isImageWider = (source: any) => {

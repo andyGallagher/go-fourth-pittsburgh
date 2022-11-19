@@ -10,7 +10,7 @@ export const Metadata = ({ page }: { page: BasePage }) => {
         ? `Go Fourth | ${page.metaTitle}`
         : "Go Fourth | GoFourthPittsburgh.org";
     const thumbnail = page.metaThumbnail
-        ? imageUrlFor(page.metaThumbnail, { isMeta: true })
+        ? imageUrlFor(page.metaThumbnail)
         : undefined;
 
     return (

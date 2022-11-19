@@ -5,6 +5,10 @@ const buildNext = () => {
     return gulp.src(".next/**").pipe(gulp.dest("dist/.next"));
 };
 
+const buildPlatform = () => {
+    return gulp.src(".platform/**").pipe(gulp.dest("dist/.platform"));
+};
+
 const buildPackage = () => {
     return gulp.src("package.json").pipe(gulp.dest("dist"));
 };
@@ -20,4 +24,10 @@ const archive = () => {
         .pipe(gulp.dest("./dist"));
 };
 
-exports.default = gulp.series(buildNext, buildPackage, buildPublic, archive);
+exports.default = gulp.series(
+    buildNext,
+    buildPlatform,
+    buildPackage,
+    buildPublic,
+    archive
+);
