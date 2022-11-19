@@ -76,6 +76,7 @@ export const Building = ({
                     />
                 ) : (
                     <Image
+                        className='w-auto'
                         alt={page.title}
                         {...getImageProps(page.mainImage)}
                     />
