@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { ReactComponent as ChevronDownIcon } from "../../assets/icons/chevron--down.svg";
 import { ReactComponent as PlayFilledIcon } from "../../assets/icons/play--filled.svg";
 import { ReactComponent as ZoomInIcon } from "../../assets/icons/zoom--in.svg";
@@ -7,7 +6,8 @@ import { Button } from "components/ui/button";
 import { Marquee } from "components/ui/marquee";
 import { Section } from "components/ui/section";
 import { ZoomIn } from "components/ui/zoom-in";
-import { imageUrlFor } from "helpers/urlFor";
+import { getImageProps, imageUrlFor } from "helpers/urlFor";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import { use100vh } from "react-div-100vh";
@@ -67,15 +67,18 @@ export const Building = ({
                 page.zoomOutAnimate &&
                 page.zoomedIn ? (
                     <ZoomIn
-                        base={imageUrlFor(page.mainImage)}
-                        animationIn={imageUrlFor(page.zoomInAnimate)}
-                        animationOut={imageUrlFor(page.zoomOutAnimate)}
-                        zoomed={imageUrlFor(page.zoomedIn)}
+                        base={page.mainImage}
+                        animationIn={page.zoomInAnimate}
+                        animationOut={page.zoomOutAnimate}
+                        zoomed={page.zoomedIn}
                         isZoomed={isZoomed}
                         onAnimationComplete={onAnimationComplete}
                     />
                 ) : (
-                    <img alt={page.title} src={imageUrlFor(page.mainImage)} />
+                    <Image
+                        alt={page.title}
+                        {...getImageProps(page.mainImage)}
+                    />
                 )}
 
                 <div className='text-white absolute top-0 left-0 flex flex-col items-center justify-center pt-16 w-[100%]'>

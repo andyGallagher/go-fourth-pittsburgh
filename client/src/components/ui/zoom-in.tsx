@@ -1,5 +1,6 @@
-/* eslint-disable @next/next/no-img-element */
 import clsx from "clsx";
+import { getImageProps } from "helpers/urlFor";
+import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
 const imageClassName =
@@ -13,18 +14,22 @@ export const ZoomIn = ({
     zoomed,
     onAnimationComplete,
 }: {
-    animationIn: string;
-    animationOut: string;
-    base: string;
+    animationIn: any;
+    animationOut: any;
+    base: any;
     isZoomed: boolean | undefined;
-    zoomed: string;
+    zoomed: any;
     onAnimationComplete: () => void;
 }) => {
     const [shownImage, setShownImage] = useState<
         "animation-in" | "animation-out" | "base" | "zoomed"
     >("base");
-    const [zoomOutRando, setZoomOutRando] = useState(animationOut);
-    const [zoomInRando, setZoomInRando] = useState(animationIn);
+    const [zoomOutRando, setZoomOutRando] = useState<{ src: "" } | undefined>(
+        undefined
+    );
+    const [zoomInRando, setZoomInRando] = useState<{ src: "" } | undefined>(
+        undefined
+    );
 
     useEffect(() => {
         let sto: ReturnType<typeof setTimeout>;
@@ -37,9 +42,9 @@ export const ZoomIn = ({
                 onAnimationComplete();
                 setZoomOutRando((rando) => {
                     setTimeout(() => {
-                        setZoomOutRando(rando);
+                        setZoomOutRando(undefined);
                     }, 0);
-                    return "";
+                    return { src: "" };
                 });
             }, 4000);
         } else if (isZoomed === false) {
@@ -50,9 +55,9 @@ export const ZoomIn = ({
                 onAnimationComplete();
                 setZoomInRando((rando) => {
                     setTimeout(() => {
-                        setZoomInRando(rando);
+                        setZoomInRando(undefined);
                     }, 0);
-                    return "";
+                    return { src: "" };
                 });
             }, 4000);
         }
@@ -67,9 +72,9 @@ export const ZoomIn = ({
             <div
                 className={clsx(imageClassName, "opacity-100 z-1 md:relative")}
             >
-                <img
+                <Image
                     alt=''
-                    src={base}
+                    {...getImageProps(base)}
                     style={{
                         height: "100%",
                         maxWidth: "initial",
@@ -83,9 +88,9 @@ export const ZoomIn = ({
                     shownImage === "base" && "opacity-100"
                 )}
             >
-                <img
+                <Image
                     alt=''
-                    src={base}
+                    {...getImageProps(base)}
                     style={{
                         height: "100%",
                         maxWidth: "initial",
@@ -99,9 +104,10 @@ export const ZoomIn = ({
                     shownImage === "animation-in" && "opacity-100"
                 )}
             >
-                <img
+                <Image
                     alt=''
-                    src={`${zoomInRando}`}
+                    {...getImageProps(animationIn)}
+                    {...(zoomInRando ?? {})}
                     style={{
                         height: "100%",
                         maxWidth: "initial",
@@ -115,9 +121,10 @@ export const ZoomIn = ({
                     shownImage === "animation-out" && "opacity-100"
                 )}
             >
-                <img
+                <Image
                     alt=''
-                    src={`${zoomOutRando}`}
+                    {...getImageProps(animationOut)}
+                    {...(zoomOutRando ?? {})}
                     style={{
                         height: "100%",
                         maxWidth: "initial",
@@ -131,9 +138,9 @@ export const ZoomIn = ({
                     shownImage === "zoomed" && "opacity-100"
                 )}
             >
-                <img
+                <Image
                     alt=''
-                    src={zoomed}
+                    {...getImageProps(zoomed)}
                     style={{
                         height: "100%",
                         maxWidth: "initial",

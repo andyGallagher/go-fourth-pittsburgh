@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
+import { getImageProps } from "helpers/urlFor";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useRef } from "react";
@@ -35,7 +35,7 @@ const COORDINATES: Record<MapKeys, { style: React.CSSProperties }> = {
     },
 };
 
-export const Map = ({ src }: { src: string }) => {
+export const Map = ({ src }: { src: any }) => {
     const mapRef = useRef<HTMLDivElement>(null);
 
     return (
@@ -44,20 +44,21 @@ export const Map = ({ src }: { src: string }) => {
                 className='flex-1 h-[60vh] relative flex items-center justify-center'
                 ref={mapRef}
             >
-                <img
+                <Image
                     className='-md:hidden w-[347px] md:rounded-xl md:overflow-hidden'
                     alt='map'
-                    src={src}
+                    {...getImageProps(src)}
                 />
 
-                <img
+                <Image
                     className='absolute top-0 bottom-0 m-auto h-[60vh] w-[auto] max-w-[initial] md:rounded-xl md:overflow-hidden'
                     alt='map'
-                    src={src}
+                    {...getImageProps(src)}
                     style={{
                         width: "100%",
                         height: "auto",
                     }}
+                    priority
                 />
 
                 {Object.entries(COORDINATES).map(([key, { style }]) => {

@@ -25,7 +25,7 @@ export const Explore = React.forwardRef<
                         </div>
                     </div>
 
-                    <Map src={imageUrlFor(page.map)} />
+                    <Map src={page.map} />
                 </div>
             </Section>
             {isExplore && (
