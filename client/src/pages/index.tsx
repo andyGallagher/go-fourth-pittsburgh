@@ -7,7 +7,7 @@ export default function Index({ page }: { page: LandingPage }) {
     return <Base page={page} />;
 }
 
-export const getServerSideProps: GetStaticProps = async (context) => {
+export const getStaticProps: GetStaticProps = async (context) => {
     const [page, buildings, contributors]: [any, any[], any[]] =
         await Promise.all([
             client.fetch(

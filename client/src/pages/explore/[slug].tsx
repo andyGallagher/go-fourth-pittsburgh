@@ -14,7 +14,7 @@ export default function Explore({ page }: { page: BuildingPage }) {
 
 //     return {
 //         paths: buildings.map((building: any) => ({
-//             params: { slug: building.slug },
+//             params: { slug: building },
 //         })),
 //         fallback: true,
 //     };

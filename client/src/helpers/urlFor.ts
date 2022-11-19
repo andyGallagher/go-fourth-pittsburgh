@@ -1,17 +1,20 @@
 import imageUrlBuilder from "@sanity/image-url";
 import client from "client";
 
-export const imageUrlFor = (source: any, isGif = false): string => {
-    const url = imageUrlBuilder(client).image(source).url();
-
-    if (isGif) {
-        return imageUrlBuilder(client)
-            .image(source)
-            .url()
-            .replace(".jpg", ".gif");
+export const imageUrlFor = (
+    source: any,
+    options?: { isMeta?: boolean }
+): string => {
+    if (options?.isMeta) {
+        const url = imageUrlBuilder(client).image(source).url();
+        return url;
     }
 
-    return url;
+    if (source.asset._ref.includes("gif")) {
+        return `/assets/images/${source.asset._ref}.gif`;
+    }
+
+    return `/assets/images/${source.asset._ref}.webp`;
 };
 
 export const isImageWider = (source: any) => {
