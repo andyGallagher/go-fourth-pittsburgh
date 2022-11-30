@@ -29,7 +29,7 @@ export const getRawDimensions = (source: any) => {
 
 export const getImageProps = (source: any) => {
     return {
-        ...getRawDimensions(source),
+        // ...getRawDimensions(source),
         src: imageUrlFor(source),
     };
 };

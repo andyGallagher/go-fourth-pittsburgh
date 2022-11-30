@@ -2,7 +2,6 @@
 import { ReactComponent as CloseIcon } from "../../assets/icons/close.svg";
 import { audioUrlFor, getImageProps } from "../../helpers/urlFor";
 import clsx from "clsx";
-import Image from "next/image";
 import { useEffect, useMemo, useRef } from "react";
 import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
@@ -62,7 +61,7 @@ export const Audio = ({
         >
             <div className='flex flex-row px-2 py-2'>
                 <div className='relative w-12 h-12 overflow-hidden flex align-center justify-center rounded-sm m-auto'>
-                    <Image
+                    <img
                         className='absolute top-0 bottom-0 m-auto w-[48px]'
                         alt='thumbnail'
                         {...getImageProps(page.mainImage)}
@@ -100,7 +99,7 @@ export const Audio = ({
                                         !index ? `z-${10} left-[32px]` : ""
                                     )}
                                 >
-                                    <Image
+                                    <img
                                         className='absolute top-0 bottom-0 m-auto h-[100%]'
                                         alt='thumbnail'
                                         {...getImageProps(contributor.image)}
@@ -110,7 +109,7 @@ export const Audio = ({
                         </div>
                     ) : (
                         <div className='ml-auto relative mt-2 mr-1 w-10 overflow-hidden flex align-center justify-center rounded-[50%]'>
-                            <Image
+                            <img
                                 className='absolute top-0 bottom-0 m-auto h-[100%]'
                                 alt='thumbnail'
                                 {...getImageProps(contributors[0].image)}

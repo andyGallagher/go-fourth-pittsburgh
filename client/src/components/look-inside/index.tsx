@@ -1,10 +1,10 @@
+/* eslint-disable @next/next/no-img-element */
 import { ReactComponent as ArrowLeftIcon } from "../../assets/icons/arrow--left.svg";
 import { ReactComponent as ArrowRightIcon } from "../../assets/icons/arrow--right.svg";
 import { ReactComponent as CloseIcon } from "../../assets/icons/close.svg";
 import { getImageProps } from "../../helpers/urlFor";
 import clsx from "clsx";
 import { Button } from "components/ui/button";
-import Image from "next/image";
 import { useState } from "react";
 import { BuildingPage } from "types";
 
@@ -46,7 +46,7 @@ export const LookInside = ({
                     />
                 </button>
                 <div className='relative flex items-center justify-center py-4 max-h-[60%] min-h-[60%] my-4 overflow-hidden'>
-                    <Image
+                    <img
                         className='w-[100%]'
                         alt={title}
                         {...getImageProps(image)}

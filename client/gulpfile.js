@@ -9,6 +9,10 @@ const buildPlatform = () => {
     return gulp.src(".platform/**").pipe(gulp.dest("dist/.platform"));
 };
 
+const builConfig = () => {
+    return gulp.src("next.config.js").pipe(gulp.dest("dist"));
+};
+
 const buildPackage = () => {
     return gulp.src("package.json").pipe(gulp.dest("dist"));
 };
@@ -27,6 +31,7 @@ const archive = () => {
 exports.default = gulp.series(
     buildNext,
     buildPlatform,
+    builConfig,
     buildPackage,
     buildPublic,
     archive

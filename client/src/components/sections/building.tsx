@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { ReactComponent as ChevronDownIcon } from "../../assets/icons/chevron--down.svg";
 import { ReactComponent as PlayFilledIcon } from "../../assets/icons/play--filled.svg";
 import { ReactComponent as ZoomInIcon } from "../../assets/icons/zoom--in.svg";
@@ -6,8 +7,7 @@ import { Button } from "components/ui/button";
 import { Marquee } from "components/ui/marquee";
 import { Section } from "components/ui/section";
 import { ZoomIn } from "components/ui/zoom-in";
-import { getImageProps, imageUrlFor } from "helpers/urlFor";
-import Image from "next/image";
+import { getImageProps } from "helpers/urlFor";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import { use100vh } from "react-div-100vh";
@@ -75,7 +75,7 @@ export const Building = ({
                         onAnimationComplete={onAnimationComplete}
                     />
                 ) : (
-                    <Image
+                    <img
                         className='w-auto'
                         alt={page.title}
                         {...getImageProps(page.mainImage)}

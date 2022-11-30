@@ -121,7 +121,7 @@ export const Base = ({ page }: { page: LandingPage | BuildingPage }) => {
                     {isExplorerPage && (
                         <Sections.Explore
                             className='-md:hidden'
-                            key={`${page.title}--explore`}
+                            key={`${page.audioFileName}--explore`}
                             isExplore
                             page={page}
                         />

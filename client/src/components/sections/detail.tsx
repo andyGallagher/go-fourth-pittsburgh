@@ -1,7 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 import { PortableText, PortableTextReactComponents } from "@portabletext/react";
 import { Section } from "components/ui/section";
 import { getImageProps, isImageWider } from "helpers/urlFor";
-import Image from "next/image";
 import React from "react";
 import { BasePage } from "types";
 
@@ -80,7 +80,7 @@ const components: Partial<PortableTextReactComponents> = {
 
             if (isImageWider(value)) {
                 return (
-                    <Image
+                    <img
                         alt={value.alt || " "}
                         loading='lazy'
                         {...getImageProps(value)}
@@ -90,7 +90,7 @@ const components: Partial<PortableTextReactComponents> = {
             }
 
             return (
-                <Image
+                <img
                     alt={value.alt || " "}
                     loading='lazy'
                     {...getImageProps(value)}
@@ -125,7 +125,7 @@ Old reference:
 <div className='flex flex-col flex-1'>
     <div className='flex px-8 justify-center items-center'>
         <Portrait subtitle='Mike Benedum'>
-            <Image
+            <img
                 alt=''
                 src='/images/benedum.jpg'
                 width={538}
@@ -134,7 +134,7 @@ Old reference:
         </Portrait>
 
         <Portrait subtitle='Joe Trees'>
-            <Image
+            <img
                 alt=''
                 src='/images/trees.jpg'
                 width={350}

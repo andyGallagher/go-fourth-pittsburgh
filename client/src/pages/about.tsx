@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { PortableText, PortableTextReactComponents } from "@portabletext/react";
 import client from "client";
 import clsx from "clsx";
@@ -9,7 +10,6 @@ import { Section } from "components/ui/section";
 import { Viewports } from "components/viewports";
 import { getImageProps } from "helpers/urlFor";
 import { GetStaticProps } from "next";
-import Image from "next/image";
 import React, { useState } from "react";
 import { AboutPage } from "types";
 
@@ -20,7 +20,7 @@ const baseComponents: Partial<PortableTextReactComponents> = {
                 return null;
             }
             return (
-                <Image
+                <img
                     alt={value.alt || " "}
                     loading='lazy'
                     {...getImageProps(value)}
@@ -45,7 +45,7 @@ const adComponents: Partial<PortableTextReactComponents> = {
                         className='block mt-4 mb-4'
                         href='http://www.HighrisesCollection.com'
                     >
-                        <Image
+                        <img
                             alt={res.value.alt || " "}
                             loading='lazy'
                             {...getImageProps(res.value)}
@@ -62,7 +62,7 @@ const adComponents: Partial<PortableTextReactComponents> = {
                         className='block mt-4 mb-4'
                         href='http://www.amazon.com/MultiStories-Antique-Skyscrapers-Business-Tycoons/dp/057880736X'
                     >
-                        <Image
+                        <img
                             alt={res.value.alt || " "}
                             loading='lazy'
                             {...getImageProps(res.value)}
@@ -73,7 +73,7 @@ const adComponents: Partial<PortableTextReactComponents> = {
             }
 
             return (
-                <Image
+                <img
                     alt={res.value.alt || " "}
                     loading='lazy'
                     {...getImageProps(res.value)}
@@ -128,7 +128,7 @@ export default function About({ page }: { page: AboutPage }) {
                                 <React.Fragment key={contributor.name}>
                                     <div className='flex flex-col mb-8 last:mb-0 portable-text items-center'>
                                         {contributor.image && (
-                                            <Image
+                                            <img
                                                 alt={`picture of ${contributor.name}`}
                                                 {...getImageProps(
                                                     contributor.image

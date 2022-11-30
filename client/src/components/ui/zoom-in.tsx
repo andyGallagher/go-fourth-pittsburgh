@@ -1,10 +1,10 @@
+/* eslint-disable @next/next/no-img-element */
 import clsx from "clsx";
 import { getImageProps } from "helpers/urlFor";
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
 const imageClassName =
-    "absolute top-0 left-0 flex-1 w-screen h-screen flex items-center justify-center overflow-hidden opacity-0 z-2 md:w-[100%]";
+    "absolute top-0 left-0 flex-1 w-screen h-screen flex items-center justify-center overflow-hidden opacity-0 z-2 md:h-auto md:w-[100%]";
 
 export const ZoomIn = ({
     animationIn,
@@ -68,13 +68,14 @@ export const ZoomIn = ({
     }, [isZoomed, onAnimationComplete]);
 
     return (
-        <div className='relative flex-1 h-screen overflow-hidden'>
+        <div className='relative flex-1 h-screen overflow-hidden md:w-[420px]'>
             <div
                 className={clsx(imageClassName, "opacity-100 z-1 md:relative")}
             >
-                <Image
+                <img
                     alt=''
                     {...getImageProps(base)}
+                    className='md:w-[100%]'
                     style={{
                         height: "100%",
                         maxWidth: "initial",
@@ -88,8 +89,9 @@ export const ZoomIn = ({
                     shownImage === "base" && "opacity-100"
                 )}
             >
-                <Image
+                <img
                     alt=''
+                    className='md:w-[100%]'
                     {...getImageProps(base)}
                     style={{
                         height: "100%",
@@ -104,10 +106,11 @@ export const ZoomIn = ({
                     shownImage === "animation-in" && "opacity-100"
                 )}
             >
-                <Image
+                <img
                     alt=''
                     {...getImageProps(animationIn)}
                     {...(zoomInRando ?? {})}
+                    className='md:w-[100%]'
                     style={{
                         height: "100%",
                         maxWidth: "initial",
@@ -121,10 +124,11 @@ export const ZoomIn = ({
                     shownImage === "animation-out" && "opacity-100"
                 )}
             >
-                <Image
+                <img
                     alt=''
                     {...getImageProps(animationOut)}
                     {...(zoomOutRando ?? {})}
+                    className='md:w-[100%]'
                     style={{
                         height: "100%",
                         maxWidth: "initial",
@@ -138,9 +142,10 @@ export const ZoomIn = ({
                     shownImage === "zoomed" && "opacity-100"
                 )}
             >
-                <Image
+                <img
                     alt=''
                     {...getImageProps(zoomed)}
+                    className='md:w-[100%]'
                     style={{
                         height: "100%",
                         maxWidth: "initial",
