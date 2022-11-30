@@ -4,6 +4,7 @@ const request = require("request");
 const { join } = require("path");
 const sharp = require("sharp");
 const { promisify } = require("util");
+const gifResize = require("@gumlet/gif-resize");
 
 const pullImages = async () => {
     const download = (url, path, callback) => {
@@ -28,9 +29,9 @@ const pullImages = async () => {
     });
 };
 
-const asyncReaddir = promisify(fs.readdir);
+const writeImages = async () => {
+    const asyncReaddir = promisify(fs.readdir);
 
-(async () => {
     const rawImagesDir = join(__dirname, "raw-images");
     const outputDir = join(__dirname, "dist");
 
@@ -38,14 +39,20 @@ const asyncReaddir = promisify(fs.readdir);
 
     files.forEach(async (file, i) => {
         if (file.includes("gif")) {
-            await fs.promises.copyFile(
-                join(rawImagesDir, file),
-                join(outputDir, `${file}.gif`)
+            const buf = fs.readFileSync(join(rawImagesDir, file));
+            const data = await gifResize({
+                width: 360,
+            })(buf);
+            await fs.promises.writeFile(join(outputDir, `${file}.gif`), data);
+        } else {
+            await sharp(join(rawImagesDir, file)).toFile(
+                join(outputDir, `${file}.webp`)
             );
         }
-
-        await sharp(join(rawImagesDir, file)).toFile(
-            join(outputDir, `${file}.webp`)
-        );
     });
+};
+
+(async () => {
+    // await pullImages();
+    await writeImages();
 })();
