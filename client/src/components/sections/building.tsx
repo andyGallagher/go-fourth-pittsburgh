@@ -18,13 +18,19 @@ const useHundo = () => {
     const fakeHundo = use100vh();
 
     useEffect(() => {
-        setHundo((hundo) => {
-            if (!hundo) {
-                return fakeHundo;
-            }
+        let sto = setTimeout(() => {
+            setHundo((hundo) => {
+                if (hundo) {
+                    return hundo;
+                }
 
-            return hundo;
-        });
+                return fakeHundo;
+            });
+        }, 0);
+
+        return () => {
+            clearTimeout(sto);
+        };
     }, [fakeHundo]);
 
     return { hundo };
@@ -76,7 +82,7 @@ export const Building = ({
                     />
                 ) : (
                     <img
-                        className='w-auto'
+                        className='w-[100%]'
                         alt={page.title}
                         {...getImageProps(page.mainImage)}
                     />

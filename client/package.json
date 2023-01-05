@@ -5,6 +5,7 @@
     "scripts": {
         "dev": "next dev",
         "build": "rm -rf .next && next build && rm -rf dist && npm run gulp",
+        "static": "next build && next export",
         "gulp": "gulp",
         "start": "next start",
         "lint": "next lint"

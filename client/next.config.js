@@ -4,6 +4,7 @@ const nextConfig = {
     swcMinify: true,
     images: {
         domains: ["cdn.gofourthpittsburgh.org", "cdn.sanity.io"],
+        unoptimized: true,
     },
 };
 

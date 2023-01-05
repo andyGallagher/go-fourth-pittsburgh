@@ -30,6 +30,7 @@ export const ZoomIn = ({
     const [zoomInRando, setZoomInRando] = useState<{ src: "" } | undefined>(
         undefined
     );
+    const [shouldLoadAnimation, setShouldLoadAnimation] = useState(false);
 
     useEffect(() => {
         let sto: ReturnType<typeof setTimeout>;
@@ -66,6 +67,10 @@ export const ZoomIn = ({
             clearTimeout(sto);
         };
     }, [isZoomed, onAnimationComplete]);
+
+    useEffect(() => {
+        setTimeout(() => setShouldLoadAnimation(true), 1000);
+    }, []);
 
     return (
         <div className='relative flex-1 h-screen overflow-hidden md:w-[420px]'>
@@ -106,16 +111,18 @@ export const ZoomIn = ({
                     shownImage === "animation-in" && "opacity-100"
                 )}
             >
-                <img
-                    alt=''
-                    {...getImageProps(animationIn)}
-                    {...(zoomInRando ?? {})}
-                    className='md:w-[100%]'
-                    style={{
-                        height: "100%",
-                        maxWidth: "initial",
-                    }}
-                />
+                {shouldLoadAnimation && (
+                    <img
+                        alt=''
+                        {...getImageProps(animationIn)}
+                        {...(zoomInRando ?? {})}
+                        className='md:w-[100%]'
+                        style={{
+                            height: "100%",
+                            maxWidth: "initial",
+                        }}
+                    />
+                )}
             </div>
 
             <div
@@ -124,16 +131,18 @@ export const ZoomIn = ({
                     shownImage === "animation-out" && "opacity-100"
                 )}
             >
-                <img
-                    alt=''
-                    {...getImageProps(animationOut)}
-                    {...(zoomOutRando ?? {})}
-                    className='md:w-[100%]'
-                    style={{
-                        height: "100%",
-                        maxWidth: "initial",
-                    }}
-                />
+                {shouldLoadAnimation && (
+                    <img
+                        alt=''
+                        {...getImageProps(animationOut)}
+                        {...(zoomOutRando ?? {})}
+                        className='md:w-[100%]'
+                        style={{
+                            height: "100%",
+                            maxWidth: "initial",
+                        }}
+                    />
+                )}
             </div>
 
             <div

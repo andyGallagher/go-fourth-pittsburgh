@@ -4,23 +4,26 @@ import { GetStaticProps } from "next";
 import { BuildingPage } from "types";
 
 export default function Explore({ page }: { page: BuildingPage }) {
+    if (page === undefined) {
+        return <div>undefined</div>;
+    }
     return <Base page={page} />;
 }
 
-// export async function getStaticPaths() {
-//     const buildings = await client.fetch(
-//         `*[_type == "building" && defined(slug.current)][].slug.current`
-//     );
+export async function getStaticPaths() {
+    const buildings = await client.fetch(
+        `*[_type == "building" && defined(slug.current)][].slug.current`
+    );
 
-//     return {
-//         paths: buildings.map((building: any) => ({
-//             params: { slug: building },
-//         })),
-//         fallback: true,
-//     };
-// }
+    return {
+        paths: buildings.map((building: any) => ({
+            params: { slug: building },
+        })),
+        fallback: true,
+    };
+}
 
-export const getServerSideProps: GetStaticProps = async (context: any) => {
+export const getStaticProps: GetStaticProps = async (context: any) => {
     const { slug = "" } = context.params;
     const [buildings, contributors]: [any[], any[]] = await Promise.all([
         client.fetch(`*[_type == "building"]`),

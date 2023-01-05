@@ -128,13 +128,34 @@ export default function About({ page }: { page: AboutPage }) {
                                 <React.Fragment key={contributor.name}>
                                     <div className='flex flex-col mb-8 last:mb-0 portable-text items-center'>
                                         {contributor.image && (
-                                            <img
-                                                alt={`picture of ${contributor.name}`}
-                                                {...getImageProps(
-                                                    contributor.image
-                                                )}
-                                                className='max-w-[30%] rounded-md'
-                                            />
+                                            <div className='max-w-[30%] rounded-md overflow-hidden'>
+                                                <img
+                                                    // YES, I know better
+                                                    className={
+                                                        contributor.name ===
+                                                        "Mark Houser"
+                                                            ? "transform scale-150 translate-y-4 md:translate-y-8"
+                                                            : undefined
+                                                    }
+                                                    alt={`picture of ${contributor.name}`}
+                                                    {...getImageProps(
+                                                        contributor.image
+                                                    )}
+                                                    style={(() => {
+                                                        if (
+                                                            contributor.name ===
+                                                            "Chris Hytha"
+                                                        ) {
+                                                            return {
+                                                                transform:
+                                                                    "scale(1.25) translate(0, -5px)",
+                                                            };
+                                                        }
+
+                                                        return {};
+                                                    })()}
+                                                />
+                                            </div>
                                         )}
                                         <h4 className='text-xl mt-2'>
                                             {contributor.name}
@@ -197,7 +218,7 @@ export default function About({ page }: { page: AboutPage }) {
     );
 }
 
-export const getServerSideProps: GetStaticProps = async (context) => {
+export const getStaticProps: GetStaticProps = async (context) => {
     const [page, contributors]: [any, any[]] = await Promise.all([
         client.fetch(
             `

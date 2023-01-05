@@ -7,6 +7,17 @@ import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 import { BasePage } from "types";
 
+const contributorStyle = (contributor: any) => {
+    // lmao
+    if (contributor.name === "Mark Houser") {
+        return {
+            transform: "scale(1.35) translate(0, 4px)",
+        };
+    }
+
+    return {};
+};
+
 export const Audio = ({
     page,
     isShowing,
@@ -103,6 +114,7 @@ export const Audio = ({
                                         className='absolute top-0 bottom-0 m-auto h-[100%]'
                                         alt='thumbnail'
                                         {...getImageProps(contributor.image)}
+                                        style={contributorStyle(contributor)}
                                     />
                                 </div>
                             ))}
@@ -113,6 +125,7 @@ export const Audio = ({
                                 className='absolute top-0 bottom-0 m-auto h-[100%]'
                                 alt='thumbnail'
                                 {...getImageProps(contributors[0].image)}
+                                style={contributorStyle(contributors[0])}
                             />
                         </div>
                     )}
