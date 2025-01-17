@@ -37,16 +37,6 @@ export const Base = ({ page }: { page: LandingPage | BuildingPage }) => {
 
     const isExplorerPage = page.type !== "LandingPage";
 
-    useWindowListener(
-        "scroll",
-        () => {
-            if (drawer === "look-inside") {
-                setDrawer(undefined);
-            }
-        },
-        [drawer]
-    );
-
     return (
         <Viewports>
             <Metadata key={`${page.title}--metadata`} page={page} />

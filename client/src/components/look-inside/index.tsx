@@ -23,7 +23,7 @@ export const LookInside = ({
     return (
         <div
             className={clsx(
-                "fixed bottom-0 left-0 w-[100%] bg-white py-2 flex flex-col rounded-t-lg transition-transform duration-300 shadow-xl z-50 h-[82vh] md:h-auto md:w-[400px] md:bottom-16 md:mx-auto",
+                "fixed bottom-0 left-0 w-[100%] bg-white pt-2 pb-2 flex flex-col rounded-t-lg transition-transform duration-300 shadow-xl z-50 h-[82vh] md:h-auto md:w-[400px] md:bottom-16 md:mx-auto",
                 isShowing
                     ? "translate-y-0 md:sticky"
                     : "translate-y-full md:hidden"
@@ -33,7 +33,7 @@ export const LookInside = ({
                     "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 -8px 18px -6px rgb(0 0 0 / 0.1)",
             }}
         >
-            <div className='relative flex-1 pt-2 pb-2 h-[82vh] min-h-[82vh]'>
+            <div className='flex flex-col relative flex-1 pt-2 pb-2 h-[82vh] min-h-[82vh]'>
                 <button
                     className='ml-auto px-4 [&_polygon]:fill-slate-600 flex'
                     onClick={close}
@@ -57,20 +57,21 @@ export const LookInside = ({
                     <div className='px-8'>{description}</div>
                 </div>
 
-                <div className='absolute bottom-4 left-0 flex px-8 w-[100%]'>
+                <div className='mt-auto flex px-8 pb-8 w-[100%] md:pb-0'>
                     {lookInside[index - 1] && (
                         <Button
                             isInverted
                             isSmall
-                            onClick={() =>
-                                setIndex((index) => Math.max(index - 1, 0))
-                            }
+                            onClick={(e) => {
+                                e.preventDefault();
+                                setIndex((index) => Math.max(index - 1, 0));
+                            }}
                         >
                             <ArrowLeftIcon
                                 style={{
                                     fill: "#FFF",
-                                    width: "16px",
-                                    height: "16px",
+                                    width: "24px",
+                                    height: "24px",
                                 }}
                             />
                         </Button>
@@ -82,17 +83,18 @@ export const LookInside = ({
                         <Button
                             isInverted
                             isSmall
-                            onClick={() =>
+                            onClick={(e) => {
+                                e.preventDefault();
                                 setIndex((index) =>
                                     Math.min(index + 1, lookInside.length)
-                                )
-                            }
+                                );
+                            }}
                         >
                             <ArrowRightIcon
                                 style={{
                                     fill: "#FFF",
-                                    width: "16px",
-                                    height: "16px",
+                                    width: "24px",
+                                    height: "24px",
                                 }}
                             />
                         </Button>
