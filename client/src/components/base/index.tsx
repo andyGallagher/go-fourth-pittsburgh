@@ -1,6 +1,5 @@
 import { Viewports } from "../viewports";
 import clsx from "clsx";
-import { useWindowListener } from "common/useDocumentListener";
 import { Audio } from "components/audio";
 import { LookInside } from "components/look-inside";
 import { Metadata } from "components/metadata";
