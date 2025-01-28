@@ -53,6 +53,7 @@ const writeImages = async () => {
 };
 
 (async () => {
+    // # TODO => Uncomment the below lines to fetch and write images
     // await pullImages();
-    await writeImages();
+    // await writeImages();
 })();
