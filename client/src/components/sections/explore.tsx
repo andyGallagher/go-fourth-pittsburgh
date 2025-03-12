@@ -3,19 +3,35 @@ import { Map } from "components/map";
 import { Marquee } from "components/ui/marquee";
 import { Section } from "components/ui/section";
 import { imageUrlFor } from "helpers/urlFor";
-import React from "react";
+import React, { useCallback, useState } from "react";
 import { BuildingPage } from "types";
 
 export const Explore = React.forwardRef<
     HTMLDivElement,
     { isExplore: boolean; page: BuildingPage; className?: string }
 >(({ className, isExplore, page }, ref) => {
+    const [hasInteracted, setHasInteracted] = useState(false);
+
+    const interact = useCallback(() => {
+        setHasInteracted(true);
+    }, []);
+
     return (
         <>
             <Section className={clsx("text-slate-700", className)} ref={ref}>
                 <div className='relative flex justify-center flex-1'>
-                    <div className='z-10 absolute w-screen bg-gradient-to-b from-white h-48 md:hidden'></div>
-                    <div className='z-100 absolute flex flex-col z-10 justify-center align-center px-16 md:hidden'>
+                    <div
+                        className={clsx(
+                            "z-10 absolute w-screen bg-gradient-to-b from-white h-48 md:hidden transition-opacity duration-200",
+                            { "opacity-0": hasInteracted }
+                        )}
+                    ></div>
+                    <div
+                        className={clsx(
+                            "z-100 absolute flex flex-col z-10 justify-center align-center px-16 md:hidden transition-opacity duration-200",
+                            { "opacity-0": hasInteracted }
+                        )}
+                    >
                         <h2 className='text-xl font-bold pt-8 pb-2 text-center'>
                             Explore
                         </h2>
@@ -25,7 +41,7 @@ export const Explore = React.forwardRef<
                         </div>
                     </div>
 
-                    <Map src={page.map} />
+                    <Map interact={interact} src={page.map} />
                 </div>
             </Section>
             {isExplore && (
