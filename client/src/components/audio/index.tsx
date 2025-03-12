@@ -31,6 +31,10 @@ export const Audio = ({
     const audioRef = useRef<AudioPlayer>(null);
 
     const contributors = useMemo(() => {
+        if (!page.audioContributor) {
+            return [];
+        }
+
         const contributorMap = page.contributors.reduce<
             Record<string, BasePage["contributors"][number]>
         >((acc, next) => ({ ...acc, [next._id]: next }), {});
@@ -56,6 +60,10 @@ export const Audio = ({
             audioRef.current?.audio.current?.play();
         }
     }, [isShowing]);
+
+    if (!page.audioFileName && !contributors.length) {
+        return null;
+    }
 
     return (
         <div

@@ -2,7 +2,7 @@ import { SanityImageAssetDocument } from "@sanity/client";
 
 export interface BasePage {
     audioFileName?: string;
-    audioContributor: {
+    audioContributor?: {
         _ref: string;
     }[];
     contributors: {
@@ -11,7 +11,7 @@ export interface BasePage {
         byline: string;
         image: SanityImageAssetDocument;
     }[];
-    audio: any; // Audio file
+    audio?: any; // Audio file
     body: any; // PortableText
     mainImage: SanityImageAssetDocument;
     subtitle: string;
@@ -35,11 +35,11 @@ export interface BuildingPage extends BasePage {
         image: SanityImageAssetDocument;
     }[];
     map: SanityImageAssetDocument;
-    slug: string;
+    slug: { current: string };
     title: string;
-    zoomInAnimate: SanityImageAssetDocument;
-    zoomOutAnimate: SanityImageAssetDocument;
-    zoomedIn: SanityImageAssetDocument;
+    zoomInAnimate?: SanityImageAssetDocument;
+    zoomOutAnimate?: SanityImageAssetDocument;
+    zoomedIn?: SanityImageAssetDocument;
 }
 
 // This one is different enough to not extend

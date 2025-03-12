@@ -41,7 +41,11 @@ export const Explore = React.forwardRef<
                         </div>
                     </div>
 
-                    <Map interact={interact} src={page.map} />
+                    <Map
+                        currentSlug={page.slug.current}
+                        interact={interact}
+                        src={page.map}
+                    />
                 </div>
             </Section>
             {isExplore && (

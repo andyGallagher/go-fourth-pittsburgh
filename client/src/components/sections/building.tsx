@@ -123,7 +123,10 @@ export const Building = ({
                         {page.type === "BuildingPage" && (
                             <>
                                 <button
-                                    className='mr-1'
+                                    className={clsx(
+                                        "mr-1",
+                                        !page.audio && "opacity-50"
+                                    )}
                                     onClick={openAudioPanel}
                                 >
                                     <PlayFilledIcon
@@ -137,7 +140,14 @@ export const Building = ({
                                     Look inside
                                 </Button>
                                 <button
-                                    className='ml-1'
+                                    className={clsx(
+                                        "ml-1",
+                                        !(
+                                            page.mainImage &&
+                                            page.zoomInAnimate &&
+                                            page.zoomOutAnimate
+                                        ) && "opacity-50"
+                                    )}
                                     onClick={() => {
                                         if (!isAnimating) {
                                             setIsZoomed(

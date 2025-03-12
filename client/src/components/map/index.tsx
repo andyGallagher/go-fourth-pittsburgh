@@ -7,7 +7,8 @@ import React, { Ref, RefObject, useEffect, useRef, useState } from "react";
 export type MapKeys =
     | "bank-of-pittsburgh"
     | "benedum-trees-building"
-    | "pittsburgh-stock-exchange";
+    | "pittsburgh-stock-exchange"
+    | "dollar-bank";
 
 const COORDINATES: Record<MapKeys, { style: React.CSSProperties }> = {
     ["bank-of-pittsburgh"]: {
@@ -32,6 +33,14 @@ const COORDINATES: Record<MapKeys, { style: React.CSSProperties }> = {
             left: "18%",
             width: "6%",
             height: "37%",
+        },
+    },
+    ["dollar-bank"]: {
+        style: {
+            top: "59%",
+            left: "83.5%",
+            width: "6.5%",
+            height: "41%",
         },
     },
 };
@@ -120,13 +129,27 @@ const useVerticalScroll = (mapRef: RefObject<HTMLDivElement>) => {
     };
 };
 
-export const Map = ({ interact, src }: { interact: () => void; src: any }) => {
+export const Map = ({
+    currentSlug,
+    interact,
+    src,
+}: {
+    currentSlug: string;
+    interact: () => void;
+    src: any;
+}) => {
+    const activeBuildingRef = useRef<HTMLAnchorElement>(null);
     const mapRef = useRef<HTMLDivElement>(null);
 
     const { horizontalScrollPosition } = useHorizontalScroll(mapRef);
     const { verticalScrollPosition } = useVerticalScroll(mapRef);
+    const [hasSetInitialScroll, setHasSetInitialScroll] = useState(false);
 
     useEffect(() => {
+        if (!hasSetInitialScroll) {
+            return;
+        }
+
         const mapElement = mapRef.current;
         if (!mapElement) {
             console.warn("Map: map element not found");
@@ -142,7 +165,17 @@ export const Map = ({ interact, src }: { interact: () => void; src: any }) => {
         return () => {
             mapElement.removeEventListener("scroll", handleScroll);
         };
-    }, [interact]);
+    }, [hasSetInitialScroll, interact]);
+
+    useEffect(() => {
+        if (activeBuildingRef.current) {
+            activeBuildingRef.current.scrollIntoView({
+                block: "center",
+                inline: "center",
+            });
+            setHasSetInitialScroll(true);
+        }
+    }, []);
 
     return (
         <div
@@ -157,17 +190,13 @@ export const Map = ({ interact, src }: { interact: () => void; src: any }) => {
                     <img
                         className='hidden md:block w-[420px] md:overflow-hidden'
                         alt='map'
-                        // # TODO => Reimplement this
-                        // {...getImageProps(src)}
-                        src='/images/map-vertical.png'
+                        {...getImageProps(src, { orientation: 90 })}
                     />
 
                     <img
                         className='h-[300px] w-auto max-w-none md:hidden'
                         alt='map'
-                        // # TODO => Reimplement this
-                        // {...getImageProps(src)}
-                        src='/images/map-horizontal.png'
+                        {...getImageProps(src)}
                     />
 
                     {Object.entries(COORDINATES).map(([key, { style }]) => {
@@ -182,6 +211,11 @@ export const Map = ({ interact, src }: { interact: () => void; src: any }) => {
 
                                         zIndex: 100,
                                     }}
+                                    ref={
+                                        currentSlug === key
+                                            ? activeBuildingRef
+                                            : null
+                                    }
                                 />
 
                                 <Link
