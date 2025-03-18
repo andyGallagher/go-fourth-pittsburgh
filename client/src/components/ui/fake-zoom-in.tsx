@@ -29,16 +29,23 @@ export const FakeZoomIn = ({
     }, [isZoomed, onAnimationComplete]);
 
     return (
-        <img
-            className='w-[100%]'
-            alt={alt}
-            {...getImageProps(base)}
-            style={{
-                transform: `scale(${isZoomed ? 3 : 1}) translateY(${
-                    isZoomed ? "4%" : "0"
-                })`,
-                transition: "transform 1.5s ease-in-out",
-            }}
-        />
+        <div className='relative flex-1 h-screen overflow-hidden md:w-[420px]'>
+            <div className='absolute top-0 left-0 flex-1 w-screen h-screen flex items-center justify-center overflow-hidden z-2 md:h-auto md:w-[100%]'>
+                <img
+                    className='md:w-[100%]'
+                    alt={alt}
+                    {...getImageProps(base)}
+                    style={{
+                        height: "100%",
+                        maxWidth: "initial",
+
+                        transform: `scale(${isZoomed ? 3 : 1}) translateY(${
+                            isZoomed ? "0%" : "0"
+                        })`,
+                        transition: "transform 1.5s ease-in-out",
+                    }}
+                />
+            </div>
+        </div>
     );
 };
