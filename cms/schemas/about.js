@@ -73,6 +73,18 @@ export default {
         },
 
         {
+            name: "sponsors",
+            title: "Sponsors",
+            type: "array",
+            of: [
+                {
+                    type: "reference",
+                    to: { type: "sponsor" },
+                },
+            ],
+        },
+
+        {
             name: "metaTitle",
             title: "Meta Title",
             type: "string",
