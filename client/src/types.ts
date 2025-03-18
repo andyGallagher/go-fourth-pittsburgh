@@ -52,6 +52,12 @@ export interface AboutPage extends BasePage {
         image: SanityImageAssetDocument;
         bio: any; // PortableText
     }[];
+    sponsors: {
+        _id: string;
+        name: string;
+        url: string;
+        image: SanityImageAssetDocument;
+    }[];
     description: any; // PortableText
     ads: any; // PortableText
 }

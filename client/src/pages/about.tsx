@@ -31,6 +31,24 @@ const baseComponents: Partial<PortableTextReactComponents> = {
     },
 };
 
+const creditsComponents: Partial<PortableTextReactComponents> = {
+    types: {
+        image: ({ value }) => {
+            if (!value?.asset?._ref) {
+                return null;
+            }
+            return (
+                <img
+                    alt={value.alt || " "}
+                    loading='lazy'
+                    {...getImageProps(value)}
+                    className='mt-4 mb-4 max-w-[50%] mx-auto'
+                />
+            );
+        },
+    },
+};
+
 const adComponents: Partial<PortableTextReactComponents> = {
     types: {
         image: (res) => {
@@ -38,7 +56,7 @@ const adComponents: Partial<PortableTextReactComponents> = {
                 return null;
             }
 
-            if (res.index === 2) {
+            if (res.index === 0) {
                 return (
                     <a
                         key='chris'
@@ -55,7 +73,7 @@ const adComponents: Partial<PortableTextReactComponents> = {
                 );
             }
 
-            if (res.index === 4) {
+            if (res.index === 2) {
                 return (
                     <a
                         key='mark'
@@ -183,7 +201,7 @@ export default function About({ page }: { page: AboutPage }) {
                             <div className='text-sm'>
                                 <PortableText
                                     value={page.body}
-                                    components={baseComponents}
+                                    components={creditsComponents}
                                 />
                             </div>
                         </div>
@@ -206,6 +224,41 @@ export default function About({ page }: { page: AboutPage }) {
                     </div>
                 </Section>
 
+                <Section
+                    className='text-slate-600 flex flex-col md:w-[50%] md:mx-auto'
+                    isHundo={false}
+                >
+                    <div className='flex flex-col items-center'>
+                        <div className='credits text-slate-500 tracking-wider portable-text flex flex-wrap justify-center items-center text-center p-16 border-t-2 border-b-2 border-slate-300 md:border-2 md:shadow-md'>
+                            <div className='mb-4'>
+                                <h3 className='text-sm tracking-widest'>
+                                    PARTNERS
+                                </h3>
+                            </div>
+                            <div className='text-xs flex flex-wrap justify-center'>
+                                {page.sponsors.map((sponsor) => {
+                                    return (
+                                        <React.Fragment key={sponsor.name}>
+                                            <a
+                                                href={sponsor.url}
+                                                className='flex flex-col mb-8 last:mb-0 portable-text items-center w-1/2'
+                                            >
+                                                <img
+                                                    className='p-2'
+                                                    {...getImageProps(
+                                                        sponsor.image
+                                                    )}
+                                                    alt={`${sponsor.name} logo`}
+                                                />
+                                            </a>
+                                        </React.Fragment>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    </div>
+                </Section>
+
                 <Footer />
 
                 <Audio
@@ -219,16 +272,19 @@ export default function About({ page }: { page: AboutPage }) {
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-    const [page, contributors]: [any, any[]] = await Promise.all([
-        client.fetch(
-            `
+    const [page, contributors, sponsors]: [any, any[], any[]] =
+        await Promise.all([
+            client.fetch(
+                `
             *[_type == "about"][0]
         `
-        ),
-        client.fetch(`*[_type == "contributor"]`),
-    ]);
+            ),
+            client.fetch(`*[_type == "contributor"]`),
+            client.fetch(`*[_type == "sponsor"]`),
+        ]);
 
     const sortedContributors = contributors.sort((a, b) => a.order - b.order);
+    const sortedSponsors = sponsors.sort((a, b) => a.order - b.order);
 
     return {
         props: {
@@ -236,6 +292,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
                 ...page,
                 type: "LandingPage",
                 contributors: sortedContributors,
+                sponsors: sortedSponsors,
             },
         },
     };
