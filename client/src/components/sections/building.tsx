@@ -2,6 +2,7 @@
 import { ReactComponent as ChevronDownIcon } from "../../assets/icons/chevron--down.svg";
 import { ReactComponent as PlayFilledIcon } from "../../assets/icons/play--filled.svg";
 import { ReactComponent as ZoomInIcon } from "../../assets/icons/zoom--in.svg";
+import { FakeZoomIn } from "../ui/fake-zoom-in";
 import clsx from "clsx";
 import { Button } from "components/ui/button";
 import { Marquee } from "components/ui/marquee";
@@ -81,10 +82,11 @@ export const Building = ({
                         onAnimationComplete={onAnimationComplete}
                     />
                 ) : (
-                    <img
-                        className='w-[100%]'
+                    <FakeZoomIn
+                        base={page.mainImage}
                         alt={page.title}
-                        {...getImageProps(page.mainImage)}
+                        isZoomed={isZoomed}
+                        onAnimationComplete={onAnimationComplete}
                     />
                 )}
 
@@ -140,14 +142,7 @@ export const Building = ({
                                     Look inside
                                 </Button>
                                 <button
-                                    className={clsx(
-                                        "ml-1",
-                                        !(
-                                            page.mainImage &&
-                                            page.zoomInAnimate &&
-                                            page.zoomOutAnimate
-                                        ) && "opacity-50"
-                                    )}
+                                    className={"ml-1"}
                                     onClick={() => {
                                         if (!isAnimating) {
                                             setIsZoomed(
