@@ -54,6 +54,16 @@ const writeImages = async () => {
 
 (async () => {
     // # TODO => Uncomment the below lines to fetch and write images
-    // await pullImages();
-    // await writeImages();
+    const args = process.argv.slice(2);
+    if (args.includes("--pull")) {
+        await pullImages();
+        return;
+    }
+    if (args.includes("--write")) {
+        await writeImages();
+        return;
+    }
+
+    console.warn(`Unrecognized command: ${args}`);
+    console.warn("Usage: node fetch-images.js --pull | --write");
 })();
