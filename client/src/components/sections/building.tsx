@@ -8,34 +8,10 @@ import { Button } from "components/ui/button";
 import { Marquee } from "components/ui/marquee";
 import { Section } from "components/ui/section";
 import { ZoomIn } from "components/ui/zoom-in";
-import { getImageProps } from "helpers/urlFor";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import { use100vh } from "react-div-100vh";
 import { BuildingPage, LandingPage } from "types";
-
-const useHundo = () => {
-    const [hundo, setHundo] = useState<number | null>(null);
-    const fakeHundo = use100vh();
-
-    useEffect(() => {
-        let sto = setTimeout(() => {
-            setHundo((hundo) => {
-                if (hundo) {
-                    return hundo;
-                }
-
-                return fakeHundo;
-            });
-        }, 0);
-
-        return () => {
-            clearTimeout(sto);
-        };
-    }, [fakeHundo]);
-
-    return { hundo };
-};
 
 export const Building = ({
     page,
@@ -48,7 +24,6 @@ export const Building = ({
     openLookInsidePanel: () => void;
     scrollToDetail: () => void;
 }) => {
-    const { hundo } = useHundo();
     const [isZoomed, setIsZoomed] = useState<boolean | undefined>(undefined);
     const [isAnimating, setIsAnimating] = useState<boolean>(false);
     const router = useRouter();
@@ -63,7 +38,7 @@ export const Building = ({
         <div
             className='relative'
             style={{
-                height: hundo ?? "100vh",
+                height: "100dvh",
                 overflow: "hidden",
             }}
         >
