@@ -36,6 +36,7 @@ export interface BuildingPage extends BasePage {
         image: SanityImageAssetDocument;
     }[];
     map: SanityImageAssetDocument;
+    rotatedMap: SanityImageAssetDocument;
     slug: { current: string };
     title: string;
     zoomInAnimate?: SanityImageAssetDocument;

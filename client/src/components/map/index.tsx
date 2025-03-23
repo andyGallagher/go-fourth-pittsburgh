@@ -132,11 +132,13 @@ const useVerticalScroll = (mapRef: RefObject<HTMLDivElement>) => {
 export const Map = ({
     currentSlug,
     interact,
-    src,
+    horizontalSrc,
+    verticalSrc,
 }: {
     currentSlug: string;
     interact: () => void;
-    src: any;
+    horizontalSrc: any;
+    verticalSrc: any;
 }) => {
     const activeBuildingRef = useRef<HTMLAnchorElement>(null);
     const mapRef = useRef<HTMLDivElement>(null);
@@ -190,13 +192,13 @@ export const Map = ({
                     <img
                         className='hidden md:block w-[420px] md:overflow-hidden'
                         alt='map'
-                        {...getImageProps(src, { orientation: 90 })}
+                        {...getImageProps(verticalSrc)}
                     />
 
                     <img
                         className='h-[300px] w-auto max-w-none md:hidden'
                         alt='map'
-                        {...getImageProps(src)}
+                        {...getImageProps(horizontalSrc)}
                     />
 
                     {Object.entries(COORDINATES).map(([key, { style }]) => {

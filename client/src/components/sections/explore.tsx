@@ -54,7 +54,8 @@ export const Explore = React.forwardRef<
                     <Map
                         currentSlug={page.slug.current}
                         interact={interact}
-                        src={page.map}
+                        horizontalSrc={page.map}
+                        verticalSrc={page.rotatedMap}
                     />
                 </div>
             </Section>

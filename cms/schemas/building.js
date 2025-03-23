@@ -107,7 +107,7 @@ export default {
         },
 
         {
-            name: "rotated map",
+            name: "rotatedMap",
             title: "Rotated Map Image",
             type: "image",
             options: {
