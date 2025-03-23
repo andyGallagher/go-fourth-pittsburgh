@@ -107,6 +107,15 @@ export default {
         },
 
         {
+            name: "rotated map",
+            title: "Rotated Map Image",
+            type: "image",
+            options: {
+                hotspot: true,
+            },
+        },
+
+        {
             name: "metaTitle",
             title: "Meta Title",
             type: "string",
