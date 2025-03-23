@@ -10,7 +10,6 @@ import { Section } from "components/ui/section";
 import { ZoomIn } from "components/ui/zoom-in";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
-import { use100vh } from "react-div-100vh";
 import { BuildingPage, LandingPage } from "types";
 
 export const Building = ({
