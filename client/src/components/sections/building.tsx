@@ -37,7 +37,7 @@ export const Building = ({
         <div
             className='relative'
             style={{
-                height: "100dvh",
+                height: "100svh",
                 overflow: "hidden",
             }}
         >
