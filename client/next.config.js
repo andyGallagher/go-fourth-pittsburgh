@@ -6,6 +6,7 @@ const nextConfig = {
         domains: ["cdn.gofourthpittsburgh.org", "cdn.sanity.io"],
         unoptimized: true,
     },
+    exportTrailingSlash: true,
 };
 
 module.exports = nextConfig;

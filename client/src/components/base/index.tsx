@@ -9,7 +9,7 @@ import { Sections } from "components/sections";
 import { Button } from "components/ui/button";
 import { Footer } from "components/ui/footer";
 import { useRouter } from "next/router";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BuildingPage, LandingPage } from "types";
 
 const useDetailScroll = () => {
@@ -35,8 +35,13 @@ export const Base = ({ page }: { page: LandingPage | BuildingPage }) => {
         undefined
     );
     const router = useRouter();
+    const scrollRef = useRef<HTMLDivElement>(null);
 
     const isExplorerPage = page.type !== "LandingPage";
+
+    useEffect(() => {
+        scrollRef.current?.scrollTo(0, 0);
+    }, [page.title]);
 
     return (
         <Viewports>
@@ -77,7 +82,10 @@ export const Base = ({ page }: { page: LandingPage | BuildingPage }) => {
                         }
                         scrollToDetail={scrollToDetail}
                     />
-                    <div className='md:w-[480px] md:overflow-scroll md:max-h-screen md:pb-8 md:mx-8'>
+                    <div
+                        ref={scrollRef}
+                        className='md:w-[480px] md:overflow-scroll md:max-h-screen md:pb-8 md:mx-8'
+                    >
                         <Sections.Detail
                             key={`${page.title}--detail`}
                             ref={detailRef}
@@ -124,7 +132,9 @@ export const Base = ({ page }: { page: LandingPage | BuildingPage }) => {
                                 isInverted
                                 onClick={() => {
                                     router.push(
-                                        `/explore/${page.nextBuildingSlug?.current}`
+                                        page.nextBuildingSlug?.current
+                                            ? `/explore/${page.nextBuildingSlug.current}`
+                                            : "/"
                                     );
                                 }}
                             >
