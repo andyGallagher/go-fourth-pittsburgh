@@ -2,8 +2,7 @@ import clsx from "clsx";
 import { Map } from "components/map";
 import { Marquee } from "components/ui/marquee";
 import { Section } from "components/ui/section";
-import { imageUrlFor } from "helpers/urlFor";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { BuildingPage } from "types";
 
 export const Explore = React.forwardRef<
@@ -11,10 +10,21 @@ export const Explore = React.forwardRef<
     { isExplore: boolean; page: BuildingPage; className?: string }
 >(({ className, isExplore, page }, ref) => {
     const [hasInteracted, setHasInteracted] = useState(false);
+    const [isTimerElapsed, setIsTimerElapsed] = useState(false);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsTimerElapsed(true);
+        }, 2000);
+
+        return () => clearTimeout(timer);
+    }, []);
 
     const interact = useCallback(() => {
-        setHasInteracted(true);
-    }, []);
+        if (isTimerElapsed) {
+            setHasInteracted(true);
+        }
+    }, [isTimerElapsed]);
 
     return (
         <>
@@ -56,4 +66,5 @@ export const Explore = React.forwardRef<
         </>
     );
 });
+
 Explore.displayName = "Explore";
