@@ -61,6 +61,8 @@ const adComponents: Partial<PortableTextReactComponents> = {
                     <a
                         key='chris'
                         className='block mt-4 mb-4'
+                        target='_blank'
+                        rel='noreferrer noopener'
                         href='http://www.HighrisesCollection.com'
                     >
                         <img
@@ -78,6 +80,8 @@ const adComponents: Partial<PortableTextReactComponents> = {
                     <a
                         key='mark'
                         className='block mt-4 mb-4'
+                        target='_blank'
+                        rel='noreferrer noopener'
                         href='http://www.amazon.com/MultiStories-Antique-Skyscrapers-Business-Tycoons/dp/057880736X'
                     >
                         <img
@@ -152,7 +156,7 @@ export default function About({ page }: { page: AboutPage }) {
                                                     className={
                                                         contributor.name ===
                                                         "Mark Houser"
-                                                            ? "transform scale-150 translate-y-4 md:translate-y-8"
+                                                            ? "transform scale-[1.15] translate-y-[3.5%]"
                                                             : undefined
                                                     }
                                                     alt={`picture of ${contributor.name}`}
@@ -238,20 +242,21 @@ export default function About({ page }: { page: AboutPage }) {
                             <div className='text-xs flex flex-wrap justify-center'>
                                 {page.sponsors.map((sponsor) => {
                                     return (
-                                        <React.Fragment key={sponsor.name}>
-                                            <a
-                                                href={sponsor.url}
-                                                className='flex flex-col mb-8 last:mb-0 portable-text items-center w-1/2'
-                                            >
-                                                <img
-                                                    className='p-2'
-                                                    {...getImageProps(
-                                                        sponsor.image
-                                                    )}
-                                                    alt={`${sponsor.name} logo`}
-                                                />
-                                            </a>
-                                        </React.Fragment>
+                                        <a
+                                            key={sponsor.name}
+                                            href={sponsor.url}
+                                            target='_blank'
+                                            rel='noreferrer noopener'
+                                            className='flex flex-col mb-8 last:mb-0 portable-text items-center w-1/2'
+                                        >
+                                            <img
+                                                className='p-2'
+                                                {...getImageProps(
+                                                    sponsor.image
+                                                )}
+                                                alt={`${sponsor.name} logo`}
+                                            />
+                                        </a>
                                     );
                                 })}
                             </div>
