@@ -124,6 +124,18 @@ export default {
                 hotspot: true,
             },
         },
+
+        {
+            name: "sponsors",
+            title: "Sponsors",
+            type: "array",
+            of: [
+                {
+                    type: "reference",
+                    to: { type: "sponsor" },
+                },
+            ],
+        },
     ],
 
     preview: {
