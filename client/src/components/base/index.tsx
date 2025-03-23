@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+import { getImageProps } from "../../helpers/urlFor";
 import { Viewports } from "../viewports";
 import clsx from "clsx";
 import { Audio } from "components/audio";
@@ -81,6 +83,41 @@ export const Base = ({ page }: { page: LandingPage | BuildingPage }) => {
                             ref={detailRef}
                             page={page}
                         />
+
+                        {Boolean(page.sponsors && page.sponsors.length > 0) && (
+                            <div className='flex flex-col items-center'>
+                                <div className='credits text-slate-500 tracking-wider portable-text flex flex-wrap justify-center items-center text-center p-8 border-t-2 border-b-2 my-4 border-slate-300 md:border-2 md:shadow-md'>
+                                    <div className='mb-4'>
+                                        <h3 className='text-sm tracking-widest'>
+                                            {page.sponsors?.length === 1
+                                                ? "PARTNER"
+                                                : "PARTNERS"}
+                                        </h3>
+                                    </div>
+                                    <div className='text-xs flex flex-wrap justify-center'>
+                                        {page.sponsors?.map((sponsor) => {
+                                            return (
+                                                <a
+                                                    key={sponsor.name}
+                                                    href={sponsor.url}
+                                                    target='_blank'
+                                                    rel='noreferrer noopener'
+                                                    className='flex flex-col mb-8 last:mb-0 portable-text items-center w-1/2'
+                                                >
+                                                    <img
+                                                        className='p-2'
+                                                        {...getImageProps(
+                                                            sponsor.image
+                                                        )}
+                                                        alt={`${sponsor.name} logo`}
+                                                    />
+                                                </a>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
 
                         <div className='mt-4 pb-8 flex justify-center'>
                             <Button

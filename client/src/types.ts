@@ -25,6 +25,7 @@ export interface BasePage {
 
 export interface LandingPage extends BasePage {
     type: "LandingPage";
+    sponsors: undefined;
 }
 
 export interface BuildingPage extends BasePage {
@@ -40,6 +41,12 @@ export interface BuildingPage extends BasePage {
     zoomInAnimate?: SanityImageAssetDocument;
     zoomOutAnimate?: SanityImageAssetDocument;
     zoomedIn?: SanityImageAssetDocument;
+    sponsors: {
+        _id: string;
+        name: string;
+        url: string;
+        image: SanityImageAssetDocument;
+    }[];
 }
 
 // This one is different enough to not extend
