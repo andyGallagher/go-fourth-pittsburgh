@@ -11,6 +11,7 @@ import building from "./building";
 import contributor from "./contributor";
 import lookInside from "./lookInside";
 import landing from "./landing";
+import popup from "./popup";
 import sponsor from "./sponsor";
 
 // Then we give our schema to the builder and provide the result to Sanity
@@ -31,5 +32,6 @@ export default createSchema({
         lookInside,
         about,
         sponsor,
+        popup,
     ]),
 });

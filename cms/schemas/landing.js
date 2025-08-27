@@ -53,16 +53,19 @@ export default {
         {
             name: "metaTitle",
             title: "Meta Title",
+            description: "Title for SEO purposes",
             type: "string",
         },
         {
             name: "metaDescription",
             title: "Meta Description",
+            description: "Description for SEO purposes",
             type: "string",
         },
         {
             name: "metaThumbnail",
             title: "Meta Thumbnail",
+            description: "Image for SEO purposes",
             type: "image",
             options: {
                 hotspot: true,
