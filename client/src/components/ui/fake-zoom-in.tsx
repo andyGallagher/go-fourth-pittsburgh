@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { useScaleValue } from "./use-scale-value";
-import clsx from "clsx";
+import { useImageDimensions } from "./use-image-dimensions";
 import { getImageProps } from "helpers/urlFor";
 import React, { useEffect, useState } from "react";
 
@@ -13,7 +12,7 @@ export const FakeZoomIn = ({
     isZoomed,
     onAnimationComplete,
     zoomTransformCss,
-    mobileOffset,
+    mobileOffset = 0,
 }: {
     base: any;
     alt: string;
@@ -22,7 +21,8 @@ export const FakeZoomIn = ({
     zoomTransformCss?: string;
     mobileOffset?: number;
 }) => {
-    const { containerRef, imageRef, scaleValue } = useScaleValue();
+    const { dimensions, containerRef, imageRef } =
+        useImageDimensions(mobileOffset);
     const [hasLoaded, setHasLoaded] = useState(false);
 
     useEffect(() => {
@@ -52,34 +52,37 @@ export const FakeZoomIn = ({
 
     return (
         <div
-            className='relative flex-1 h-screen overflow-hidden md:w-[420px]'
+            className='relative flex-1 overflow-hidden md:w-[420px]'
             ref={containerRef}
+            style={{
+                height: dimensions.containerHeight,
+            }}
         >
-            <div className='absolute top-0 left-0 flex-1 w-screen h-screen flex items-center justify-center overflow-hidden z-2 md:h-auto md:w-[100%]'>
+            <div
+                className='absolute top-0 left-0 w-full h-full flex items-center justify-center overflow-hidden'
+                style={{
+                    clipPath: `inset(${dimensions.cropTop}px 0 0 0)`,
+                }}
+            >
                 <img
                     ref={imageRef}
-                    className='md:w-[100%]'
+                    className='object-cover'
                     alt={alt}
                     {...getImageProps(base)}
                     style={{
-                        height: "100%",
-                        maxWidth: "initial",
-
+                        width: dimensions.imageWidth,
+                        height: dimensions.imageHeight,
+                        maxWidth: "none",
                         transform: `
-                        translateY(${-(mobileOffset ?? 0)}%)
+                            ${(() => {
+                                if (isZoomed && zoomTransformCss) {
+                                    return zoomTransformCss;
+                                }
 
-                        scale(${scaleValue})
-
-                        ${(() => {
-                            if (isZoomed && zoomTransformCss) {
-                                return zoomTransformCss;
-                            }
-
-                            return `scale(${isZoomed ? 3 : 1}) translateY(${
-                                isZoomed ? "0%" : "0"
-                            })`;
-                        })()}`,
-
+                                return `scale(${isZoomed ? 3 : 1})`;
+                            })()}
+                        `,
+                        transformOrigin: "center center",
                         ...(hasLoaded
                             ? {
                                   transition: "transform 1.5s ease-in-out",

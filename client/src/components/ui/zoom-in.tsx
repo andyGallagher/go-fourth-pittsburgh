@@ -1,11 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
-import { useScaleValue } from "./use-scale-value";
+import { useImageDimensions } from "./use-image-dimensions";
 import clsx from "clsx";
 import { getImageProps } from "helpers/urlFor";
 import React, { useEffect, useRef, useState } from "react";
 
 const imageClassName =
-    "absolute top-0 left-0 flex-1 w-screen h-screen flex items-center justify-center overflow-hidden opacity-0 z-2 md:h-auto md:w-[100%]";
+    "absolute top-0 left-0 w-full h-full flex items-center justify-center overflow-hidden opacity-0";
 
 export const ZoomIn = ({
     animationIn,
@@ -14,7 +14,7 @@ export const ZoomIn = ({
     isZoomed,
     zoomed,
     onAnimationComplete,
-    mobileOffset,
+    mobileOffset = 0,
 }: {
     animationIn: any;
     animationOut: any;
@@ -34,7 +34,8 @@ export const ZoomIn = ({
         undefined
     );
     const [shouldLoadAnimation, setShouldLoadAnimation] = useState(false);
-    const { scaleValue, containerRef, imageRef } = useScaleValue();
+    const { dimensions, containerRef, imageRef } =
+        useImageDimensions(mobileOffset);
 
     useEffect(() => {
         let sto: ReturnType<typeof setTimeout> | undefined = undefined;
@@ -78,21 +79,29 @@ export const ZoomIn = ({
         setTimeout(() => setShouldLoadAnimation(true), 1000);
     }, []);
 
-    const imgClassName = `h-full md:w-[100%] max-w-initial`;
+    const imgClassName = `object-cover`;
     const imgStyle = {
-        maxWidth: "initial",
-        transform: `translateY(${-(mobileOffset ?? 0)}%) scale(${scaleValue})`,
-        height: "100%",
+        width: dimensions.imageWidth,
+        height: dimensions.imageHeight,
+        maxWidth: "none",
         transformOrigin: "center center",
+    };
+
+    const clipStyle = {
+        clipPath: `inset(${dimensions.cropTop}px 0 0 0)`,
     };
 
     return (
         <div
-            className='relative flex-1 h-screen md:h-auto overflow-hidden md:w-[420px]'
+            className='relative flex-1 overflow-hidden md:w-[420px]'
             ref={containerRef}
+            style={{
+                height: dimensions.containerHeight,
+            }}
         >
             <div
-                className={clsx(imageClassName, "opacity-100 z-1 md:relative")}
+                className={clsx(imageClassName, "opacity-100 z-1")}
+                style={clipStyle}
             >
                 <img
                     alt=''
@@ -108,6 +117,7 @@ export const ZoomIn = ({
                     imageClassName,
                     shownImage === "base" && "opacity-100"
                 )}
+                style={clipStyle}
             >
                 <img
                     alt=''
@@ -122,6 +132,7 @@ export const ZoomIn = ({
                     imageClassName,
                     shownImage === "animation-in" && "opacity-100"
                 )}
+                style={clipStyle}
             >
                 {shouldLoadAnimation && (
                     <img
@@ -139,6 +150,7 @@ export const ZoomIn = ({
                     imageClassName,
                     shownImage === "animation-out" && "opacity-100"
                 )}
+                style={clipStyle}
             >
                 {shouldLoadAnimation && (
                     <img
@@ -156,15 +168,13 @@ export const ZoomIn = ({
                     imageClassName,
                     shownImage === "zoomed" && "opacity-100"
                 )}
+                style={clipStyle}
             >
                 <img
                     alt=''
                     {...getImageProps(zoomed)}
-                    className='md:w-[100%]'
-                    style={{
-                        transform: `scale(${scaleValue})`,
-                        transformOrigin: "center center",
-                    }}
+                    className={imgClassName}
+                    style={imgStyle}
                 />
             </div>
         </div>
