@@ -139,7 +139,7 @@ export const Building = ({
                         onAnimationComplete={onAnimationComplete}
                         mobileOffset={(page as any)?.mobileOffset}
                         heightOverride={
-                            page.type === "LandingPage" ? "100vh" : undefined
+                            page.type === "LandingPage" ? "100svh" : undefined
                         }
                     />
                 )}
@@ -281,7 +281,7 @@ export const Building = ({
                             `flex flex-col mt-4 justify-center items-center w-20`,
                             page.previousBuildingSlug
                                 ? "cursor-pointer"
-                                : "opacity-50"
+                                : "opacity-30"
                         )}
                         onClick={() => {
                             if (page.previousBuildingSlug) {
@@ -316,7 +316,7 @@ export const Building = ({
                             "flex flex-col mt-4 justify-center items-center w-20",
                             {
                                 "cursor-pointer": page.nextBuildingSlug,
-                                "opacity-50": !page.nextBuildingSlug,
+                                "opacity-30": !page.nextBuildingSlug,
                             }
                         )}
                         onClick={() => {
