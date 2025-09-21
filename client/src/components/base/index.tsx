@@ -35,6 +35,7 @@ export const Base = ({ page }: { page: LandingPage | BuildingPage }) => {
     const [drawer, setDrawer] = useState<"audio" | "look-inside" | undefined>(
         undefined
     );
+    const [wasAudioOpen, setWasAudioOpen] = useState(false);
     const router = useRouter();
     const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -60,7 +61,7 @@ export const Base = ({ page }: { page: LandingPage | BuildingPage }) => {
                     className=' md:flex md:flex-row md:mx-auto'
                     onClick={() => {
                         if (drawer === "look-inside") {
-                            setDrawer(undefined);
+                            setDrawer(wasAudioOpen ? "audio" : undefined);
                         }
                     }}
                 >
@@ -81,13 +82,15 @@ export const Base = ({ page }: { page: LandingPage | BuildingPage }) => {
                                 return drawer === "audio" ? undefined : "audio";
                             })
                         }
-                        openLookInsidePanel={() =>
+                        openLookInsidePanel={() => {
+                            // Store if audio was open before opening look-inside
+                            setWasAudioOpen(drawer === "audio");
                             setDrawer((drawer) => {
                                 return drawer === "look-inside"
                                     ? undefined
                                     : "look-inside";
-                            })
-                        }
+                            });
+                        }}
                         scrollToDetail={scrollToDetail}
                     />
                     <div
@@ -183,7 +186,9 @@ export const Base = ({ page }: { page: LandingPage | BuildingPage }) => {
                     <LookInside
                         key={`${page.title}--lookInside`}
                         isShowing={drawer === "look-inside"}
-                        close={() => setDrawer(undefined)}
+                        close={() =>
+                            setDrawer(wasAudioOpen ? "audio" : undefined)
+                        }
                         lookInside={page.lookInside}
                     />
                 )}

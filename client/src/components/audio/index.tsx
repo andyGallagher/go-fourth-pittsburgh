@@ -63,7 +63,7 @@ export const Audio = ({
     }, [isShowing]);
 
     useEffect(() => {
-        if (isShowing) {
+        if (isShowing && !hasShownRef.current) {
             audioRef.current?.audio.current?.play();
         }
     }, [isShowing]);
