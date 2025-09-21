@@ -27,6 +27,16 @@ export const FakeZoomIn = ({
         useImageDimensions(mobileOffset);
     const [hasLoaded, setHasLoaded] = useState(false);
 
+    const [viewportWidth, setViewportWidth] = useState<number | undefined>(
+        undefined
+    );
+
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            setViewportWidth(window.innerWidth);
+        }
+    }, []);
+
     useEffect(() => {
         let sto: ReturnType<typeof setTimeout>;
         sto = setTimeout(() => {
@@ -54,11 +64,15 @@ export const FakeZoomIn = ({
 
     return (
         <div
-            className='relative flex-1 overflow-hidden md:w-[420px]'
+            className='relative flex-1 overflow-hidden md:w-[420px] md:h-[703px]'
             ref={containerRef}
-            style={{
-                height: heightOverride ?? dimensions.containerHeight,
-            }}
+            style={
+                viewportWidth && viewportWidth < 768
+                    ? {
+                          height: heightOverride ?? dimensions.containerHeight,
+                      }
+                    : {}
+            }
         >
             <div
                 className='absolute left-0 w-full h-full flex items-start justify-center overflow-hidden'

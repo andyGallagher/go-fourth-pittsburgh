@@ -22,6 +22,17 @@ export const useImageDimensions = (mobileOffset: number = 0) => {
             const viewportWidth = window.innerWidth;
             const viewportHeight = window.innerHeight;
 
+            // On desktop (md breakpoint and up), use simple defaults without custom calculations
+            if (viewportWidth >= 768) {
+                setDimensions({
+                    containerHeight: "100vh",
+                    imageHeight: "100%",
+                    imageWidth: "100%",
+                    cropTop: 0,
+                });
+                return;
+            }
+
             const naturalAspectRatio = image.naturalWidth / image.naturalHeight;
             const viewportAspectRatio = viewportWidth / viewportHeight;
 

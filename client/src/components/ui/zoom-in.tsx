@@ -99,7 +99,7 @@ export const ZoomIn = ({
 
     return (
         <div
-            className='relative flex-1 overflow-hidden md:w-[420px]'
+            className='relative flex-1 overflow-hidden md:w-[420px] md:h-[703px]'
             ref={containerRef}
             style={{
                 height: `calc(${dimensions.containerHeight} - ${dimensions.cropTop}px)`,
