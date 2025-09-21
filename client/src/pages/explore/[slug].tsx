@@ -31,7 +31,13 @@ export const getStaticProps: GetStaticProps = async (context: any) => {
             client.fetch(`*[_type == "contributor"]`),
             client.fetch(`*[_type == "sponsor"]`),
         ]);
-    const sortedBuildings = buildings.sort((a, b) => a.order - b.order);
+
+    const sortedBuildings = buildings.sort((a, b) => {
+        const orderA = a.order ?? Number.MAX_SAFE_INTEGER;
+        const orderB = b.order ?? Number.MAX_SAFE_INTEGER;
+        return orderA - orderB;
+    });
+
     const activeBuildingIndex = sortedBuildings.findIndex(
         (building) => building.slug.current === slug
     );
@@ -51,15 +57,36 @@ export const getStaticProps: GetStaticProps = async (context: any) => {
         }
     );
 
+    const buildingCoordinates = sortedBuildings.map((building) => {
+        if (!building.mapCoordinates) {
+            console.warn(
+                "mapCoordinates is undefined for building:",
+                building.slug.current
+            );
+            return {
+                slug: building.slug.current,
+                coordinates: [0, 0, 0, 0],
+            };
+        }
+
+        return {
+            slug: building.slug.current,
+            coordinates: building.mapCoordinates,
+        };
+    });
+
     return {
         props: {
             page: {
                 ...sortedBuildings[activeBuildingIndex],
                 nextBuildingSlug:
                     sortedBuildings[activeBuildingIndex + 1]?.slug ?? null,
+                previousBuildingSlug:
+                    sortedBuildings[activeBuildingIndex - 1]?.slug ?? null,
                 type: "BuildingPage",
                 sponsors: buildingSponsors ?? null,
                 contributors,
+                buildingCoordinates,
             },
         },
     };

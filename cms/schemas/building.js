@@ -56,6 +56,29 @@ export default {
                 hotspot: true,
             },
         },
+
+        {
+            name: "imageColor",
+            title: "Image Color",
+            description: "Color theme for text overlaying the main image",
+            type: "string",
+            options: {
+                list: [
+                    { title: "Light", value: "light" },
+                    { title: "Dark", value: "dark" },
+                ],
+            },
+        },
+
+        {
+            name: "shouldShowGradient",
+            title: "Show Gradient Overlay",
+            type: "boolean",
+            description:
+                "Whether to show a gradient overlay on the main image for better text contrast",
+            initialValue: true,
+        },
+
         {
             name: "zoomInAnimate",
             title: "Zoom In animation",
@@ -97,6 +120,14 @@ export default {
         },
 
         {
+            name: "mobileOffset",
+            title: "Mobile Offset %",
+            type: "number",
+            description:
+                "Percentage to vertically offset the image on mobile (0-100). 0 is centered.",
+        },
+
+        {
             name: "body",
             title: "Body",
             type: "blockContent",
@@ -121,6 +152,16 @@ export default {
             options: {
                 hotspot: true,
             },
+        },
+
+        {
+            name: "mapCoordinates",
+            title: "Map Coordinates",
+            description:
+                "Coordinates for the building map on mobile (x, y, width, height)",
+            type: "array",
+            of: [{ type: "number" }],
+            validation: (Rule) => Rule.length(4),
         },
 
         {

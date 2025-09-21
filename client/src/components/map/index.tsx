@@ -2,48 +2,7 @@
 import clsx from "clsx";
 import { getImageProps } from "helpers/urlFor";
 import Link from "next/link";
-import React, { Ref, RefObject, useEffect, useRef, useState } from "react";
-
-export type MapKeys =
-    | "bank-of-pittsburgh"
-    | "benedum-trees-building"
-    | "pittsburgh-stock-exchange"
-    | "dollar-bank";
-
-const COORDINATES: Record<MapKeys, { style: React.CSSProperties }> = {
-    ["bank-of-pittsburgh"]: {
-        style: {
-            top: "57%",
-            left: "17%",
-            width: "6%",
-            height: "43%",
-        },
-    },
-    ["benedum-trees-building"]: {
-        style: {
-            top: "0%",
-            left: "11.5%",
-            width: "6%",
-            height: "37%",
-        },
-    },
-    ["pittsburgh-stock-exchange"]: {
-        style: {
-            top: "0%",
-            left: "18%",
-            width: "6%",
-            height: "37%",
-        },
-    },
-    ["dollar-bank"]: {
-        style: {
-            top: "59%",
-            left: "83.5%",
-            width: "6.5%",
-            height: "41%",
-        },
-    },
-};
+import React, { RefObject, useEffect, useRef, useState } from "react";
 
 const useHorizontalScroll = (mapRef: RefObject<HTMLDivElement>) => {
     const [scrollPosition, setScrollPosition] = useState<
@@ -134,11 +93,16 @@ export const Map = ({
     interact,
     horizontalSrc,
     verticalSrc,
+    buildingCoordinates,
 }: {
     currentSlug: string;
     interact: () => void;
     horizontalSrc: any;
     verticalSrc: any;
+    buildingCoordinates: {
+        slug: string;
+        coordinates: [number, number, number, number];
+    }[];
 }) => {
     const activeBuildingRef = useRef<HTMLAnchorElement>(null);
     const mapRef = useRef<HTMLDivElement>(null);
@@ -181,7 +145,7 @@ export const Map = ({
 
     return (
         <div
-            className='flex-1 w-[100vw] h-auto overflow-hidden flex md:h-[703px] md:w-auto md:rounded-xl bg-[#f0d2b1]'
+            className='flex-1 w-full h-auto overflow-hidden flex md:h-[703px] md:w-auto md:rounded-t-xl md:rounded-b-none bg-[#f0d2b1]'
             onMouseDown={interact}
         >
             <div
@@ -201,20 +165,28 @@ export const Map = ({
                         {...getImageProps(horizontalSrc)}
                     />
 
-                    {Object.entries(COORDINATES).map(([key, { style }]) => {
+                    {buildingCoordinates.map(({ slug, coordinates }) => {
+                        const style = {
+                            top: `${coordinates[0]}%`,
+                            left: `${coordinates[1]}%`,
+                            width: `${coordinates[2]}%`,
+                            height: `${coordinates[3]}%`,
+                        };
                         return (
-                            <React.Fragment key={key}>
+                            <React.Fragment key={slug}>
                                 <Link
                                     className='md:hidden'
-                                    href={`/explore/${key}`}
+                                    href={`/explore/${slug}`}
                                     style={{
                                         position: "absolute",
                                         ...style,
 
+                                        // border: "1px solid red",
+
                                         zIndex: 100,
                                     }}
                                     ref={
-                                        currentSlug === key
+                                        currentSlug === slug
                                             ? activeBuildingRef
                                             : null
                                     }
@@ -222,7 +194,7 @@ export const Map = ({
 
                                 <Link
                                     className='hidden md:block'
-                                    href={`/explore/${key}`}
+                                    href={`/explore/${slug}`}
                                     style={{
                                         position: "absolute",
 

@@ -1,11 +1,13 @@
 import imageUrlBuilder from "@sanity/image-url";
 import client from "client";
 
+const IS_DEV = true; //process.env.NODE_ENV === "development";
+
 export const imageUrlFor = (
     source: any,
     options?: { isMeta?: boolean }
 ): string => {
-    if (options?.isMeta) {
+    if (options?.isMeta || IS_DEV) {
         const url = imageUrlBuilder(client).image(source).url();
         return url;
     }

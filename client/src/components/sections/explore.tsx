@@ -28,37 +28,49 @@ export const Explore = React.forwardRef<
 
     return (
         <>
-            <Section className={clsx("text-slate-700", className)} ref={ref}>
-                <div className='relative flex justify-center flex-1'>
-                    <div
-                        className={clsx(
-                            "z-10 absolute w-screen bg-gradient-to-b from-white h-48 md:hidden transition-opacity duration-200",
-                            { "opacity-0": hasInteracted }
-                        )}
-                    ></div>
-                    <div
-                        className={clsx(
-                            "z-100 absolute flex flex-col z-10 justify-center align-center px-16 md:hidden transition-opacity duration-200",
-                            { "opacity-0": hasInteracted }
-                        )}
+            {(() => {
+                if (page.map === undefined || page.rotatedMap === undefined) {
+                    console.warn(
+                        "Map or rotatedMap is undefined for page:",
+                        page.slug.current
+                    );
+                    return null;
+                }
+
+                return (
+                    <Section
+                        className={clsx("text-slate-700", className)}
+                        ref={ref}
                     >
-                        <h2 className='text-xl font-bold pt-8 pb-2 text-center'>
-                            Explore
-                        </h2>
+                        <div className='relative flex justify-center flex-1 overflow-scroll'>
+                            <div
+                                className={clsx(
+                                    "z-10 absolute w-screen bg-gradient-to-b from-white h-32 md:hidden transition-opacity duration-200",
+                                    { "opacity-0": hasInteracted }
+                                )}
+                            ></div>
+                            <div
+                                className={clsx(
+                                    "z-100 absolute flex flex-col z-10 justify-center align-center md:px-16 md:hidden transition-opacity duration-200",
+                                    { "opacity-0": hasInteracted }
+                                )}
+                            >
+                                <div className='font-bold pt-3 pb-2 text-center whitespace-nowrap'>
+                                    Touch a building or scroll to discover more
+                                </div>
+                            </div>
 
-                        <div className='mt-2 mb-8 text-center'>
-                            Touch a highlighted building to discover more.
+                            <Map
+                                currentSlug={page.slug.current}
+                                interact={interact}
+                                horizontalSrc={page.map}
+                                verticalSrc={page.rotatedMap}
+                                buildingCoordinates={page.buildingCoordinates}
+                            />
                         </div>
-                    </div>
-
-                    <Map
-                        currentSlug={page.slug.current}
-                        interact={interact}
-                        horizontalSrc={page.map}
-                        verticalSrc={page.rotatedMap}
-                    />
-                </div>
-            </Section>
+                    </Section>
+                );
+            })()}
             {isExplore && (
                 <div className='relative flex-1 overflow-hidden flex flex-col md:hidden'>
                     <Marquee />

@@ -135,7 +135,7 @@ export default function About({ page }: { page: AboutPage }) {
                                 )
                             }
                         >
-                            Play audio
+                            Audio Tour
                         </Button>
 
                         <div className='flex flex-col pt-8 px-12 portable-text'>

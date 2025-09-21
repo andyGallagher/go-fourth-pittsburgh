@@ -1,7 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
+import { ReactComponent as ArrowLeftIcon } from "../../assets/icons/arrow--left.svg";
+import { ReactComponent as ArrowRightIcon } from "../../assets/icons/arrow--right.svg";
 import { ReactComponent as CloseIcon } from "../../assets/icons/close.svg";
 import { audioUrlFor, getImageProps } from "../../helpers/urlFor";
+import { Button } from "../ui/button";
 import clsx from "clsx";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useMemo, useRef } from "react";
 import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
@@ -27,6 +32,8 @@ export const Audio = ({
     isShowing: boolean;
     close: () => void;
 }) => {
+    const router = useRouter();
+
     const hasShownRef = useRef(false);
     const audioRef = useRef<AudioPlayer>(null);
 
@@ -74,6 +81,7 @@ export const Audio = ({
                     : "translate-y-full md:hidden"
             )}
             style={{
+                zIndex: 200,
                 boxShadow:
                     "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 -8px 18px -6px rgb(0 0 0 / 0.1)",
             }}
@@ -145,6 +153,53 @@ export const Audio = ({
                 src={audioUrlFor(page.audio.asset._ref)}
                 showJumpControls={false}
             />
+
+            <div className='flex mt-6 pt-2 border-t-2 border-slate-300 justify-between'>
+                {page.previousBuildingSlug?.current && (
+                    <Button
+                        className='flex items-center bg-slate-300'
+                        isSmall
+                        onClick={(e) => {
+                            e.preventDefault();
+                            router.push(
+                                `/explore/${page.previousBuildingSlug!.current}`
+                            );
+                        }}
+                    >
+                        <ArrowLeftIcon
+                            style={{
+                                fill: "rgb(30, 41, 59)",
+                                width: "16px",
+                                height: "16px",
+                            }}
+                        />
+                        <span className='ml-1'>Previous</span>
+                    </Button>
+                )}
+
+                {page.nextBuildingSlug?.current && (
+                    <Button
+                        className='flex items-center bg-slate-300'
+                        isSmall
+                        onClick={(e) => {
+                            e.preventDefault();
+                            router.push(
+                                `/explore/${page.nextBuildingSlug!.current}`
+                            );
+                        }}
+                        style={{ marginLeft: "auto" }}
+                    >
+                        <span className='mr-1'>Next</span>
+                        <ArrowRightIcon
+                            style={{
+                                fill: "rgb(30, 41, 59)",
+                                width: "16px",
+                                height: "16px",
+                            }}
+                        />
+                    </Button>
+                )}
+            </div>
         </div>
     );
 };

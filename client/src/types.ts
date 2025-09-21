@@ -17,6 +17,7 @@ export interface BasePage {
     subtitle: string;
     title: string;
     type: "LandingPage" | "BuildingPage" | "AboutPage";
+    previousBuildingSlug?: { current: string };
     nextBuildingSlug?: { current: string };
     metaTitle: string;
     metaDescription: string;
@@ -26,6 +27,7 @@ export interface BasePage {
 export interface LandingPage extends BasePage {
     type: "LandingPage";
     sponsors: undefined;
+    popup: any;
 }
 
 export interface BuildingPage extends BasePage {
@@ -42,11 +44,20 @@ export interface BuildingPage extends BasePage {
     zoomInAnimate?: SanityImageAssetDocument;
     zoomOutAnimate?: SanityImageAssetDocument;
     zoomedIn?: SanityImageAssetDocument;
+    zoomTransformCss?: string;
+    shouldShowGradient?: boolean;
+    imageColor?: string;
+    mobileOffset?: number;
     sponsors: {
         _id: string;
         name: string;
         url: string;
         image: SanityImageAssetDocument;
+    }[];
+    popup: any;
+    buildingCoordinates: {
+        slug: string;
+        coordinates: [number, number, number, number];
     }[];
 }
 

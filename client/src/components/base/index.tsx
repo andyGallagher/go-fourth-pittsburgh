@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { getImageProps } from "../../helpers/urlFor";
+import { Popup } from "../popup";
 import { Viewports } from "../viewports";
 import clsx from "clsx";
 import { Audio } from "components/audio";
@@ -47,7 +48,14 @@ export const Base = ({ page }: { page: LandingPage | BuildingPage }) => {
         <Viewports>
             <Metadata key={`${page.title}--metadata`} page={page} />
 
-            <main className={clsx(drawer === "audio" && "pb-[90px]")}>
+            <main
+                className={clsx(
+                    "w-[100vw] md:w-auto",
+                    drawer === "audio" && "pb-[90px]"
+                )}
+            >
+                <Popup popup={page.popup} />
+
                 <div
                     className=' md:flex md:flex-row md:mx-auto'
                     onClick={() => {
@@ -94,7 +102,7 @@ export const Base = ({ page }: { page: LandingPage | BuildingPage }) => {
 
                         {Boolean(page.sponsors && page.sponsors.length > 0) && (
                             <div className='flex flex-col items-center'>
-                                <div className='credits text-slate-500 tracking-wider portable-text flex flex-wrap justify-center items-center text-center p-8 border-t-2 border-b-2 my-4 border-slate-300 md:border-2 md:shadow-md'>
+                                <div className='credits text-slate-600 tracking-wider portable-text flex flex-wrap justify-center items-center text-center p-8 border-t-2 border-b-2 my-4 border-slate-300 md:border-2 md:shadow-md'>
                                     <div className='mb-4'>
                                         <h3 className='text-sm tracking-widest'>
                                             {page.sponsors?.length === 1

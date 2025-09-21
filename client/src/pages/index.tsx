@@ -8,8 +8,9 @@ export default function Index({ page }: { page: LandingPage }) {
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-    const [page, buildings, contributors, sponsors]: [
+    const [page, buildings, contributors, sponsors, popups]: [
         any,
+        any[],
         any[],
         any[],
         any[]
@@ -22,9 +23,20 @@ export const getStaticProps: GetStaticProps = async (context) => {
         client.fetch(`*[_type == "building"]`),
         client.fetch(`*[_type == "contributor"]`),
         client.fetch(`*[_type == "sponsor"]`),
+        client.fetch(`*[_type == "popup"]`),
     ]);
 
-    const sortedBuildings = buildings.sort((a, b) => a.order - b.order);
+    const sortedBuildings = buildings.sort((a, b) => {
+        const orderA = a.order ?? Number.MAX_SAFE_INTEGER;
+        const orderB = b.order ?? Number.MAX_SAFE_INTEGER;
+        return orderA - orderB;
+    });
+
+    const sortedPopups = popups.sort((a, b) => {
+        const orderA = a.order ?? Number.MAX_SAFE_INTEGER;
+        const orderB = b.order ?? Number.MAX_SAFE_INTEGER;
+        return orderA - orderB;
+    });
 
     return {
         props: {
@@ -33,7 +45,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
                 type: "LandingPage",
                 nextBuildingSlug: sortedBuildings[0].slug,
                 contributors,
-                sponsors,
+                sponsors: [],
+                popup: sortedPopups[0],
             },
         },
     };
