@@ -112,14 +112,7 @@ export const Building = ({
     }, [router.asPath]);
 
     return (
-        <div
-            className='relative md:h-[100svh] overflow-hidden md:rounded-xl'
-            style={{
-                height: (page as any)?.mobileOffset
-                    ? `calc(100svh - ${(page as any).mobileOffset}vh)`
-                    : "100svh",
-            }}
-        >
+        <div className='relative md:h-[100svh] overflow-hidden md:rounded-xl'>
             <Section className='relative'>
                 {page.type === "BuildingPage" &&
                 page.mainImage &&

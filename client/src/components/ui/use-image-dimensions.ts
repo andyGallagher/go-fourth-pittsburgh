@@ -35,9 +35,9 @@ export const useImageDimensions = (mobileOffset: number = 0) => {
                 // Set container height to what the image height would be when width = 100vw
                 const scaledImageHeight = viewportWidth / naturalAspectRatio;
 
-                // Apply mobile offset to reduce container height
+                // Apply mobile offset to reduce container height, but ensure no bottom cropping
                 const offsetAmount = (scaledImageHeight * mobileOffset) / 100;
-                containerHeight = `${scaledImageHeight - offsetAmount}px`;
+                containerHeight = `${scaledImageHeight}px`; // Show full height, don't subtract offset
 
                 // Image should fill viewport width
                 imageWidth = "100vw";
@@ -46,14 +46,17 @@ export const useImageDimensions = (mobileOffset: number = 0) => {
                 // Calculate how much to crop from top
                 cropTop = offsetAmount;
             } else {
-                // Image is taller than viewport ratio - will be cropped vertically
-                // Set container to viewport height minus offset
-                const offsetAmount = (viewportHeight * mobileOffset) / 100;
-                containerHeight = `${viewportHeight - offsetAmount}px`;
+                // Image is taller than viewport ratio - scale to show full image
+                // Calculate the height needed to show full image when width fits viewport
+                const scaledImageHeight = viewportWidth / naturalAspectRatio;
 
-                // Image should fill viewport height
-                imageHeight = "100vh";
-                imageWidth = `${viewportHeight * naturalAspectRatio}px`;
+                // Apply mobile offset
+                const offsetAmount = (scaledImageHeight * mobileOffset) / 100;
+                containerHeight = `${scaledImageHeight}px`; // Show full height
+
+                // Image dimensions
+                imageWidth = "100vw";
+                imageHeight = `${scaledImageHeight}px`;
 
                 cropTop = offsetAmount;
             }

@@ -4,9 +4,6 @@ import clsx from "clsx";
 import { getImageProps } from "helpers/urlFor";
 import React, { useEffect, useRef, useState } from "react";
 
-const imageClassName =
-    "absolute top-0 left-0 w-full h-full flex items-center justify-center overflow-hidden opacity-0";
-
 export const ZoomIn = ({
     animationIn,
     animationOut,
@@ -79,7 +76,7 @@ export const ZoomIn = ({
         setTimeout(() => setShouldLoadAnimation(true), 1000);
     }, []);
 
-    const imgClassName = `object-cover`;
+    const imgClassName = `object-cover object-top`;
     const imgStyle = {
         width: dimensions.imageWidth,
         height: dimensions.imageHeight,
@@ -89,19 +86,28 @@ export const ZoomIn = ({
 
     const clipStyle = {
         clipPath: `inset(${dimensions.cropTop}px 0 0 0)`,
+        top: `-${dimensions.cropTop}px`,
     };
+
+    const imageStyle = {
+        ...clipStyle,
+        height: `calc(${dimensions.containerHeight} + ${dimensions.cropTop}px)`,
+    };
+
+    const imageClassName =
+        "absolute top-0 left-0 w-full h-full flex items-start justify-center overflow-hidden opacity-0";
 
     return (
         <div
             className='relative flex-1 overflow-hidden md:w-[420px]'
             ref={containerRef}
             style={{
-                height: dimensions.containerHeight,
+                height: `calc(${dimensions.containerHeight} - ${dimensions.cropTop}px)`,
             }}
         >
             <div
                 className={clsx(imageClassName, "opacity-100 z-1")}
-                style={clipStyle}
+                style={imageStyle}
             >
                 <img
                     alt=''
@@ -117,7 +123,7 @@ export const ZoomIn = ({
                     imageClassName,
                     shownImage === "base" && "opacity-100"
                 )}
-                style={clipStyle}
+                style={imageStyle}
             >
                 <img
                     alt=''
@@ -132,7 +138,7 @@ export const ZoomIn = ({
                     imageClassName,
                     shownImage === "animation-in" && "opacity-100"
                 )}
-                style={clipStyle}
+                style={imageStyle}
             >
                 {shouldLoadAnimation && (
                     <img
@@ -150,7 +156,7 @@ export const ZoomIn = ({
                     imageClassName,
                     shownImage === "animation-out" && "opacity-100"
                 )}
-                style={clipStyle}
+                style={imageStyle}
             >
                 {shouldLoadAnimation && (
                     <img
@@ -168,7 +174,7 @@ export const ZoomIn = ({
                     imageClassName,
                     shownImage === "zoomed" && "opacity-100"
                 )}
-                style={clipStyle}
+                style={imageStyle}
             >
                 <img
                     alt=''

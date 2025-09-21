@@ -59,14 +59,15 @@ export const FakeZoomIn = ({
             }}
         >
             <div
-                className='absolute top-0 left-0 w-full h-full flex items-center justify-center overflow-hidden'
+                className='absolute left-0 w-full h-full flex items-start justify-center overflow-hidden'
                 style={{
                     clipPath: `inset(${dimensions.cropTop}px 0 0 0)`,
+                    top: `-${dimensions.cropTop}px`,
                 }}
             >
                 <img
                     ref={imageRef}
-                    className='object-cover'
+                    className='object-cover object-top'
                     alt={alt}
                     {...getImageProps(base)}
                     style={{
