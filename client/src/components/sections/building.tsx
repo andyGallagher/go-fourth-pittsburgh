@@ -138,6 +138,9 @@ export const Building = ({
                         isZoomed={isZoomed}
                         onAnimationComplete={onAnimationComplete}
                         mobileOffset={(page as any)?.mobileOffset}
+                        heightOverride={
+                            page.type === "LandingPage" ? "100vh" : undefined
+                        }
                     />
                 )}
 

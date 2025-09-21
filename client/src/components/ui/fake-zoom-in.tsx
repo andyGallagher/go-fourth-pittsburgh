@@ -13,6 +13,7 @@ export const FakeZoomIn = ({
     onAnimationComplete,
     zoomTransformCss,
     mobileOffset = 0,
+    heightOverride,
 }: {
     base: any;
     alt: string;
@@ -20,6 +21,7 @@ export const FakeZoomIn = ({
     onAnimationComplete: () => void;
     zoomTransformCss?: string;
     mobileOffset?: number;
+    heightOverride?: string;
 }) => {
     const { dimensions, containerRef, imageRef } =
         useImageDimensions(mobileOffset);
@@ -55,7 +57,7 @@ export const FakeZoomIn = ({
             className='relative flex-1 overflow-hidden md:w-[420px]'
             ref={containerRef}
             style={{
-                height: dimensions.containerHeight,
+                height: heightOverride ?? dimensions.containerHeight,
             }}
         >
             <div
