@@ -85,8 +85,8 @@ export const ZoomIn = ({
     };
 
     const clipStyle = {
-        clipPath: `inset(${dimensions.cropTop}px 0 0 0)`,
-        top: `-${dimensions.cropTop}px`,
+        clipPath: `inset(${dimensions.cropTop - 10}px 0 0 0)`,
+        top: `-${dimensions.cropTop - 8}px`,
     };
 
     const imageStyle = {
@@ -99,7 +99,7 @@ export const ZoomIn = ({
 
     return (
         <div
-            className='relative flex-1 overflow-hidden md:w-[420px] md:h-[703px]'
+            className='relative flex-1 overflow-hidden md:w-[420px] md:h-[703px] md:max-h-[90vh]'
             ref={containerRef}
             style={{
                 height: `calc(${dimensions.containerHeight} - ${dimensions.cropTop}px)`,

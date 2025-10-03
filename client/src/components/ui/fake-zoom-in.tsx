@@ -64,7 +64,7 @@ export const FakeZoomIn = ({
 
     return (
         <div
-            className='relative flex-1 overflow-hidden md:w-[420px] md:h-[703px]'
+            className='relative flex-1 overflow-hidden md:w-[420px] md:h-[703px] md:max-h-[90vh]'
             ref={containerRef}
             style={
                 viewportWidth && viewportWidth < 768
@@ -75,10 +75,11 @@ export const FakeZoomIn = ({
             }
         >
             <div
-                className='absolute left-0 w-full h-full flex items-start justify-center overflow-hidden'
+                className='absolute left-0 w-full flex items-start justify-center'
                 style={{
-                    clipPath: `inset(${dimensions.cropTop}px 0 0 0)`,
                     top: `-${dimensions.cropTop}px`,
+                    height: dimensions.imageHeight,
+                    clipPath: `inset(${dimensions.cropTop}px 0 0 0)`,
                 }}
             >
                 <img

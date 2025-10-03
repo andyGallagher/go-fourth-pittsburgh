@@ -43,32 +43,37 @@ export const useImageDimensions = (mobileOffset: number = 0) => {
 
             if (naturalAspectRatio > viewportAspectRatio) {
                 // Image is wider than viewport ratio - will be cropped horizontally
-                // Set container height to what the image height would be when width = 100vw
                 const scaledImageHeight = viewportWidth / naturalAspectRatio;
 
-                // Apply mobile offset to reduce container height, but ensure no bottom cropping
+                // Apply mobile offset to calculate crop amount from top
                 const offsetAmount = (scaledImageHeight * mobileOffset) / 100;
-                containerHeight = `${scaledImageHeight}px`; // Show full height, don't subtract offset
 
-                // Image should fill viewport width
+                // Container height should show the full scaled image height minus the cropped portion
+                const visibleHeight = scaledImageHeight - offsetAmount;
+                containerHeight = `${visibleHeight}px`;
+
+                // Image dimensions - keep full scaled height
                 imageWidth = "100vw";
                 imageHeight = `${scaledImageHeight}px`;
 
-                // Calculate how much to crop from top
+                // Crop from top by this amount
                 cropTop = offsetAmount;
             } else {
-                // Image is taller than viewport ratio - scale to show full image
-                // Calculate the height needed to show full image when width fits viewport
+                // Image is taller than viewport ratio - scale to fit width
                 const scaledImageHeight = viewportWidth / naturalAspectRatio;
 
-                // Apply mobile offset
+                // Apply mobile offset to calculate crop amount from top
                 const offsetAmount = (scaledImageHeight * mobileOffset) / 100;
-                containerHeight = `${scaledImageHeight}px`; // Show full height
 
-                // Image dimensions
+                // Container height should show the full scaled image height minus the cropped portion
+                const visibleHeight = scaledImageHeight - offsetAmount;
+                containerHeight = `${visibleHeight}px`;
+
+                // Image dimensions - keep full scaled height
                 imageWidth = "100vw";
                 imageHeight = `${scaledImageHeight}px`;
 
+                // Crop from top by this amount
                 cropTop = offsetAmount;
             }
 

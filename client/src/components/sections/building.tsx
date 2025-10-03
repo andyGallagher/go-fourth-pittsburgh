@@ -147,7 +147,7 @@ export const Building = ({
                 <div
                     className={clsx(
                         `absolute top-0 left-0 flex flex-col items-center justify-center w-[100%] ${textColorClass}`,
-                        page.type === "LandingPage" ? "pt-8" : "pt-4"
+                        page.type === "LandingPage" ? "pt-8" : "pt-4 md:pt-10"
                     )}
                 >
                     <h1
