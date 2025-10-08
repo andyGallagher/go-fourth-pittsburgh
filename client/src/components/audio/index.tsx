@@ -13,13 +13,6 @@ import "react-h5-audio-player/lib/styles.css";
 import { BasePage } from "types";
 
 const contributorStyle = (contributor: any) => {
-    // lmao
-    if (contributor.name === "Mark Houser") {
-        return {
-            transform: "scale(1.35) translate(0, 4px)",
-        };
-    }
-
     return {};
 };
 
@@ -36,6 +29,8 @@ export const Audio = ({
 
     const hasShownRef = useRef(false);
     const audioRef = useRef<AudioPlayer>(null);
+
+    const audioFileName = page.audioFileName || page.title;
 
     const contributors = useMemo(() => {
         if (!page.audioContributor) {
@@ -68,7 +63,7 @@ export const Audio = ({
         }
     }, [isShowing]);
 
-    if (!page.audioFileName && !contributors.length) {
+    if (!audioFileName && !contributors.length) {
         return null;
     }
 
@@ -96,9 +91,7 @@ export const Audio = ({
                 </div>
 
                 <div className='ml-4 flex flex-col flex-1 min-h-[68px]'>
-                    <div className='font-bold text-base'>
-                        {page.audioFileName ?? page.title}
-                    </div>
+                    <div className='font-bold text-base'>{audioFileName}</div>
                     <div className='text-sm'>
                         {contributors.map(({ name }) => name).join(" & ")}
                     </div>
@@ -116,44 +109,58 @@ export const Audio = ({
                             }}
                         />
                     </button>
-                    {contributors.length ? (
-                        <div className='ml-auto relative w-[64px] height-[55px]'>
-                            {contributors.map((contributor, index) => (
-                                <div
-                                    key={contributor.name}
-                                    className={clsx(
-                                        "absolute mt-2 mr-1 w-10 h-10 overflow-hidden flex align-center justify-center rounded-[50%] top-[-4px]",
-                                        !index ? `z-${10} left-[32px]` : ""
-                                    )}
-                                >
-                                    <img
-                                        className='absolute top-0 bottom-0 m-auto h-[100%]'
-                                        alt='thumbnail'
-                                        {...getImageProps(contributor.image)}
-                                        style={contributorStyle(contributor)}
-                                    />
+                    {(() => {
+                        if (!contributors.length) return null;
+                        if (contributors.length > 1) {
+                            return (
+                                <div className='ml-auto relative w-[64px] height-[55px]'>
+                                    {contributors.map((contributor, index) => (
+                                        <div
+                                            key={contributor.name}
+                                            className={clsx(
+                                                "absolute mt-2 mr-1 w-10 h-10 overflow-hidden flex align-center justify-center rounded-[50%] top-[-4px]",
+                                                !index
+                                                    ? `z-${10} left-[32px]`
+                                                    : ""
+                                            )}
+                                        >
+                                            <img
+                                                className='absolute top-0 bottom-0 m-auto h-[100%]'
+                                                alt='thumbnail'
+                                                {...getImageProps(
+                                                    contributor.image
+                                                )}
+                                                style={contributorStyle(
+                                                    contributor
+                                                )}
+                                            />
+                                        </div>
+                                    ))}
                                 </div>
-                            ))}
-                        </div>
-                    ) : (
-                        <div className='ml-auto relative mt-2 mr-1 w-10 overflow-hidden flex align-center justify-center rounded-[50%]'>
-                            <img
-                                className='absolute top-0 bottom-0 m-auto h-[100%]'
-                                alt='thumbnail'
-                                {...getImageProps(contributors[0].image)}
-                                style={contributorStyle(contributors[0])}
-                            />
-                        </div>
-                    )}
+                            );
+                        }
+
+                        return (
+                            <div className='ml-auto relative mt-2 mr-1 w-10 overflow-hidden flex align-center justify-center rounded-[50%]'>
+                                <img
+                                    className='absolute top-0 bottom-0 m-auto h-[100%]'
+                                    alt='thumbnail'
+                                    {...getImageProps(contributors[0].image)}
+                                    style={contributorStyle(contributors[0])}
+                                />
+                            </div>
+                        );
+                    })()}
                 </div>
             </div>
 
-            <AudioPlayer
-                ref={audioRef}
-                src={audioUrlFor(page.audio.asset._ref)}
-                showJumpControls={false}
-            />
-
+            {page.audio?.asset._ref && (
+                <AudioPlayer
+                    ref={audioRef}
+                    src={audioUrlFor(page.audio.asset._ref)}
+                    showJumpControls={false}
+                />
+            )}
             <div className='flex mt-6 pt-2 border-t-2 border-slate-300 justify-between'>
                 {page.previousBuildingSlug?.current && (
                     <Button
