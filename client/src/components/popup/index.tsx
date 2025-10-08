@@ -6,10 +6,12 @@ import { Button } from "components/ui/button";
 import React, { useEffect, useState, useCallback } from "react";
 
 export const Popup = ({ popup }: { popup: any }) => {
+    const shouldDismissBeSaved = false;
+
     const [isVisible, setIsVisible] = useState(false);
 
     // Generate a consistent localStorage key
-    const storageKey = `dismissedPopups`;
+    const storageKey = `dismissedPopups107`;
 
     // Safe localStorage getter with error handling
     const getFromStorage = useCallback((key: string) => {
@@ -22,13 +24,20 @@ export const Popup = ({ popup }: { popup: any }) => {
     }, []);
 
     // Safe localStorage setter with error handling
-    const saveToStorage = useCallback((key: string, value: any) => {
-        try {
-            localStorage.setItem(key, JSON.stringify(value));
-        } catch (error) {
-            console.error("Error writing to localStorage:", error);
-        }
-    }, []);
+    const saveToStorage = useCallback(
+        (key: string, value: any) => {
+            if (!shouldDismissBeSaved) {
+                return;
+            }
+
+            try {
+                localStorage.setItem(key, JSON.stringify(value));
+            } catch (error) {
+                console.error("Error writing to localStorage:", error);
+            }
+        },
+        [shouldDismissBeSaved]
+    );
 
     useEffect(() => {
         if (!popup) {

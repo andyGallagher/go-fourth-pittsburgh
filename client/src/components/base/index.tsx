@@ -1,11 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import { getImageProps } from "../../helpers/urlFor";
-import { Popup } from "../popup";
 import { Viewports } from "../viewports";
 import clsx from "clsx";
 import { Audio } from "components/audio";
 import { LookInside } from "components/look-inside";
 import { Metadata } from "components/metadata";
+import { Popup } from "components/popup";
 import { Sections } from "components/sections";
 import { Button } from "components/ui/button";
 import { Footer } from "components/ui/footer";
@@ -49,14 +49,14 @@ export const Base = ({ page }: { page: LandingPage | BuildingPage }) => {
         <Viewports>
             <Metadata key={`${page.title}--metadata`} page={page} />
 
+            <Popup popup={page.popup} />
+
             <main
                 className={clsx(
                     "w-[100vw] md:w-auto",
                     drawer === "audio" && "pb-[90px]"
                 )}
             >
-                <Popup popup={page.popup} />
-
                 <div
                     className=' md:flex md:flex-row md:mx-auto'
                     onClick={() => {
