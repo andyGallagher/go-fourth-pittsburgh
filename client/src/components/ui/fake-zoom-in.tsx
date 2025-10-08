@@ -93,6 +93,10 @@ export const FakeZoomIn = ({
                         maxWidth: "none",
                         transform: `
                             ${(() => {
+                                if (!hasLoaded) {
+                                    return `scale(1)`;
+                                }
+
                                 if (isZoomed && zoomTransformCss) {
                                     return zoomTransformCss;
                                 }
