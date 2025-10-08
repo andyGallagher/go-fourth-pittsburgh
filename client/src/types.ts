@@ -56,6 +56,7 @@ export interface BuildingPage extends BasePage {
     }[];
     popup: any;
     buildingCoordinates: {
+        order: number;
         slug: string;
         coordinates: [number, number, number, number];
     }[];
