@@ -67,7 +67,7 @@ export const Popup = ({ popup }: { popup: any }) => {
         }
 
         setIsVisible(false);
-    }, []);
+    }, [saveToStorage, getFromStorage, popup, storageKey]);
 
     // Handle ESC key press
     useEffect(() => {
