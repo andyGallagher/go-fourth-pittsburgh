@@ -51,10 +51,6 @@ export const Audio = ({
         if (isShowing) {
             hasShownRef.current = true;
         }
-
-        if (!isShowing && hasShownRef.current) {
-            audioRef.current?.audio.current?.pause();
-        }
     }, [isShowing]);
 
     useEffect(() => {
