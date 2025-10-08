@@ -49,5 +49,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
                 popup: sortedPopups[0],
             },
         },
+        // Enables ISR with a revalidation period of 60 seconds
+        revalidate: 60,
     };
 };

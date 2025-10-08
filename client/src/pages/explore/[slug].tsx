@@ -19,7 +19,7 @@ export async function getStaticPaths() {
         paths: buildings.map((building: any) => ({
             params: { slug: building },
         })),
-        fallback: true,
+        fallback: "blocking", // Changed from true to 'blocking' for better SEO and UX
     };
 }
 
@@ -89,5 +89,7 @@ export const getStaticProps: GetStaticProps = async (context: any) => {
                 buildingCoordinates,
             },
         },
+        // Enables ISR with a revalidation period of 60 seconds
+        revalidate: 60,
     };
 };

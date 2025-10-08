@@ -300,5 +300,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
                 sponsors: sortedSponsors,
             },
         },
+        // Enables ISR with a revalidation period of 60 seconds
+        revalidate: 60,
     };
 };
