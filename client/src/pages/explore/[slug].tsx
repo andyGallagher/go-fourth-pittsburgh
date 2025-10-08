@@ -70,6 +70,7 @@ export const getStaticProps: GetStaticProps = async (context: any) => {
         }
 
         return {
+            order: building.order ?? Number.MAX_SAFE_INTEGER,
             slug: building.slug.current,
             coordinates: building.mapCoordinates,
         };
