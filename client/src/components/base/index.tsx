@@ -113,7 +113,7 @@ export const Base = ({ page }: { page: LandingPage | BuildingPage }) => {
                                                 : "PARTNERS"}
                                         </h3>
                                     </div>
-                                    <div className='text-xs flex flex-wrap justify-center'>
+                                    <div className='text-xs flex flex-wrap justify-center flex-col align-center'>
                                         {page.sponsors?.map((sponsor) => {
                                             return (
                                                 <a
