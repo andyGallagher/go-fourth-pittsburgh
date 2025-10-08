@@ -3,6 +3,7 @@ import { getImageProps } from "../../helpers/urlFor";
 import { Viewports } from "../viewports";
 import clsx from "clsx";
 import { Audio } from "components/audio";
+import { FloatingAudioButton } from "components/audio/floating-button";
 import { LookInside } from "components/look-inside";
 import { Metadata } from "components/metadata";
 import { Popup } from "components/popup";
@@ -36,6 +37,7 @@ export const Base = ({ page }: { page: LandingPage | BuildingPage }) => {
         undefined
     );
     const [wasAudioOpen, setWasAudioOpen] = useState(false);
+    const [isAudioPlaying, setIsAudioPlaying] = useState(false);
     const router = useRouter();
     const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -43,6 +45,7 @@ export const Base = ({ page }: { page: LandingPage | BuildingPage }) => {
 
     useEffect(() => {
         scrollRef.current?.scrollTo(0, 0);
+        setIsAudioPlaying(false);
     }, [page.title]);
 
     return (
@@ -180,6 +183,13 @@ export const Base = ({ page }: { page: LandingPage | BuildingPage }) => {
                     page={page}
                     isShowing={drawer === "audio"}
                     close={() => setDrawer(undefined)}
+                    onAudioStateChange={setIsAudioPlaying}
+                />
+
+                <FloatingAudioButton
+                    page={page}
+                    isVisible={isAudioPlaying && drawer !== "audio"}
+                    onClick={() => setDrawer("audio")}
                 />
 
                 {page.type === "BuildingPage" && (

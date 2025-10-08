@@ -7,7 +7,7 @@ import { Button } from "../ui/button";
 import clsx from "clsx";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 import { BasePage } from "types";
@@ -20,15 +20,18 @@ export const Audio = ({
     page,
     isShowing,
     close,
+    onAudioStateChange,
 }: {
     page: BasePage;
     isShowing: boolean;
     close: () => void;
+    onAudioStateChange?: (isPlaying: boolean) => void;
 }) => {
     const router = useRouter();
 
     const hasShownRef = useRef(false);
     const audioRef = useRef<AudioPlayer>(null);
+    const [isPlaying, setIsPlaying] = useState(false);
 
     const audioFileName = page.audioFileName || page.title;
 
@@ -58,6 +61,37 @@ export const Audio = ({
             audioRef.current?.audio.current?.play();
         }
     }, [isShowing]);
+
+    // Track audio play/pause state
+    useEffect(() => {
+        const audioElement = audioRef.current?.audio.current;
+        if (!audioElement) return;
+
+        const handlePlay = () => {
+            setIsPlaying(true);
+            onAudioStateChange?.(true);
+        };
+
+        const handlePause = () => {
+            setIsPlaying(false);
+            onAudioStateChange?.(false);
+        };
+
+        const handleEnded = () => {
+            setIsPlaying(false);
+            onAudioStateChange?.(false);
+        };
+
+        audioElement.addEventListener("play", handlePlay);
+        audioElement.addEventListener("pause", handlePause);
+        audioElement.addEventListener("ended", handleEnded);
+
+        return () => {
+            audioElement.removeEventListener("play", handlePlay);
+            audioElement.removeEventListener("pause", handlePause);
+            audioElement.removeEventListener("ended", handleEnded);
+        };
+    }, [onAudioStateChange]);
 
     if (!audioFileName && !contributors.length) {
         return null;

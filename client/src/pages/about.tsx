@@ -3,6 +3,7 @@ import { PortableText, PortableTextReactComponents } from "@portabletext/react";
 import client from "client";
 import clsx from "clsx";
 import { Audio } from "components/audio";
+import { FloatingAudioButton } from "components/audio/floating-button";
 import { Metadata } from "components/metadata";
 import { Button } from "components/ui/button";
 import { Footer } from "components/ui/footer";
@@ -108,6 +109,7 @@ const adComponents: Partial<PortableTextReactComponents> = {
 
 export default function About({ page }: { page: AboutPage }) {
     const [drawer, setDrawer] = useState<"audio" | undefined>(undefined);
+    const [isAudioPlaying, setIsAudioPlaying] = useState(false);
 
     return (
         <Viewports>
@@ -270,6 +272,13 @@ export default function About({ page }: { page: AboutPage }) {
                     page={page}
                     isShowing={drawer === "audio"}
                     close={() => setDrawer(undefined)}
+                    onAudioStateChange={setIsAudioPlaying}
+                />
+
+                <FloatingAudioButton
+                    page={page}
+                    isVisible={isAudioPlaying && drawer !== "audio"}
+                    onClick={() => setDrawer("audio")}
                 />
             </main>
         </Viewports>
