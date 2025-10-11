@@ -241,7 +241,7 @@ export default function About({ page }: { page: AboutPage }) {
                                     PARTNERS
                                 </h3>
                             </div>
-                            <div className='text-xs flex flex-wrap justify-center flex-col align-center'>
+                            <div className='text-xs flex flex-wrap justify-center flex-col align-center items-center'>
                                 {page.sponsors.map((sponsor) => {
                                     return (
                                         <a

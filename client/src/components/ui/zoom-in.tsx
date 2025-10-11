@@ -95,7 +95,7 @@ export const ZoomIn = ({
     };
 
     const imageClassName =
-        "absolute top-0 left-0 w-full h-full flex items-start justify-center overflow-hidden opacity-0";
+        "absolute top-0 left-0 w-full h-full flex items-start justify-center overflow-hidden";
 
     return (
         <div
@@ -121,7 +121,7 @@ export const ZoomIn = ({
             <div
                 className={clsx(
                     imageClassName,
-                    shownImage === "base" && "opacity-100"
+                    shownImage === "base" ? "opacity-100" : "opacity-0"
                 )}
                 style={imageStyle}
             >
@@ -136,7 +136,7 @@ export const ZoomIn = ({
             <div
                 className={clsx(
                     imageClassName,
-                    shownImage === "animation-in" && "opacity-100"
+                    shownImage === "animation-in" ? "opacity-100" : "opacity-0"
                 )}
                 style={imageStyle}
             >
@@ -154,7 +154,7 @@ export const ZoomIn = ({
             <div
                 className={clsx(
                     imageClassName,
-                    shownImage === "animation-out" && "opacity-100"
+                    shownImage === "animation-out" ? "opacity-100" : "opacity-0"
                 )}
                 style={imageStyle}
             >
@@ -172,7 +172,7 @@ export const ZoomIn = ({
             <div
                 className={clsx(
                     imageClassName,
-                    shownImage === "zoomed" && "opacity-100"
+                    shownImage === "zoomed" ? "opacity-100" : "opacity-0"
                 )}
                 style={imageStyle}
             >

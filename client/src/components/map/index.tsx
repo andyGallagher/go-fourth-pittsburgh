@@ -109,20 +109,19 @@ export const Map = ({
 
     const activeBuildingRef = useRef<HTMLAnchorElement>(null);
     const mapRef = useRef<HTMLDivElement>(null);
+    const hasScrolledRef = useRef<string | null>(null); // Track which slug we've scrolled to
 
     const { horizontalScrollPosition } = useHorizontalScroll(mapRef);
     const { verticalScrollPosition } = useVerticalScroll(mapRef);
-    const [hasSetInitialScroll, setHasSetInitialScroll] = useState(false);
-    const [showStartHere, setShowStartHere] = useState(false);
+    const [showStartHere, setShowStartHere] = useState(true);
 
-    // Reset scroll state when currentSlug changes
+    // Mobile-only initial scroll - direct and simple
     useEffect(() => {
-        setHasSetInitialScroll(false);
-    }, [currentSlug]);
+        // Only handle mobile scrolling
+        if (typeof window === "undefined" || window.innerWidth >= 768) return;
 
-    // Fallback scroll mechanism using coordinates if ref-based scroll fails
-    useEffect(() => {
-        if (hasSetInitialScroll) return;
+        // Skip if we've already scrolled to this slug
+        if (hasScrolledRef.current === currentSlug) return;
 
         const currentBuilding = buildingCoordinates.find(
             (building) => building.slug === currentSlug
@@ -130,49 +129,60 @@ export const Map = ({
 
         if (!currentBuilding || !mapRef.current) return;
 
-        const timer = setTimeout(() => {
-            if (!hasSetInitialScroll && mapRef.current) {
-                try {
-                    const mapElement = mapRef.current;
-                    const isDesktop = window.innerWidth >= 768; // md breakpoint
+        const mapElement = mapRef.current;
 
-                    if (isDesktop) {
-                        // For desktop (vertical layout)
-                        const scrollTop =
-                            (currentBuilding.coordinates[1] / 100) *
-                                mapElement.scrollHeight -
-                            mapElement.clientHeight / 2;
-                        mapElement.scrollTo({
-                            top: Math.max(0, scrollTop),
-                            behavior: "smooth",
-                        });
-                    } else {
-                        // For mobile (horizontal layout)
+        const performScroll = () => {
+            if (!mapElement) return;
+
+            // Double RAF for reliable execution after layout
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    try {
                         const scrollLeft =
                             (currentBuilding.coordinates[1] / 100) *
                                 mapElement.scrollWidth -
                             mapElement.clientWidth / 2;
+
                         mapElement.scrollTo({
                             left: Math.max(0, scrollLeft),
-                            behavior: "smooth",
+                            behavior: "auto", // Use auto for instant, reliable positioning
                         });
+
+                        hasScrolledRef.current = currentSlug;
+                        console.log(
+                            `Mobile scroll: positioned at ${currentBuilding.slug}`
+                        );
+                    } catch (error) {
+                        console.warn("Map: Mobile scroll failed", error);
                     }
-                    setHasSetInitialScroll(true);
-                } catch (error) {
-                    console.warn("Map: Fallback scroll failed", error);
-                    setHasSetInitialScroll(true);
-                }
+                });
+            });
+        };
+
+        // Find the mobile image specifically
+        const mobileImage = mapElement.querySelector(
+            "img.h-\\[300px\\]"
+        ) as HTMLImageElement;
+
+        if (mobileImage) {
+            if (mobileImage.complete && mobileImage.naturalHeight > 0) {
+                // Image is loaded
+                performScroll();
+            } else {
+                // Wait for image to load
+                const handleLoad = () => performScroll();
+                mobileImage.addEventListener("load", handleLoad, {
+                    once: true,
+                });
             }
-        }, 1000); // Longer delay for fallback
-
-        return () => clearTimeout(timer);
-    }, [currentSlug, hasSetInitialScroll, buildingCoordinates]);
-
-    useEffect(() => {
-        if (!hasSetInitialScroll) {
-            return;
+        } else {
+            // Fallback - try again after images might load
+            setTimeout(performScroll, 100);
         }
+    }, [currentSlug, buildingCoordinates]);
 
+    // Handle scroll interactions after initial positioning
+    useEffect(() => {
         const mapElement = mapRef.current;
         if (!mapElement) {
             console.warn("Map: map element not found");
@@ -188,58 +198,7 @@ export const Map = ({
         return () => {
             mapElement.removeEventListener("scroll", handleScroll);
         };
-    }, [hasSetInitialScroll, interact]);
-
-    useEffect(() => {
-        // Add a small delay to ensure the DOM is fully rendered
-        const timer = setTimeout(() => {
-            if (activeBuildingRef.current) {
-                try {
-                    activeBuildingRef.current.scrollIntoView({
-                        block: "center",
-                        inline: "center",
-                        behavior: "smooth",
-                    });
-                    setHasSetInitialScroll(true);
-                } catch (error) {
-                    console.warn(
-                        "Map: Failed to scroll to active building",
-                        error
-                    );
-                    setHasSetInitialScroll(true);
-                }
-            } else {
-                // If ref is not available, try again after a longer delay
-                const retryTimer = setTimeout(() => {
-                    if (activeBuildingRef.current) {
-                        try {
-                            activeBuildingRef.current.scrollIntoView({
-                                block: "center",
-                                inline: "center",
-                                behavior: "smooth",
-                            });
-                            setHasSetInitialScroll(true);
-                        } catch (error) {
-                            console.warn(
-                                "Map: Failed to scroll to active building on retry",
-                                error
-                            );
-                            setHasSetInitialScroll(true);
-                        }
-                    } else {
-                        console.warn(
-                            "Map: Active building ref not found after retry"
-                        );
-                        setHasSetInitialScroll(true);
-                    }
-                }, 500);
-
-                return () => clearTimeout(retryTimer);
-            }
-        }, 100);
-
-        return () => clearTimeout(timer);
-    }, [currentSlug]); // Add currentSlug as dependency
+    }, [interact]);
 
     useEffect(() => {
         const timer = setTimeout(() => {
