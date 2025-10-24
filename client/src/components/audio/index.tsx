@@ -217,7 +217,9 @@ export const Audio = ({
                         onClick={(e) => {
                             e.preventDefault();
                             router.push(
-                                `/explore/${page.nextBuildingSlug!.current}`
+                                `/explore/${
+                                    page.nextBuildingSlug!.current
+                                }?autoplay=true`
                             );
                         }}
                         style={{ marginLeft: "auto" }}

@@ -45,8 +45,18 @@ export const Base = ({ page }: { page: LandingPage | BuildingPage }) => {
 
     useEffect(() => {
         scrollRef.current?.scrollTo(0, 0);
-        setIsAudioPlaying(false);
     }, [page.title]);
+
+    // Auto-open audio drawer if navigated via "Next building" button
+    // Clean up the URL
+    useEffect(() => {
+        if (router.query.autoplay === "true") {
+            setDrawer("audio");
+            router.replace(router.asPath.split("?")[0], undefined, {
+                shallow: true,
+            });
+        }
+    }, [router.query.autoplay, router]);
 
     return (
         <Viewports>
