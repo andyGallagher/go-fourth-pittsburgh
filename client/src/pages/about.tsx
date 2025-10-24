@@ -108,14 +108,9 @@ const adComponents: Partial<PortableTextReactComponents> = {
 };
 
 export default function About({ page }: { page: AboutPage }) {
-    const [drawer, setDrawer] = useState<"audio" | undefined>(undefined);
-    const [isAudioPlaying, setIsAudioPlaying] = useState(false);
-
     return (
         <Viewports>
-            <main
-                className={clsx(drawer === "audio" && "pb-[90px] md:pb-[0px]")}
-            >
+            <main className='pb-[90px] md:pb-[0px]'>
                 <Metadata page={page} />
                 <Section className='text-slate-600 pt-12' isHundo={false}>
                     <div className='flex flex-col items-center md:max-w-[600px] md:mx-auto'>
@@ -128,17 +123,6 @@ export default function About({ page }: { page: AboutPage }) {
                         </h1>
 
                         <h2 className='text-xl mt-2 mb-8'>{page.subtitle}</h2>
-
-                        <Button
-                            isInverted
-                            onClick={() =>
-                                setDrawer((drawer) =>
-                                    drawer === undefined ? "audio" : undefined
-                                )
-                            }
-                        >
-                            Audio Tour
-                        </Button>
 
                         <div className='flex flex-col pt-8 px-12 portable-text'>
                             <PortableText
@@ -267,19 +251,6 @@ export default function About({ page }: { page: AboutPage }) {
                 </Section>
 
                 <Footer />
-
-                <Audio
-                    page={page}
-                    isShowing={drawer === "audio"}
-                    close={() => setDrawer(undefined)}
-                    onAudioStateChange={setIsAudioPlaying}
-                />
-
-                <FloatingAudioButton
-                    page={page}
-                    isVisible={isAudioPlaying && drawer !== "audio"}
-                    onClick={() => setDrawer("audio")}
-                />
             </main>
         </Viewports>
     );

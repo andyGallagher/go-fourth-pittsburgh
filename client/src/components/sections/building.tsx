@@ -100,9 +100,8 @@ export const Building = ({
 
     // Determine text color based on imageColor
     const isDarkImage =
-        page.type === "LandingPage" ||
-        (page.type === "BuildingPage" &&
-            (page as BuildingPage).imageColor === "dark");
+        page.type === "BuildingPage" &&
+        (page as BuildingPage).imageColor === "dark";
     const textColorClass = isDarkImage ? "text-slate-800" : "text-white";
     const fillColor = isDarkImage ? "#1e293b" : "#fff";
 

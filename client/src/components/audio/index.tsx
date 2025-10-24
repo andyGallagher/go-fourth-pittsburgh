@@ -29,7 +29,7 @@ export const Audio = ({
 }) => {
     const router = useRouter();
 
-    const hasShownRef = useRef(false);
+    const hasPlayedRef = useRef(false);
     const audioRef = useRef<AudioPlayer>(null);
     const [isPlaying, setIsPlaying] = useState(false);
 
@@ -51,14 +51,10 @@ export const Audio = ({
     }, [page]);
 
     useEffect(() => {
-        if (isShowing) {
-            hasShownRef.current = true;
-        }
-    }, [isShowing]);
-
-    useEffect(() => {
-        if (isShowing && !hasShownRef.current) {
+        if (isShowing && !hasPlayedRef.current) {
             audioRef.current?.audio.current?.play();
+            hasPlayedRef.current = true;
+            setIsPlaying(true);
         }
     }, [isShowing]);
 

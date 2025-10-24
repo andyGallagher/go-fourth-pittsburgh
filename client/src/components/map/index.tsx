@@ -203,7 +203,7 @@ export const Map = ({
     useEffect(() => {
         const timer = setTimeout(() => {
             setShowStartHere(true);
-        }, 3000);
+        }, 500);
 
         return () => clearTimeout(timer);
     }, []);

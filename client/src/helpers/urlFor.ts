@@ -1,7 +1,7 @@
 import imageUrlBuilder from "@sanity/image-url";
 import client from "client";
 
-const IS_DEV = true; //process.env.NODE_ENV === "development";
+const IS_DEV = false; //process.env.NODE_ENV === "development";
 
 export const imageUrlFor = (
     source: any,
