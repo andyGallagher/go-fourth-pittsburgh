@@ -8,7 +8,7 @@ export default function Index({ page }: { page: LandingPage }) {
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-    const [page, buildings, contributors, sponsors, popups]: [
+    const [page, buildings, contributors, popups]: [
         any,
         any[],
         any[],
@@ -24,6 +24,15 @@ export const getStaticProps: GetStaticProps = async (context) => {
         client.fetch(`*[_type == "contributor"]`),
         client.fetch(`*[_type == "sponsor"]`),
         client.fetch(`*[_type == "popup"]`),
+    ]);
+
+    const [_page, sponsors] = await Promise.all([
+        client.fetch(
+            `
+                *[_type == "about"][0]
+            `
+        ),
+        client.fetch(`*[_type == "sponsor"]`),
     ]);
 
     const sortedBuildings = buildings.sort((a, b) => {
@@ -45,8 +54,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
                 type: "LandingPage",
                 nextBuildingSlug: sortedBuildings[0].slug,
                 contributors,
-                sponsors: [],
                 popup: sortedPopups[0],
+                sponsors,
             },
         },
         // Enables ISR with a revalidation period of 60 seconds

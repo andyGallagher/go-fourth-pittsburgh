@@ -86,7 +86,6 @@ export const Base = ({ page }: { page: LandingPage | BuildingPage }) => {
                             page={page}
                         />
                     )}
-
                     <Sections.Building
                         key={`${page.title}--building`}
                         page={page}
@@ -177,7 +176,6 @@ export const Base = ({ page }: { page: LandingPage | BuildingPage }) => {
                             </Button>
                         </div>
                     </div>
-
                     {isExplorerPage && (
                         <Sections.Explore
                             className='-md:hidden'

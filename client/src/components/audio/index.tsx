@@ -5,7 +5,6 @@ import { ReactComponent as CloseIcon } from "../../assets/icons/close.svg";
 import { audioUrlFor, getImageProps } from "../../helpers/urlFor";
 import { Button } from "../ui/button";
 import clsx from "clsx";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import AudioPlayer from "react-h5-audio-player";
@@ -154,7 +153,8 @@ export const Audio = ({
                                                 className='absolute top-0 bottom-0 m-auto h-[100%]'
                                                 alt='thumbnail'
                                                 {...getImageProps(
-                                                    contributor.image
+                                                    contributor.zoomImage ||
+                                                        contributor.image
                                                 )}
                                                 style={contributorStyle(
                                                     contributor

@@ -149,9 +149,6 @@ export const Map = ({
                         });
 
                         hasScrolledRef.current = currentSlug;
-                        console.log(
-                            `Mobile scroll: positioned at ${currentBuilding.slug}`
-                        );
                     } catch (error) {
                         console.warn("Map: Mobile scroll failed", error);
                     }

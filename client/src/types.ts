@@ -9,6 +9,7 @@ export interface BasePage {
         _id: string;
         name: string;
         byline: string;
+        zoomImage?: SanityImageAssetDocument;
         image: SanityImageAssetDocument;
     }[];
     audio?: any; // Audio file
@@ -26,7 +27,12 @@ export interface BasePage {
 
 export interface LandingPage extends BasePage {
     type: "LandingPage";
-    sponsors: undefined;
+    sponsors: {
+        _id: string;
+        name: string;
+        url: string;
+        image: SanityImageAssetDocument;
+    }[];
     popup: any;
 }
 
@@ -69,6 +75,7 @@ export interface AboutPage extends BasePage {
         _id: string;
         name: string;
         byline: string;
+        zoomImage?: SanityImageAssetDocument;
         image: SanityImageAssetDocument;
         bio: any; // PortableText
     }[];

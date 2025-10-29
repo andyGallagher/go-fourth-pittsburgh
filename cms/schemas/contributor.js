@@ -31,6 +31,14 @@ export default {
             },
         },
         {
+            name: "zoomImage",
+            title: "Zoom Image",
+            type: "image",
+            options: {
+                hotspot: true,
+            },
+        },
+        {
             name: "bio",
             title: "Bio",
             type: "blockContent",

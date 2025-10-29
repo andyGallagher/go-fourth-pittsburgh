@@ -1,11 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { PortableText, PortableTextReactComponents } from "@portabletext/react";
 import client from "client";
-import clsx from "clsx";
-import { Audio } from "components/audio";
-import { FloatingAudioButton } from "components/audio/floating-button";
 import { Metadata } from "components/metadata";
-import { Button } from "components/ui/button";
 import { Footer } from "components/ui/footer";
 import { Section } from "components/ui/section";
 import { Viewports } from "components/viewports";
@@ -110,7 +106,7 @@ const adComponents: Partial<PortableTextReactComponents> = {
 export default function About({ page }: { page: AboutPage }) {
     return (
         <Viewports>
-            <main className='pb-[90px] md:pb-[0px]'>
+            <main className=''>
                 <Metadata page={page} />
                 <Section className='text-slate-600 pt-12' isHundo={false}>
                     <div className='flex flex-col items-center md:max-w-[600px] md:mx-auto'>
@@ -122,9 +118,9 @@ export default function About({ page }: { page: AboutPage }) {
                             {page.title}
                         </h1>
 
-                        <h2 className='text-xl mt-2 mb-8'>{page.subtitle}</h2>
+                        <h2 className='text-xl mt-2 mb-6'>{page.subtitle}</h2>
 
-                        <div className='flex flex-col pt-8 px-12 portable-text'>
+                        <div className='flex flex-col pt-0 px-12 portable-text'>
                             <PortableText
                                 value={page.description}
                                 components={baseComponents}
@@ -139,15 +135,11 @@ export default function About({ page }: { page: AboutPage }) {
                                             <div className='max-w-[30%] rounded-md overflow-hidden'>
                                                 <img
                                                     // YES, I know better
-                                                    className={
-                                                        contributor.name ===
-                                                        "Mark Houser"
-                                                            ? "transform scale-[1.15] translate-y-[3.5%]"
-                                                            : undefined
-                                                    }
+                                                    className={contributor.name}
                                                     alt={`picture of ${contributor.name}`}
                                                     {...getImageProps(
-                                                        contributor.image
+                                                        contributor.zoomImage ||
+                                                            contributor.image
                                                     )}
                                                     style={(() => {
                                                         if (
