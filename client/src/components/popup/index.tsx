@@ -6,38 +6,30 @@ import { Button } from "components/ui/button";
 import React, { useEffect, useState, useCallback } from "react";
 
 export const Popup = ({ popup }: { popup: any }) => {
-    const shouldDismissBeSaved = false;
-
     const [isVisible, setIsVisible] = useState(false);
 
-    // Generate a consistent localStorage key
+    // sessionStorage so a dismissal lasts for the browser session,
+    // but the popup shows again on the next visit
     const storageKey = `dismissedPopups107`;
 
-    // Safe localStorage getter with error handling
+    // Safe sessionStorage getter with error handling
     const getFromStorage = useCallback((key: string) => {
         try {
-            return JSON.parse(localStorage.getItem(key) || "[]");
+            return JSON.parse(sessionStorage.getItem(key) || "[]");
         } catch (error) {
-            console.error("Error reading from localStorage:", error);
+            console.error("Error reading from sessionStorage:", error);
             return [];
         }
     }, []);
 
-    // Safe localStorage setter with error handling
-    const saveToStorage = useCallback(
-        (key: string, value: any) => {
-            if (!shouldDismissBeSaved) {
-                return;
-            }
-
-            try {
-                localStorage.setItem(key, JSON.stringify(value));
-            } catch (error) {
-                console.error("Error writing to localStorage:", error);
-            }
-        },
-        [shouldDismissBeSaved]
-    );
+    // Safe sessionStorage setter with error handling
+    const saveToStorage = useCallback((key: string, value: any) => {
+        try {
+            sessionStorage.setItem(key, JSON.stringify(value));
+        } catch (error) {
+            console.error("Error writing to sessionStorage:", error);
+        }
+    }, []);
 
     useEffect(() => {
         if (!popup) {

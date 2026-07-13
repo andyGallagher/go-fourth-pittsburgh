@@ -7,8 +7,8 @@ export const Metadata = ({ page }: { page: BasePage }) => {
         page.metaDescription ||
         "Discover Pittsburgh's Wall Street on a virtual tour of Fourth Avenue with Mark Houser and Megan Harris. With rare images and drone photography by Chris Hytha of Highrises.";
     const title = page.metaTitle
-        ? `Go Fourth | ${page.metaTitle}`
-        : "Go Fourth | GoFourthPittsburgh.org";
+        ? `Pittsburgh's Wall Street | ${page.metaTitle}`
+        : "Pittsburgh's Wall Street | Go Fourth";
     const thumbnail = page.metaThumbnail
         ? imageUrlFor(page.metaThumbnail)
         : undefined;
@@ -17,17 +17,16 @@ export const Metadata = ({ page }: { page: BasePage }) => {
         <Head>
             <title>{title}</title>
             <meta name='description' content={description} />
-            <link rel='icon' href='/favicon.png' />
+            <link rel='icon' href='/favicon.svg' />
 
             <meta property='og:type' content='website' />
-            <meta property='og:title' content='www.gofourthpittsburgh.org' />
-            <meta property='og:url' content='www.gofourthpittsburgh.org' />
+            <meta property='og:title' content={title} />
             <meta
-                property='og:site_name'
-                content='www.gofourthpittsburgh.org'
+                property='og:url'
+                content='https://pittsburghwallstreet.com'
             />
+            <meta property='og:site_name' content="Pittsburgh's Wall Street" />
             <meta property='og:description' content={description} />
-            <meta property='og:type' content='website' />
             <meta name='twitter:title' content={title} />
             <meta property='og:image' content={thumbnail} />
             <meta name='twitter:card' content='summary_large_image' />
@@ -35,7 +34,7 @@ export const Metadata = ({ page }: { page: BasePage }) => {
             <meta name='twitter:site' content='@housertalks' />
             <meta property='twitter:image' content={thumbnail} />
             <meta property='twitter:image:alt' content='' />
-            <link rel='canonical' href='www.gofourthpittsburgh.org' />
+            <link rel='canonical' href='https://pittsburghwallstreet.com' />
         </Head>
     );
 };

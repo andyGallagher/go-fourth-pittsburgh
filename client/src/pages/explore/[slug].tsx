@@ -51,11 +51,16 @@ export const getStaticProps: GetStaticProps = async (context: any) => {
         };
     }
 
-    const buildingSponsors = sortedBuildings[activeBuildingIndex].sponsors?.map(
-        (sponsor: any) => {
+    const buildingSponsors = sortedBuildings[activeBuildingIndex].sponsors
+        ?.map((sponsor: any) => {
             return sponsors.find((s) => s._id === sponsor._ref);
-        }
-    );
+        })
+        .filter(Boolean)
+        .sort((a: any, b: any) => {
+            const orderA = a.order ?? Number.MAX_SAFE_INTEGER;
+            const orderB = b.order ?? Number.MAX_SAFE_INTEGER;
+            return orderA - orderB;
+        });
 
     const buildingCoordinates = sortedBuildings.map((building) => {
         if (!building.mapCoordinates) {
