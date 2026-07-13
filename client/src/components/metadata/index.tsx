@@ -17,13 +17,20 @@ export const Metadata = ({ page }: { page: BasePage }) => {
         <Head>
             <title>{title}</title>
             <meta name='description' content={description} />
-            <link rel='icon' href='/favicon.svg' />
+            <link rel='icon' href='/favicon.svg' type='image/svg+xml' />
+            <link
+                rel='icon'
+                href='/favicon.png'
+                type='image/png'
+                sizes='48x48'
+            />
+            <link rel='apple-touch-icon' href='/apple-touch-icon.png' />
 
             <meta property='og:type' content='website' />
             <meta property='og:title' content={title} />
             <meta
                 property='og:url'
-                content='https://pittsburghwallstreet.com'
+                content='https://www.pittsburghwallstreet.com'
             />
             <meta property='og:site_name' content="Pittsburgh's Wall Street" />
             <meta property='og:description' content={description} />
@@ -34,7 +41,10 @@ export const Metadata = ({ page }: { page: BasePage }) => {
             <meta name='twitter:site' content='@housertalks' />
             <meta property='twitter:image' content={thumbnail} />
             <meta property='twitter:image:alt' content='' />
-            <link rel='canonical' href='https://pittsburghwallstreet.com' />
+            <link
+                rel='canonical'
+                href='https://www.pittsburghwallstreet.com'
+            />
         </Head>
     );
 };
