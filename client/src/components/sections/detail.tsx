@@ -10,7 +10,7 @@ const components: Partial<PortableTextReactComponents> = {
         normal: ({ children, index }) => {
             if (index === 0) {
                 return (
-                    <p>
+                    <p className='text-base mb-4'>
                         {React.Children.map(children, (child, index) => {
                             if (index === 0 && typeof child === "string") {
                                 const firstLetter = child.slice(0, 1);
@@ -45,12 +45,12 @@ const components: Partial<PortableTextReactComponents> = {
                 );
             }
 
-            return <p>{children}</p>;
+            return <p className='text-base mb-4'>{children}</p>;
         },
         blockquote: ({ children, ...rest }) => {
             const childCount = React.Children.count(children);
             return (
-                <blockquote className='mx-8 mt-8 p-4 font-garamond text-slate-200 bg-slate-700 rounded-sm'>
+                <blockquote className='mx-8 mt-8 p-4 font-garamond text-base text-slate-200 bg-slate-700 rounded-sm'>
                     {React.Children.map(children, (child, index) => {
                         if (index === childCount - 1) {
                             return (
@@ -65,12 +65,24 @@ const components: Partial<PortableTextReactComponents> = {
                 </blockquote>
             );
         },
-        h1: ({ children }) => <h1>{children}</h1>,
-        h2: ({ children }) => <h2>{children}</h2>,
-        h3: ({ children }) => <h3>{children}</h3>,
-        h4: ({ children }) => <h4>{children}</h4>,
-        h5: ({ children }) => <h5>{children}</h5>,
-        h6: ({ children }) => <h6>{children}</h6>,
+        h1: ({ children }) => (
+            <h1 className='text-3xl font-bold mb-4'>{children}</h1>
+        ),
+        h2: ({ children }) => (
+            <h2 className='text-2xl font-bold mb-3'>{children}</h2>
+        ),
+        h3: ({ children }) => (
+            <h3 className='text-xl font-bold mb-2'>{children}</h3>
+        ),
+        h4: ({ children }) => (
+            <h4 className='text-lg font-bold mb-2'>{children}</h4>
+        ),
+        h5: ({ children }) => (
+            <h5 className='text-base font-bold mb-2'>{children}</h5>
+        ),
+        h6: ({ children }) => (
+            <h6 className='text-sm font-bold mb-2'>{children}</h6>
+        ),
     },
     types: {
         image: ({ value }) => {

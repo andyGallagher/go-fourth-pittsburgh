@@ -7,7 +7,7 @@ export const Metadata = ({ page }: { page: BasePage }) => {
         page.metaDescription ||
         "Discover Pittsburgh's Wall Street on a virtual tour of Fourth Avenue with Mark Houser and Megan Harris. With rare images and drone photography by Chris Hytha of Highrises.";
     const title = page.metaTitle
-        ? `Pittsburgh's Wall Street | ${page.metaTitle}`
+        ? `${page.metaTitle} | Go Fourth`
         : "Pittsburgh's Wall Street | Go Fourth";
     const thumbnail = page.metaThumbnail
         ? imageUrlFor(page.metaThumbnail)
