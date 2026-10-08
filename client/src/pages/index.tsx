@@ -23,7 +23,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
         client.fetch(`*[_type == "building"]`),
         client.fetch(`*[_type == "contributor"]`),
         client.fetch(`*[_type == "sponsor"]`),
-        client.fetch(`*[_type == "popup"]`),
+        client.fetch(`*[_type == "popup" && isLive == true]`),
     ]);
 
     const sortedBuildings = buildings.sort((a, b) => {
@@ -51,7 +51,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
                 type: "LandingPage",
                 nextBuildingSlug: sortedBuildings[0].slug,
                 contributors,
-                popup: sortedPopups[0],
+                popup: sortedPopups[0] ?? null,
                 sponsors: sortedSponsors,
             },
         },
