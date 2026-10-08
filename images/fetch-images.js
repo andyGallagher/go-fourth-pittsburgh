@@ -52,9 +52,51 @@ const writeImages = async () => {
     });
 };
 
+// Pulls and converts only the images not already on the CDN.
+// `existingFile` lists the filenames currently in s3://go-fourth-cdn/dist/, one per line.
+const processNewImages = async (existingFile) => {
+    const existing = new Set(fs.readFileSync(existingFile, "utf8").split("\n"));
+
+    const client = sanityClient({
+        projectId: "r6svgyjt",
+        dataset: "production",
+        apiVersion: "2022-11-01",
+        useCdn: false,
+    });
+
+    const images = await client.fetch(`*[_type == "sanity.imageAsset"]{_id, url}`);
+    const outputName = (id) => (id.includes("gif") ? `${id}.gif` : `${id}.webp`);
+    const missing = images.filter((image) => !existing.has(outputName(image._id)));
+
+    console.log(`${images.length} images, ${missing.length} new`);
+
+    fs.mkdirSync(join(__dirname, "dist"), { recursive: true });
+
+    for (const image of missing) {
+        const res = await fetch(image.url);
+        if (!res.ok) {
+            throw new Error(`Failed to download ${image.url}: ${res.status}`);
+        }
+        const buf = Buffer.from(await res.arrayBuffer());
+        const output = join(__dirname, "dist", outputName(image._id));
+
+        if (image._id.includes("gif")) {
+            await fs.promises.writeFile(output, await gifResize({ width: 360 })(buf));
+        } else {
+            await sharp(buf).toFile(output);
+        }
+
+        console.log(`✅ ${outputName(image._id)}`);
+    }
+};
+
 (async () => {
     // # TODO => Uncomment the below lines to fetch and write images
     const args = process.argv.slice(2);
+    if (args[0] === "--new") {
+        await processNewImages(args[1]);
+        return;
+    }
     if (args.includes("--pull")) {
         await pullImages();
         return;
@@ -65,5 +107,7 @@ const writeImages = async () => {
     }
 
     console.warn(`Unrecognized command: ${args}`);
-    console.warn("Usage: node fetch-images.js --pull | --write");
+    console.warn(
+        "Usage: node fetch-images.js --pull | --write | --new <existing-list-file>"
+    );
 })();
